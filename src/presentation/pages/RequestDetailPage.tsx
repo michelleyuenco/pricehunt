@@ -6,7 +6,7 @@ import { LoadingSpinner } from '../components/LoadingSpinner';
 import { formatRelativeTime } from '../../shared/utils/formatDate';
 import { formatPrice } from '../../shared/utils/formatPrice';
 import { getCategoryInfo } from '../../domain/constants/categories';
-import { getCityInfo } from '../../domain/constants/cities';
+import { getCityInfo } from '../../domain/constants/locations';
 import { useAuth } from '../../application/context/AuthContext';
 import { type Availability, type Currency } from '../../domain/entities/Response';
 

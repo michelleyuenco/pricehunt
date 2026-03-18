@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { type PriceRequest } from '../../domain/entities/Request';
 import { formatRelativeTime } from '../../shared/utils/formatDate';
 import { getCategoryInfo, getSubCategoryLabel } from '../../domain/constants/categories';
-import { getCityInfo } from '../../domain/constants/cities';
+import { getCityInfo } from '../../domain/constants/locations';
 
 interface Props {
   request: PriceRequest;

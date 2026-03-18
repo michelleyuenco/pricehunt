@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { PageHeader } from '../components/PageHeader';
-import { CITIES } from '../../domain/constants/cities';
+import { CITIES } from '../../domain/constants/locations';
 import { firestoreRepo } from '../../infrastructure/firebase/FirestoreRequestRepository';
 
 interface Leader {

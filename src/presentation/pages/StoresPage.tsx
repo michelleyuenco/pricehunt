@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../components/PageHeader';
 import { STATIC_STORES } from '../../domain/constants/stores';
-import { CITIES } from '../../domain/constants/cities';
+import { CITIES } from '../../domain/constants/locations';
 
 export function StoresPage() {
   const [selectedCity, setSelectedCity] = useState<string>('all');

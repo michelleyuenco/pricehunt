@@ -4,7 +4,8 @@ import { useCreateRequest } from '../../application/hooks/useRequests';
 import { useStoreNames } from '../../application/hooks/useStores';
 import { PageHeader } from '../components/PageHeader';
 import { CATEGORIES } from '../../domain/constants/categories';
-import { CITIES } from '../../domain/constants/cities';
+import { getLocationLabel, getFlagForLocation } from '../../domain/constants/locations';
+import { LocationSelector } from '../components/LocationSelector';
 import { useAuth } from '../../application/context/AuthContext';
 import { type MainCategory, type Urgency } from '../../domain/entities/Request';
 
@@ -17,7 +18,7 @@ interface FormData {
   category: MainCategory;
   subCategory: string;
   storeName: string;
-  city: string;
+  location: string;
   district: string;
   anyStoreInCity: boolean;
   urgency: Urgency;
@@ -31,7 +32,7 @@ const initialForm: FormData = {
   category: 'other',
   subCategory: '',
   storeName: '',
-  city: 'hongkong',
+  location: 'hongkong',
   district: '',
   anyStoreInCity: false,
   urgency: 'normal',
@@ -71,8 +72,9 @@ export function CreateRequestPage() {
       username: user.displayName ?? '用戶',
       avatarEmoji: user.photoURL ?? '👤',
       ...form,
+      city: form.location,
       storeName: form.anyStoreInCity
-        ? `${CITIES.find(c => c.value === form.city)?.labelZh ?? form.city}任一商店`
+        ? `${getLocationLabel(form.location)}任一商店`
         : form.storeName,
       subCategory: form.subCategory || undefined,
       tipEnabled: false,
@@ -275,26 +277,11 @@ export function CreateRequestPage() {
                 <span>在哪裡？</span>
               </h3>
 
-              <div>
-                <label className="block text-sm font-medium text-white/60 mb-1.5">城市</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {CITIES.map(city => (
-                    <button
-                      key={city.value}
-                      type="button"
-                      onClick={() => update('city', city.value)}
-                      className={`flex items-center gap-2 py-2.5 px-3 rounded-xl border text-sm font-medium transition-all duration-200 ${
-                        form.city === city.value
-                          ? 'border-green-500/50 bg-green-500/20 text-green-400'
-                          : 'border-white/10 bg-white/5 text-white/60 hover:border-white/20'
-                      }`}
-                    >
-                      <span>{city.flag}</span>
-                      <span>{city.labelZh}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <LocationSelector
+                label="地區 Location"
+                value={form.location}
+                onChange={(v) => update('location', v)}
+              />
 
               <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-xl">
                 <button
@@ -443,14 +430,14 @@ export function CreateRequestPage() {
                   <span className="text-white/40">商店</span>
                   <span className="font-medium text-white">
                     {form.anyStoreInCity
-                      ? `${CITIES.find(c => c.value === form.city)?.labelZh}任一商店`
+                      ? `${getLocationLabel(form.location)}任一商店`
                       : form.storeName}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-white/40">城市</span>
                   <span className="font-medium text-white">
-                    {CITIES.find(c => c.value === form.city)?.labelZh}
+                    {getFlagForLocation(form.location)} {getLocationLabel(form.location)}
                   </span>
                 </div>
               </div>

@@ -4,7 +4,7 @@ import { RequestCard } from '../components/RequestCard';
 import { FloatingButton } from '../components/FloatingButton';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { PageHeader } from '../components/PageHeader';
-import { CITIES } from '../../domain/constants/cities';
+import { CITIES } from '../../domain/constants/locations';
 import { CATEGORIES } from '../../domain/constants/categories';
 import { type Category } from '../../domain/entities/Request';
 
