@@ -6,7 +6,7 @@ import { PageHeader } from '../components/PageHeader';
 import { CATEGORIES } from '../../domain/constants/categories';
 import { CITIES } from '../../domain/constants/cities';
 import { useAuth } from '../../application/context/AuthContext';
-import { type Category, type Urgency } from '../../domain/entities/Request';
+import { type MainCategory, type Urgency } from '../../domain/entities/Request';
 
 type Step = 1 | 2 | 3;
 
@@ -14,7 +14,8 @@ interface FormData {
   productName: string;
   brand: string;
   description: string;
-  category: Category;
+  category: MainCategory;
+  subCategory: string;
   storeName: string;
   city: string;
   district: string;
@@ -28,6 +29,7 @@ const initialForm: FormData = {
   brand: '',
   description: '',
   category: 'other',
+  subCategory: '',
   storeName: '',
   city: 'hongkong',
   district: '',
@@ -72,6 +74,7 @@ export function CreateRequestPage() {
       storeName: form.anyStoreInCity
         ? `${CITIES.find(c => c.value === form.city)?.labelZh ?? form.city}任一商店`
         : form.storeName,
+      subCategory: form.subCategory || undefined,
       tipEnabled: false,
     });
     setNewRequestId(req.id);
@@ -209,7 +212,7 @@ export function CreateRequestPage() {
                     <button
                       key={cat.value}
                       type="button"
-                      onClick={() => update('category', cat.value)}
+                      onClick={() => { update('category', cat.value); update('subCategory', ''); }}
                       className={`flex flex-col items-center gap-1 py-2.5 px-1 rounded-xl border transition-all duration-200 text-xs font-medium ${
                         form.category === cat.value
                           ? 'border-green-500/50 bg-green-500/20 text-green-400'
@@ -222,6 +225,35 @@ export function CreateRequestPage() {
                   ))}
                 </div>
               </div>
+
+              {/* Sub-category selector */}
+              {form.category !== 'other' && (() => {
+                const selectedCat = CATEGORIES.find(c => c.value === form.category);
+                if (!selectedCat || selectedCat.subCategories.length === 0) return null;
+                return (
+                  <div>
+                    <label className="block text-sm font-medium text-white/60 mb-1.5">
+                      細分類別 Sub-category
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedCat.subCategories.map(sub => (
+                        <button
+                          key={sub.value}
+                          type="button"
+                          onClick={() => update('subCategory', form.subCategory === sub.value ? '' : sub.value)}
+                          className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all duration-200 ${
+                            form.subCategory === sub.value
+                              ? 'border-green-500/50 bg-green-500/20 text-green-400'
+                              : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:bg-white/8'
+                          }`}
+                        >
+                          {sub.labelZh}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
 
             <button
@@ -399,6 +431,14 @@ export function CreateRequestPage() {
                   <span className="text-white/40">商品</span>
                   <span className="font-medium text-white">{form.productName}</span>
                 </div>
+                {form.subCategory && (
+                  <div className="flex justify-between">
+                    <span className="text-white/40">細分類</span>
+                    <span className="font-medium text-white">
+                      {CATEGORIES.find(c => c.value === form.category)?.subCategories.find(s => s.value === form.subCategory)?.labelZh}
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span className="text-white/40">商店</span>
                   <span className="font-medium text-white">

@@ -116,6 +116,7 @@ export function useCreateRequest() {
     brand?: string;
     description?: string;
     category: PriceRequest['category'];
+    subCategory?: string;
     storeName: string;
     city: string;
     district?: string;
@@ -134,6 +135,7 @@ export function useCreateRequest() {
       brand: data.brand,
       description: data.description,
       category: data.category,
+      subCategory: data.subCategory,
       storeName: data.storeName,
       city: data.city,
       district: data.district,

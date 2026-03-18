@@ -1,6 +1,10 @@
 export type RequestStatus = 'waiting' | 'answered' | 'closed';
 export type Urgency = 'normal' | 'urgent';
-export type Category = 'food' | 'drinks' | 'essentials' | 'beauty' | 'snacks' | 'medicine' | 'other';
+export type MainCategory = 'food' | 'drinks' | 'essentials' | 'beauty' | 'snacks' | 'medicine' | 'other';
+export type SubCategory = string;
+
+/** @deprecated Use MainCategory — kept for backward compatibility */
+export type Category = MainCategory;
 
 export interface PriceRequest {
   id: string;
@@ -10,7 +14,8 @@ export interface PriceRequest {
   productName: string;
   brand?: string;
   description?: string;
-  category: Category;
+  category: MainCategory;
+  subCategory?: SubCategory;
   storeName: string;
   city: string;
   district?: string;

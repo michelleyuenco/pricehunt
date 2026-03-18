@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { type PriceRequest } from '../../domain/entities/Request';
 import { formatRelativeTime } from '../../shared/utils/formatDate';
-import { getCategoryInfo } from '../../domain/constants/categories';
+import { getCategoryInfo, getSubCategoryLabel } from '../../domain/constants/categories';
 import { getCityInfo } from '../../domain/constants/cities';
 
 interface Props {
@@ -92,7 +92,7 @@ export function RequestCard({ request }: Props) {
         {/* Footer */}
         <div className="flex items-center justify-between">
           <span className="text-xs bg-white/5 border border-white/10 text-white/50 px-2 py-1 rounded-lg">
-            {category.emoji} {category.labelZh}
+            {category.emoji} {category.labelZh}{request.subCategory && (" · " + getSubCategoryLabel(request.category, request.subCategory))}
           </span>
           <div className="flex items-center gap-3 text-xs text-white/30">
             {request.tipEnabled && (
