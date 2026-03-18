@@ -13,5 +13,9 @@ service cloud.firestore {
       allow update: if request.auth != null;
       allow delete: if false;
     }
+    match /officialPrices/{code} {
+      allow read: if true;
+      allow write: if false; // Only server/admin can write
+    }
   }
 }

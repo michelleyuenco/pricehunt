@@ -1,12 +1,38 @@
 import { useRequests } from '../../application/hooks/useRequests';
+import { useOfficialPrices } from '../../application/hooks/useOfficialPrices';
 import { RequestCard } from '../components/RequestCard';
 import { FloatingButton } from '../components/FloatingButton';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../application/context/AuthContext';
 
+function OfficialPriceCard({ product }: { product: ReturnType<typeof useOfficialPrices>['prices'][0] }) {
+  const storeCount = Object.values(product.stores ?? {}).filter(Boolean).length;
+  return (
+    <Link
+      to={`/official-price/${product.code}`}
+      className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-green-500/30 hover:bg-green-500/5 transition-all duration-200 active:scale-[0.98]"
+    >
+      <div className="flex-1 min-w-0">
+        <p className="text-[11px] text-white/30 truncate mb-0.5">{product.brand}</p>
+        <p className="text-sm font-semibold text-white/90 leading-snug line-clamp-2">{product.name}</p>
+        <p className="text-[11px] text-white/30 mt-1">{storeCount} 間商店</p>
+      </div>
+      {product.minPrice != null && (
+        <div className="shrink-0 text-right">
+          <p className="text-lg font-extrabold text-green-400 leading-tight">
+            {product.currency}{product.minPrice.toFixed(1)}
+          </p>
+          <p className="text-[10px] text-white/30">最低</p>
+        </div>
+      )}
+    </Link>
+  );
+}
+
 export function HomePage() {
   const { requests, loading } = useRequests();
+  const { prices: officialPrices, loading: pricesLoading } = useOfficialPrices(8);
   const { user, signInWithGoogle } = useAuth();
 
   return (
@@ -81,8 +107,39 @@ export function HomePage() {
         </div>
       </div>
 
+      {/* Official Prices Section */}
+      <div className="px-4 pb-2">
+        <div className="max-w-lg mx-auto">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="font-bold text-white/80 text-base flex items-center gap-2 tracking-tight">
+              <span>📊</span>
+              <span>官方價格 Official Prices</span>
+            </h3>
+            <span className="text-xs text-white/30">消委會</span>
+          </div>
+
+          {pricesLoading ? (
+            <div className="py-6 flex justify-center">
+              <LoadingSpinner />
+            </div>
+          ) : officialPrices.length === 0 ? (
+            <div className="bg-white/3 border border-white/8 rounded-xl p-5 text-center">
+              <div className="text-3xl mb-2 opacity-40">📊</div>
+              <p className="text-sm text-white/30">官方價格資料尚未載入</p>
+              <p className="text-xs text-white/20 mt-1">Run the scraper to populate official prices</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-2">
+              {officialPrices.map(p => (
+                <OfficialPriceCard key={p.code} product={p} />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Feed */}
-      <div className="px-4">
+      <div className="px-4 pt-4">
         <div className="max-w-lg mx-auto">
           <h3 className="font-bold text-white/80 text-base mb-3 flex items-center gap-2 tracking-tight">
             <span>🔥</span>

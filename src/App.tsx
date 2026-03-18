@@ -8,6 +8,7 @@ import { CreateRequestPage } from './presentation/pages/CreateRequestPage';
 import { StoresPage } from './presentation/pages/StoresPage';
 import { CommunityPage } from './presentation/pages/CommunityPage';
 import { MyRequestsPage } from './presentation/pages/MyRequestsPage';
+import { OfficialPricePage } from './presentation/pages/OfficialPricePage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/stores" element={<StoresPage />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/my-requests" element={<MyRequestsPage />} />
+            <Route path="/official-price/:code" element={<OfficialPricePage />} />
           </Routes>
           <Navbar />
         </div>

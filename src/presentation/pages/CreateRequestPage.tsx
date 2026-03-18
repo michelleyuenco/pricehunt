@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCreateRequest } from '../../application/hooks/useRequests';
 import { useStoreNames } from '../../application/hooks/useStores';
+import { useOfficialPriceSearch } from '../../application/hooks/useOfficialPrices';
 import { PageHeader } from '../components/PageHeader';
 import { CATEGORIES } from '../../domain/constants/categories';
 import { getLocationLabel, getFlagForLocation } from '../../domain/constants/locations';
@@ -52,6 +53,12 @@ export function CreateRequestPage() {
   const [success, setSuccess] = useState(false);
   const [storeInput, setStoreInput] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showPriceSuggestions, setShowPriceSuggestions] = useState(false);
+  const [selectedOfficialPrice, setSelectedOfficialPrice] = useState<{ name: string; minPrice: number | null; currency: string } | null>(null);
+
+  const { results: officialSuggestions } = useOfficialPriceSearch(
+    showPriceSuggestions ? form.productName : ''
+  );
 
   const update = <K extends keyof FormData>(key: K, value: FormData[K]) => {
     setForm(prev => ({ ...prev, [key]: value }));
@@ -173,17 +180,63 @@ export function CreateRequestPage() {
                 <span>什麼商品？</span>
               </h3>
 
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-medium text-white/60 mb-1.5">
                   商品名稱 <span className="text-red-400">*</span>
                 </label>
                 <input
                   value={form.productName}
-                  onChange={e => update('productName', e.target.value)}
+                  onChange={e => {
+                    update('productName', e.target.value);
+                    setShowPriceSuggestions(true);
+                    setSelectedOfficialPrice(null);
+                  }}
+                  onFocus={() => setShowPriceSuggestions(true)}
+                  onBlur={() => setTimeout(() => setShowPriceSuggestions(false), 200)}
                   placeholder="例如：義美小泡芙 / Product name"
                   className="input-field"
                   required
                 />
+                {/* Official price suggestions */}
+                {showPriceSuggestions && officialSuggestions.length > 0 && (
+                  <div className="absolute z-20 left-0 right-0 bg-[#111111] border border-green-500/20 rounded-xl shadow-2xl mt-1 overflow-hidden">
+                    <div className="px-3 py-2 text-[10px] text-green-400/60 font-semibold uppercase tracking-widest border-b border-white/5">
+                      📊 官方價格參考 Official Prices
+                    </div>
+                    {officialSuggestions.slice(0, 5).map(p => (
+                      <button
+                        key={p.code}
+                        type="button"
+                        className="w-full text-left px-3 py-2.5 hover:bg-white/5 border-b border-white/5 last:border-0 transition-colors flex items-center justify-between gap-2"
+                        onMouseDown={() => {
+                          update('productName', p.name);
+                          if (p.brand) update('brand', p.brand);
+                          setSelectedOfficialPrice({ name: p.name, minPrice: p.minPrice, currency: p.currency });
+                          setShowPriceSuggestions(false);
+                        }}
+                      >
+                        <div className="min-w-0">
+                          <p className="text-xs text-white/40 truncate">{p.brand}</p>
+                          <p className="text-sm text-white/80 leading-snug line-clamp-1">{p.name}</p>
+                        </div>
+                        {p.minPrice != null && (
+                          <span className="shrink-0 text-sm font-bold text-green-400">
+                            {p.currency}{p.minPrice.toFixed(1)}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {/* Selected official price hint */}
+                {selectedOfficialPrice && selectedOfficialPrice.minPrice != null && (
+                  <div className="mt-2 flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-lg px-3 py-2">
+                    <span className="text-green-400 text-sm">📊</span>
+                    <p className="text-xs text-green-400">
+                      官方最低價 Official min: <strong>{selectedOfficialPrice.currency}{selectedOfficialPrice.minPrice.toFixed(1)}</strong>
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div>
