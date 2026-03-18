@@ -82,12 +82,12 @@ export function CreateRequestPage() {
   // Not signed in gate
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50 pb-24 pt-14">
+      <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
         <PageHeader title="發起格價需求" showBack />
         <div className="px-4 py-12 max-w-lg mx-auto text-center">
-          <div className="text-6xl mb-4">🔑</div>
-          <h2 className="text-xl font-bold text-charcoal mb-2">請先登入</h2>
-          <p className="text-gray-500 mb-6 text-sm">Please sign in to create a price request.</p>
+          <div className="text-6xl mb-4 opacity-60">🔑</div>
+          <h2 className="text-xl font-bold text-white mb-2">請先登入</h2>
+          <p className="text-white/40 mb-6 text-sm">Please sign in to create a price request.</p>
           <button
             onClick={signInWithGoogle}
             className="btn-primary px-8 py-3"
@@ -101,12 +101,12 @@ export function CreateRequestPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gray-50 pb-24 pt-14">
+      <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
         <PageHeader title="發起成功！" />
         <div className="px-4 py-8 max-w-lg mx-auto text-center">
           <div className="text-7xl mb-4">🎉</div>
-          <h2 className="text-2xl font-bold text-charcoal mb-2">需求已發出！</h2>
-          <p className="text-gray-600 mb-6">
+          <h2 className="text-2xl font-bold text-white mb-2">需求已發出！</h2>
+          <p className="text-white/50 mb-8 leading-relaxed">
             等待格價獵人幫你回報價格。<br />
             通常在 1 小時內會有人回覆！
           </p>
@@ -130,29 +130,29 @@ export function CreateRequestPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24 pt-14">
+    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
       <PageHeader title="發起格價需求" showBack />
 
       {/* Step indicator */}
-      <div className="bg-white border-b border-gray-100 px-4 py-3">
+      <div className="bg-[#0A0A0A]/95 border-b border-white/10 px-4 py-3">
         <div className="max-w-lg mx-auto flex items-center gap-2">
           {([1, 2, 3] as Step[]).map(s => (
             <div key={s} className="flex items-center gap-2 flex-1">
               <div
-                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 transition-colors ${
+                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 transition-all duration-200 ${
                   step === s
-                    ? 'bg-primary-500 text-white'
+                    ? 'bg-gradient-to-br from-green-500 to-emerald-500 text-white shadow-[0_0_12px_rgba(34,197,94,0.4)]'
                     : step > s
-                    ? 'bg-primary-200 text-primary-700'
-                    : 'bg-gray-200 text-gray-500'
+                    ? 'bg-green-500/30 text-green-400 border border-green-500/30'
+                    : 'bg-white/5 text-white/30 border border-white/10'
                 }`}
               >
                 {step > s ? '✓' : s}
               </div>
-              <span className={`text-xs font-medium ${step === s ? 'text-charcoal' : 'text-gray-400'}`}>
+              <span className={`text-xs font-medium ${step === s ? 'text-white' : 'text-white/30'}`}>
                 {s === 1 ? '商品資訊' : s === 2 ? '商店位置' : '附加設定'}
               </span>
-              {s < 3 && <div className="flex-1 h-px bg-gray-200 mx-1" />}
+              {s < 3 && <div className="flex-1 h-px bg-white/10 mx-1" />}
             </div>
           ))}
         </div>
@@ -162,15 +162,15 @@ export function CreateRequestPage() {
         {/* Step 1 */}
         {step === 1 && (
           <div className="space-y-4">
-            <div className="card p-4 space-y-4">
-              <h3 className="font-bold text-charcoal flex items-center gap-2">
+            <div className="card p-5 space-y-4">
+              <h3 className="font-bold text-white flex items-center gap-2">
                 <span>📦</span>
                 <span>什麼商品？</span>
               </h3>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  商品名稱 <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-white/60 mb-1.5">
+                  商品名稱 <span className="text-red-400">*</span>
                 </label>
                 <input
                   value={form.productName}
@@ -182,7 +182,7 @@ export function CreateRequestPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">品牌 Brand（選填）</label>
+                <label className="block text-sm font-medium text-white/60 mb-1.5">品牌 Brand（選填）</label>
                 <input
                   value={form.brand}
                   onChange={e => update('brand', e.target.value)}
@@ -192,7 +192,7 @@ export function CreateRequestPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">商品描述（選填）</label>
+                <label className="block text-sm font-medium text-white/60 mb-1.5">商品描述（選填）</label>
                 <textarea
                   value={form.description}
                   onChange={e => update('description', e.target.value)}
@@ -203,17 +203,17 @@ export function CreateRequestPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">分類</label>
+                <label className="block text-sm font-medium text-white/60 mb-1.5">分類</label>
                 <div className="grid grid-cols-4 gap-2">
                   {CATEGORIES.map(cat => (
                     <button
                       key={cat.value}
                       type="button"
                       onClick={() => update('category', cat.value)}
-                      className={`flex flex-col items-center gap-1 py-2 px-1 rounded-xl border-2 transition-all text-xs font-medium ${
+                      className={`flex flex-col items-center gap-1 py-2.5 px-1 rounded-xl border transition-all duration-200 text-xs font-medium ${
                         form.category === cat.value
-                          ? 'border-primary-500 bg-primary-50 text-primary-700'
-                          : 'border-gray-200 text-gray-600'
+                          ? 'border-green-500/50 bg-green-500/20 text-green-400'
+                          : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:bg-white/8'
                       }`}
                     >
                       <span className="text-xl">{cat.emoji}</span>
@@ -227,7 +227,7 @@ export function CreateRequestPage() {
             <button
               onClick={() => setStep(2)}
               disabled={!form.productName}
-              className="btn-primary w-full disabled:opacity-50"
+              className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"
             >
               下一步：商店位置 →
             </button>
@@ -237,24 +237,24 @@ export function CreateRequestPage() {
         {/* Step 2 */}
         {step === 2 && (
           <div className="space-y-4">
-            <div className="card p-4 space-y-4">
-              <h3 className="font-bold text-charcoal flex items-center gap-2">
+            <div className="card p-5 space-y-4">
+              <h3 className="font-bold text-white flex items-center gap-2">
                 <span>📍</span>
                 <span>在哪裡？</span>
               </h3>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">城市</label>
+                <label className="block text-sm font-medium text-white/60 mb-1.5">城市</label>
                 <div className="grid grid-cols-2 gap-2">
                   {CITIES.map(city => (
                     <button
                       key={city.value}
                       type="button"
                       onClick={() => update('city', city.value)}
-                      className={`flex items-center gap-2 py-2 px-3 rounded-xl border-2 text-sm font-medium transition-all ${
+                      className={`flex items-center gap-2 py-2.5 px-3 rounded-xl border text-sm font-medium transition-all duration-200 ${
                         form.city === city.value
-                          ? 'border-primary-500 bg-primary-50 text-primary-700'
-                          : 'border-gray-200 text-gray-600'
+                          ? 'border-green-500/50 bg-green-500/20 text-green-400'
+                          : 'border-white/10 bg-white/5 text-white/60 hover:border-white/20'
                       }`}
                     >
                       <span>{city.flag}</span>
@@ -264,30 +264,32 @@ export function CreateRequestPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+              <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-xl">
                 <button
                   type="button"
                   onClick={() => update('anyStoreInCity', !form.anyStoreInCity)}
-                  className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ${
-                    form.anyStoreInCity ? 'bg-primary-500' : 'bg-gray-300'
+                  className={`w-12 h-6 rounded-full transition-all duration-200 relative flex-shrink-0 ${
+                    form.anyStoreInCity
+                      ? 'bg-gradient-to-r from-green-500 to-emerald-500 shadow-[0_0_10px_rgba(34,197,94,0.4)]'
+                      : 'bg-white/10'
                   }`}
                 >
                   <div
-                    className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-all ${
+                    className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-all duration-200 ${
                       form.anyStoreInCity ? 'right-1' : 'left-1'
                     }`}
                   />
                 </button>
                 <div>
-                  <div className="text-sm font-medium text-charcoal">此城市任一商店都可以</div>
-                  <div className="text-xs text-gray-500">Any store in this city</div>
+                  <div className="text-sm font-medium text-white">此城市任一商店都可以</div>
+                  <div className="text-xs text-white/40">Any store in this city</div>
                 </div>
               </div>
 
               {!form.anyStoreInCity && (
                 <div className="relative">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    商店名稱 <span className="text-red-500">*</span>
+                  <label className="block text-sm font-medium text-white/60 mb-1.5">
+                    商店名稱 <span className="text-red-400">*</span>
                   </label>
                   <input
                     value={storeInput}
@@ -301,12 +303,12 @@ export function CreateRequestPage() {
                     className="input-field"
                   />
                   {showSuggestions && storeSuggestions.length > 0 && (
-                    <div className="absolute z-10 left-0 right-0 bg-white border border-gray-200 rounded-xl shadow-lg mt-1 overflow-hidden">
+                    <div className="absolute z-10 left-0 right-0 bg-[#111111] border border-white/10 rounded-xl shadow-2xl mt-1 overflow-hidden">
                       {storeSuggestions.slice(0, 6).map(name => (
                         <button
                           key={name}
                           type="button"
-                          className="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 border-b border-gray-100 last:border-0"
+                          className="w-full text-left px-4 py-2.5 text-sm text-white/70 hover:bg-white/5 border-b border-white/5 last:border-0 transition-colors"
                           onClick={() => {
                             setStoreInput(name);
                             update('storeName', name);
@@ -322,7 +324,7 @@ export function CreateRequestPage() {
               )}
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">地區（選填）</label>
+                <label className="block text-sm font-medium text-white/60 mb-1.5">地區（選填）</label>
                 <input
                   value={form.district}
                   onChange={e => update('district', e.target.value)}
@@ -337,7 +339,7 @@ export function CreateRequestPage() {
               <button
                 onClick={() => setStep(3)}
                 disabled={!form.anyStoreInCity && !form.storeName}
-                className="btn-primary flex-1 disabled:opacity-50"
+                className="btn-primary flex-1 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"
               >
                 下一步 →
               </button>
@@ -348,14 +350,14 @@ export function CreateRequestPage() {
         {/* Step 3 */}
         {step === 3 && (
           <div className="space-y-4">
-            <div className="card p-4 space-y-4">
-              <h3 className="font-bold text-charcoal flex items-center gap-2">
+            <div className="card p-5 space-y-4">
+              <h3 className="font-bold text-white flex items-center gap-2">
                 <span>⚙️</span>
                 <span>附加設定</span>
               </h3>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">緊急程度</label>
+                <label className="block text-sm font-medium text-white/60 mb-2">緊急程度</label>
                 <div className="flex gap-3">
                   {[
                     { value: 'normal' as Urgency, label: '一般 Normal', emoji: '🟢' },
@@ -365,12 +367,12 @@ export function CreateRequestPage() {
                       key={opt.value}
                       type="button"
                       onClick={() => update('urgency', opt.value)}
-                      className={`flex-1 flex items-center gap-2 py-3 px-4 rounded-xl border-2 font-medium text-sm transition-all ${
+                      className={`flex-1 flex items-center gap-2 py-3 px-4 rounded-xl border font-medium text-sm transition-all duration-200 ${
                         form.urgency === opt.value
                           ? opt.value === 'urgent'
-                            ? 'border-red-400 bg-red-50 text-red-700'
-                            : 'border-primary-500 bg-primary-50 text-primary-700'
-                          : 'border-gray-200 text-gray-600'
+                            ? 'border-amber-500/50 bg-amber-500/20 text-amber-400 shadow-[0_0_12px_rgba(245,158,11,0.3)]'
+                            : 'border-green-500/50 bg-green-500/20 text-green-400'
+                          : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20'
                       }`}
                     >
                       <span>{opt.emoji}</span>
@@ -381,7 +383,7 @@ export function CreateRequestPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">給回報者的話（選填）</label>
+                <label className="block text-sm font-medium text-white/60 mb-1.5">給回報者的話（選填）</label>
                 <textarea
                   value={form.note}
                   onChange={e => update('note', e.target.value)}
@@ -391,23 +393,23 @@ export function CreateRequestPage() {
                 />
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-4 text-sm space-y-2">
-                <div className="font-semibold text-gray-700 mb-2">📋 需求摘要</div>
+              <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-sm space-y-2">
+                <div className="font-semibold text-white/80 mb-2">📋 需求摘要</div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">商品</span>
-                  <span className="font-medium">{form.productName}</span>
+                  <span className="text-white/40">商品</span>
+                  <span className="font-medium text-white">{form.productName}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">商店</span>
-                  <span className="font-medium">
+                  <span className="text-white/40">商店</span>
+                  <span className="font-medium text-white">
                     {form.anyStoreInCity
                       ? `${CITIES.find(c => c.value === form.city)?.labelZh}任一商店`
                       : form.storeName}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">城市</span>
-                  <span className="font-medium">
+                  <span className="text-white/40">城市</span>
+                  <span className="font-medium text-white">
                     {CITIES.find(c => c.value === form.city)?.labelZh}
                   </span>
                 </div>
@@ -419,7 +421,7 @@ export function CreateRequestPage() {
               <button
                 onClick={handleSubmit}
                 disabled={submitting}
-                className="btn-accent flex-1 disabled:opacity-50"
+                className="btn-accent flex-1 disabled:opacity-40"
               >
                 {submitting ? '發送中...' : '🚀 發起需求！'}
               </button>

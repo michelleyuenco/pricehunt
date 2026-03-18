@@ -18,9 +18,14 @@ export function Navbar() {
   return (
     <>
       {/* Top auth bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 px-4 py-2">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0A]/95 backdrop-blur-xl border-b border-white/10 px-4 py-2">
         <div className="max-w-lg mx-auto flex items-center justify-between">
-          <span className="font-bold text-primary-600 text-sm">🔍 PriceHunt</span>
+          <span className="font-bold text-sm flex items-center gap-1.5">
+            <span>🔍</span>
+            <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent tracking-wide">
+              PriceHunt
+            </span>
+          </span>
           {user ? (
             <div className="relative">
               <button
@@ -28,20 +33,26 @@ export function Navbar() {
                 className="flex items-center gap-2"
               >
                 {user.photoURL ? (
-                  <img src={user.photoURL} alt="avatar" className="w-7 h-7 rounded-full" />
+                  <img
+                    src={user.photoURL}
+                    alt="avatar"
+                    className="w-7 h-7 rounded-full ring-2 ring-green-500/60"
+                  />
                 ) : (
-                  <div className="w-7 h-7 rounded-full bg-primary-200 flex items-center justify-center text-sm">👤</div>
+                  <div className="w-7 h-7 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-sm">
+                    👤
+                  </div>
                 )}
-                <span className="text-xs font-medium text-charcoal max-w-[100px] truncate">
+                <span className="text-xs font-medium text-white/70 max-w-[100px] truncate">
                   {user.displayName ?? user.email}
                 </span>
-                <span className="text-gray-400 text-xs">▾</span>
+                <span className="text-white/30 text-xs">▾</span>
               </button>
               {showMenu && (
-                <div className="absolute right-0 top-9 bg-white border border-gray-200 rounded-xl shadow-lg py-2 w-36 z-50">
+                <div className="absolute right-0 top-9 bg-[#111111] border border-white/10 rounded-xl shadow-2xl py-2 w-36 z-50 backdrop-blur-xl">
                   <button
                     onClick={() => { signOut(); setShowMenu(false); }}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                    className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
                   >
                     登出 Sign Out
                   </button>
@@ -51,7 +62,7 @@ export function Navbar() {
           ) : (
             <button
               onClick={signInWithGoogle}
-              className="flex items-center gap-1.5 bg-primary-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full active:scale-95 transition-all"
+              className="flex items-center gap-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full active:scale-95 transition-all shadow-[0_0_15px_rgba(34,197,94,0.3)]"
             >
               <span>🔑</span>
               <span>登入 Sign In</span>
@@ -61,7 +72,7 @@ export function Navbar() {
       </div>
 
       {/* Bottom nav */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 safe-area-pb">
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A]/95 backdrop-blur-xl border-t border-white/10 safe-area-pb">
         <div className="max-w-lg mx-auto flex items-center justify-around px-2 py-2">
           {navItems.map(item => {
             const isActive = location.pathname === item.to;
@@ -69,12 +80,15 @@ export function Navbar() {
               <Link
                 key={item.to}
                 to={item.to}
-                className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl transition-all duration-150 ${
-                  isActive ? 'text-primary-600' : 'text-gray-400 hover:text-gray-600'
+                className={`relative flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl transition-all duration-200 ${
+                  isActive ? 'text-green-400' : 'text-white/40 hover:text-white/60'
                 }`}
               >
+                {isActive && (
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-green-400 rounded-full shadow-[0_0_6px_rgba(34,197,94,0.8)]" />
+                )}
                 <span className="text-xl">{item.icon}</span>
-                <span className={`text-xs font-medium ${isActive ? 'text-primary-600' : 'text-gray-400'}`}>
+                <span className={`text-xs font-medium ${isActive ? 'text-green-400' : 'text-white/40'}`}>
                   {item.label}
                 </span>
               </Link>

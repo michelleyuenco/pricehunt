@@ -29,6 +29,14 @@ export default {
       fontFamily: {
         sans: ['"Noto Sans TC"', 'system-ui', 'sans-serif'],
       },
+      backdropBlur: {
+        xs: '2px',
+      },
+      boxShadow: {
+        'glow-green': '0 0 30px rgba(34,197,94,0.3)',
+        'glow-green-sm': '0 0 15px rgba(34,197,94,0.2)',
+        'glow-amber': '0 0 20px rgba(245,158,11,0.3)',
+      },
     },
   },
   plugins: [],

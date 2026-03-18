@@ -22,19 +22,19 @@ export function StoresPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24 pt-14">
+    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
       <PageHeader title="商店目錄 Stores" subtitle="瀏覽各城市商店" />
 
       {/* City tabs */}
-      <div className="bg-white border-b border-gray-100 px-4 py-3">
+      <div className="bg-[#0A0A0A]/95 border-b border-white/10 px-4 py-3">
         <div className="max-w-lg mx-auto">
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
             <button
               onClick={() => setSelectedCity('all')}
-              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 selectedCity === 'all'
-                  ? 'bg-primary-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-[0_0_15px_rgba(34,197,94,0.3)]'
+                  : 'bg-white/5 border border-white/10 text-white/50 hover:text-white/70 hover:bg-white/8'
               }`}
             >
               🌍 全部
@@ -43,10 +43,10 @@ export function StoresPage() {
               <button
                 key={city.value}
                 onClick={() => setSelectedCity(city.value)}
-                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                   selectedCity === city.value
-                    ? 'bg-primary-500 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-[0_0_15px_rgba(34,197,94,0.3)]'
+                    : 'bg-white/5 border border-white/10 text-white/50 hover:text-white/70 hover:bg-white/8'
                 }`}
               >
                 {city.flag} {city.labelZh}
@@ -58,28 +58,28 @@ export function StoresPage() {
 
       <div className="px-4 py-4">
         <div className="max-w-lg mx-auto">
-          <p className="text-sm text-gray-500 mb-3">共 {filteredStores.length} 間商店</p>
+          <p className="text-sm text-white/30 mb-3">共 {filteredStores.length} 間商店</p>
           <div className="flex flex-col gap-3">
             {filteredStores.map(store => (
               <Link
                 key={store.id}
                 to={`/explore?store=${encodeURIComponent(store.nameZh)}`}
-                className="block"
+                className="block group"
               >
-                <div className="card p-4 hover:shadow-md transition-shadow duration-200 active:scale-[0.99]">
+                <div className="bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.14] rounded-2xl p-4 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center text-xl">
+                      <div className="w-10 h-10 bg-green-500/10 border border-green-500/20 rounded-xl flex items-center justify-center text-xl">
                         🏪
                       </div>
                       <div>
-                        <div className="font-bold text-charcoal">
+                        <div className="font-bold text-white">
                           {store.nameZh}
                           {store.nameEn !== store.nameZh && (
-                            <span className="font-normal text-gray-500 text-sm"> · {store.nameEn}</span>
+                            <span className="font-normal text-white/40 text-sm"> · {store.nameEn}</span>
                           )}
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-white/40">
                           {getCityFlag(store.city)} {getCityLabel(store.city)}
                         </div>
                       </div>
@@ -90,7 +90,7 @@ export function StoresPage() {
                       {store.mostRequestedTags.map(tag => (
                         <span
                           key={tag}
-                          className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full"
+                          className="text-xs bg-white/5 border border-white/10 text-white/40 px-2 py-0.5 rounded-full"
                         >
                           {tag}
                         </span>

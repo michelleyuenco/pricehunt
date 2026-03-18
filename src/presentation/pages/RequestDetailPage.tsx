@@ -11,9 +11,9 @@ import { useAuth } from '../../application/context/AuthContext';
 import { type Availability, type Currency } from '../../domain/entities/Response';
 
 const availabilityLabels: Record<Availability, { zh: string; cls: string }> = {
-  in_stock: { zh: '✅ 有貨', cls: 'text-green-600 bg-green-50' },
-  out_of_stock: { zh: '❌ 缺貨', cls: 'text-red-600 bg-red-50' },
-  limited: { zh: '⚠️ 少量', cls: 'text-yellow-600 bg-yellow-50' },
+  in_stock: { zh: '✅ 有貨', cls: 'text-green-400 bg-green-500/10 border border-green-500/20' },
+  out_of_stock: { zh: '❌ 缺貨', cls: 'text-red-400 bg-red-500/10 border border-red-500/20' },
+  limited: { zh: '⚠️ 少量', cls: 'text-amber-400 bg-amber-500/10 border border-amber-500/20' },
 };
 
 const CURRENCIES: Currency[] = ['HK$', 'NT$', 'S$', '¥'];
@@ -64,7 +64,7 @@ export function RequestDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 pb-24 pt-14">
+      <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
         <PageHeader title="需求詳情" showBack />
         <LoadingSpinner />
       </div>
@@ -73,11 +73,11 @@ export function RequestDetailPage() {
 
   if (!request) {
     return (
-      <div className="min-h-screen bg-gray-50 pb-24 pt-14">
+      <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
         <PageHeader title="需求詳情" showBack />
-        <div className="text-center py-16 text-gray-400">
-          <div className="text-5xl mb-4">😕</div>
-          <p>找不到此需求</p>
+        <div className="text-center py-16">
+          <div className="text-5xl mb-4 opacity-30">😕</div>
+          <p className="text-white/40">找不到此需求</p>
         </div>
       </div>
     );
@@ -87,54 +87,62 @@ export function RequestDetailPage() {
   const city = getCityInfo(request.city);
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24 pt-14">
+    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
       <PageHeader title="需求詳情" showBack />
 
       <div className="px-4 py-4 max-w-lg mx-auto space-y-4">
         {/* Request card */}
-        <div className="card p-4">
-          <div className="flex items-start justify-between gap-2 mb-3">
+        <div className="card p-5">
+          <div className="flex items-start justify-between gap-2 mb-4">
             <div className="flex items-center gap-2">
               {request.avatarEmoji && request.avatarEmoji.startsWith('http') ? (
-                <img src={request.avatarEmoji} alt="avatar" className="w-8 h-8 rounded-full" />
+                <img src={request.avatarEmoji} alt="avatar" className="w-8 h-8 rounded-full ring-1 ring-white/10" />
               ) : (
-                <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-lg">
+                <div className="w-8 h-8 rounded-full bg-green-500/20 border border-green-500/20 flex items-center justify-center text-lg">
                   {request.avatarEmoji || '👤'}
                 </div>
               )}
               <div>
-                <span className="font-semibold text-charcoal">{request.username}</span>
-                <div className="text-xs text-gray-400">{formatRelativeTime(request.createdAt)}</div>
+                <span className="font-semibold text-white">{request.username}</span>
+                <div className="text-xs text-white/30">{formatRelativeTime(request.createdAt)}</div>
               </div>
             </div>
             <div className="flex flex-col items-end gap-1">
               {request.urgency === 'urgent' && (
-                <span className="text-xs bg-red-100 text-red-600 font-semibold px-2 py-0.5 rounded-full">
+                <span className="text-xs bg-red-500/20 text-red-400 border border-red-500/30 font-semibold px-2 py-0.5 rounded-full">
                   ⚡ 急需
                 </span>
               )}
-              <span className={request.status === 'waiting' ? 'status-waiting' : 'status-answered'}>
-                {request.status === 'waiting' ? '待回覆' : '已回覆'}
-              </span>
+              {request.status === 'waiting' ? (
+                <span className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(245,158,11,0.8)]" />
+                  <span className="text-amber-400">等待中</span>
+                </span>
+              ) : (
+                <span className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_6px_rgba(34,197,94,0.8)]" />
+                  <span className="text-green-400">已回覆</span>
+                </span>
+              )}
             </div>
           </div>
 
-          <h2 className="text-xl font-bold text-charcoal mb-1">
+          <h2 className="text-xl font-bold text-white mb-1 tracking-tight">
             {request.productName}
-            {request.brand && <span className="font-normal text-gray-500 text-base"> · {request.brand}</span>}
+            {request.brand && <span className="font-normal text-white/40 text-base"> · {request.brand}</span>}
           </h2>
           {request.description && (
-            <p className="text-sm text-gray-600 mb-3">{request.description}</p>
+            <p className="text-sm text-white/50 mb-3">{request.description}</p>
           )}
 
           <div className="grid grid-cols-2 gap-2 text-sm mb-3">
-            <div className="bg-gray-50 rounded-xl p-3">
-              <div className="text-xs text-gray-400 mb-0.5">商店</div>
-              <div className="font-semibold">🏪 {request.storeName}</div>
+            <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+              <div className="text-xs text-white/30 mb-0.5">商店</div>
+              <div className="font-semibold text-white">🏪 {request.storeName}</div>
             </div>
-            <div className="bg-gray-50 rounded-xl p-3">
-              <div className="text-xs text-gray-400 mb-0.5">城市</div>
-              <div className="font-semibold">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+              <div className="text-xs text-white/30 mb-0.5">城市</div>
+              <div className="font-semibold text-white">
                 {city?.flag} {city?.labelZh ?? request.city}
                 {request.district && ` · ${request.district}`}
               </div>
@@ -142,13 +150,13 @@ export function RequestDetailPage() {
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-lg">
+            <span className="text-xs bg-white/5 border border-white/10 text-white/50 px-2 py-1 rounded-lg">
               {category.emoji} {category.labelZh}
             </span>
           </div>
 
           {request.note && (
-            <div className="mt-3 p-3 bg-blue-50 rounded-xl text-sm text-blue-700">
+            <div className="mt-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl text-sm text-blue-300">
               📝 {request.note}
             </div>
           )}
@@ -156,17 +164,17 @@ export function RequestDetailPage() {
 
         {/* Responses */}
         <div>
-          <h3 className="font-bold text-charcoal text-base mb-3 flex items-center gap-2">
+          <h3 className="font-bold text-white/80 text-base mb-3 flex items-center gap-2 tracking-tight">
             <span>💬</span>
             <span>格價回覆</span>
-            <span className="text-sm font-normal text-gray-500">({responses.length})</span>
+            <span className="text-sm font-normal text-white/30">({responses.length})</span>
           </h3>
 
           {responses.length === 0 ? (
-            <div className="card p-6 text-center text-gray-400">
-              <div className="text-4xl mb-2">🙋</div>
-              <p className="font-medium">還沒有人回覆</p>
-              <p className="text-sm mt-1">你去逛店時，幫忙記錄一下價格吧！</p>
+            <div className="card p-6 text-center">
+              <div className="text-4xl mb-2 opacity-30">🙋</div>
+              <p className="font-medium text-white/50">還沒有人回覆</p>
+              <p className="text-sm mt-1 text-white/30">你去逛店時，幫忙記錄一下價格吧！</p>
             </div>
           ) : (
             <div className="flex flex-col gap-3">
@@ -178,19 +186,19 @@ export function RequestDetailPage() {
                     <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2">
                         {res.avatarEmoji && res.avatarEmoji.startsWith('http') ? (
-                          <img src={res.avatarEmoji} alt="avatar" className="w-7 h-7 rounded-full" />
+                          <img src={res.avatarEmoji} alt="avatar" className="w-7 h-7 rounded-full ring-1 ring-white/10" />
                         ) : (
-                          <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-sm">
+                          <div className="w-7 h-7 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-sm">
                             {res.avatarEmoji || '👤'}
                           </div>
                         )}
                         <div>
-                          <span className="font-medium text-sm">{res.username}</span>
-                          <div className="text-xs text-gray-400">{formatRelativeTime(res.createdAt)}</div>
+                          <span className="font-medium text-sm text-white">{res.username}</span>
+                          <div className="text-xs text-white/30">{formatRelativeTime(res.createdAt)}</div>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-xl font-bold text-primary-600">
+                        <div className="text-2xl font-bold text-green-400">
                           {formatPrice(res.price, res.currency)}
                         </div>
                         <div className={`text-xs font-medium px-2 py-0.5 rounded-full ${avail.cls}`}>
@@ -198,14 +206,14 @@ export function RequestDetailPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="text-xs text-gray-500 mb-2">📍 {res.storeConfirmed}</div>
-                    {res.note && <p className="text-sm text-gray-700 mb-3">{res.note}</p>}
+                    <div className="text-xs text-white/40 mb-2">📍 {res.storeConfirmed}</div>
+                    {res.note && <p className="text-sm text-white/60 mb-3">{res.note}</p>}
                     <button
                       onClick={() => handleVote(res.id)}
-                      className={`flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
+                      className={`flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-lg transition-all duration-200 ${
                         voted
-                          ? 'bg-primary-100 text-primary-700'
-                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                          ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                          : 'bg-white/5 text-white/40 border border-white/10 hover:bg-white/10 hover:text-white/60'
                       }`}
                     >
                       <span>👍</span>
@@ -219,15 +227,15 @@ export function RequestDetailPage() {
         </div>
 
         {/* Add response form */}
-        <div className="card p-4">
-          <h3 className="font-bold text-charcoal text-base mb-4 flex items-center gap-2">
+        <div className="card p-5">
+          <h3 className="font-bold text-white text-base mb-4 flex items-center gap-2">
             <span>📝</span>
             <span>提供格價資訊</span>
           </h3>
 
           {!user ? (
             <div className="text-center py-4">
-              <p className="text-sm text-gray-500 mb-3">登入後才能提交格價資訊</p>
+              <p className="text-sm text-white/40 mb-3">登入後才能提交格價資訊</p>
               <button onClick={signInWithGoogle} className="btn-primary px-6">
                 Google 登入 Sign In
               </button>
@@ -235,24 +243,24 @@ export function RequestDetailPage() {
           ) : (
             <>
               {submitted && (
-                <div className="bg-green-50 text-green-700 rounded-xl p-3 mb-4 text-sm font-medium">
+                <div className="bg-green-500/10 border border-green-500/20 text-green-400 rounded-xl p-3 mb-4 text-sm font-medium">
                   ✅ 感謝您的回覆！已成功提交。
                 </div>
               )}
 
               <form onSubmit={handleSubmitResponse} className="space-y-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    價格 Price <span className="text-red-500">*</span>
+                  <label className="block text-sm font-medium text-white/60 mb-1.5">
+                    價格 Price <span className="text-red-400">*</span>
                   </label>
                   <div className="flex gap-2">
                     <select
                       value={currency}
                       onChange={e => setCurrency(e.target.value as Currency)}
-                      className="text-sm border border-gray-200 rounded-xl px-3 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-primary-400 w-20"
+                      className="text-sm border border-white/10 rounded-xl px-3 py-3 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-green-500/50 w-20"
                     >
                       {CURRENCIES.map(c => (
-                        <option key={c} value={c}>{c}</option>
+                        <option key={c} value={c} className="bg-[#111111]">{c}</option>
                       ))}
                     </select>
                     <input
@@ -269,7 +277,7 @@ export function RequestDetailPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">庫存狀態</label>
+                  <label className="block text-sm font-medium text-white/60 mb-1.5">庫存狀態</label>
                   <div className="flex gap-2">
                     {(['in_stock', 'out_of_stock', 'limited'] as Availability[]).map(a => {
                       const info = availabilityLabels[a];
@@ -278,10 +286,10 @@ export function RequestDetailPage() {
                           key={a}
                           type="button"
                           onClick={() => setAvailability(a)}
-                          className={`flex-1 text-sm py-2 px-2 rounded-xl border-2 font-medium transition-all ${
+                          className={`flex-1 text-sm py-2 px-2 rounded-xl border font-medium transition-all duration-200 ${
                             availability === a
-                              ? 'border-primary-500 bg-primary-50 text-primary-700'
-                              : 'border-gray-200 text-gray-600'
+                              ? 'border-green-500/50 bg-green-500/20 text-green-400'
+                              : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20'
                           }`}
                         >
                           {info.zh}
@@ -292,7 +300,7 @@ export function RequestDetailPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">備注（選填）</label>
+                  <label className="block text-sm font-medium text-white/60 mb-1.5">備注（選填）</label>
                   <textarea
                     value={note}
                     onChange={e => setNote(e.target.value)}
@@ -305,7 +313,7 @@ export function RequestDetailPage() {
                 <button
                   type="submit"
                   disabled={submitting || !price}
-                  className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"
                 >
                   {submitting ? '提交中...' : '提交格價資訊'}
                 </button>
