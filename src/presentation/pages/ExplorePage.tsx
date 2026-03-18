@@ -27,7 +27,7 @@ export function ExplorePage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-gray-50 pb-24 pt-14">
       <PageHeader title="探索 Explore" subtitle="搜尋商品格價需求" />
 
       <div className="px-4 py-3 bg-white border-b border-gray-100 space-y-3">
@@ -45,7 +45,6 @@ export function ExplorePage() {
 
           {/* Filters row */}
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-            {/* City */}
             <select
               value={city}
               onChange={e => setCity(e.target.value)}
@@ -59,7 +58,6 @@ export function ExplorePage() {
               ))}
             </select>
 
-            {/* Category */}
             <select
               value={category}
               onChange={e => setCategory(e.target.value as Category | '')}
@@ -73,7 +71,6 @@ export function ExplorePage() {
               ))}
             </select>
 
-            {/* Status */}
             <select
               value={status}
               onChange={e => setStatus(e.target.value as typeof status)}

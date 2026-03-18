@@ -5,6 +5,7 @@ import { useStoreNames } from '../../application/hooks/useStores';
 import { PageHeader } from '../components/PageHeader';
 import { CATEGORIES } from '../../domain/constants/categories';
 import { CITIES } from '../../domain/constants/cities';
+import { useAuth } from '../../application/context/AuthContext';
 import { type Category, type Urgency } from '../../domain/entities/Request';
 
 type Step = 1 | 2 | 3;
@@ -20,7 +21,6 @@ interface FormData {
   anyStoreInCity: boolean;
   urgency: Urgency;
   note: string;
-  tipEnabled: boolean;
 }
 
 const initialForm: FormData = {
@@ -29,24 +29,24 @@ const initialForm: FormData = {
   description: '',
   category: 'other',
   storeName: '',
-  city: 'taipei',
+  city: 'hongkong',
   district: '',
   anyStoreInCity: false,
   urgency: 'normal',
   note: '',
-  tipEnabled: false,
 };
 
 export function CreateRequestPage() {
   const navigate = useNavigate();
   const { create } = useCreateRequest();
   const storeNames = useStoreNames();
+  const { user, signInWithGoogle } = useAuth();
 
   const [step, setStep] = useState<Step>(1);
   const [form, setForm] = useState<FormData>(initialForm);
   const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [newRequestId, setNewRequestId] = useState('');
+  const [success, setSuccess] = useState(false);
   const [storeInput, setStoreInput] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -59,23 +59,49 @@ export function CreateRequestPage() {
   );
 
   const handleSubmit = async () => {
+    if (!user) { await signInWithGoogle(); return; }
     if (!form.productName || (!form.anyStoreInCity && !form.storeName)) return;
     setSubmitting(true);
     const req = await create({
+      userId: user.uid,
+      userName: user.displayName ?? '用戶',
+      userPhoto: user.photoURL ?? '',
+      username: user.displayName ?? '用戶',
+      avatarEmoji: user.photoURL ?? '👤',
       ...form,
-      storeName: form.anyStoreInCity ? `${CITIES.find(c => c.value === form.city)?.labelZh ?? form.city}任一商店` : form.storeName,
-      userId: 'current_user',
-      username: '我的帳號',
-      avatarEmoji: '😊',
+      storeName: form.anyStoreInCity
+        ? `${CITIES.find(c => c.value === form.city)?.labelZh ?? form.city}任一商店`
+        : form.storeName,
+      tipEnabled: false,
     });
     setNewRequestId(req.id);
     setSuccess(true);
     setSubmitting(false);
   };
 
+  // Not signed in gate
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gray-50 pb-24 pt-14">
+        <PageHeader title="發起格價需求" showBack />
+        <div className="px-4 py-12 max-w-lg mx-auto text-center">
+          <div className="text-6xl mb-4">🔑</div>
+          <h2 className="text-xl font-bold text-charcoal mb-2">請先登入</h2>
+          <p className="text-gray-500 mb-6 text-sm">Please sign in to create a price request.</p>
+          <button
+            onClick={signInWithGoogle}
+            className="btn-primary px-8 py-3"
+          >
+            Google 登入 Sign In
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (success) {
     return (
-      <div className="min-h-screen bg-gray-50 pb-24">
+      <div className="min-h-screen bg-gray-50 pb-24 pt-14">
         <PageHeader title="發起成功！" />
         <div className="px-4 py-8 max-w-lg mx-auto text-center">
           <div className="text-7xl mb-4">🎉</div>
@@ -84,20 +110,6 @@ export function CreateRequestPage() {
             等待格價獵人幫你回報價格。<br />
             通常在 1 小時內會有人回覆！
           </p>
-          <div className="card p-4 mb-6 text-left">
-            <p className="text-xs text-gray-400 mb-1">分享連結</p>
-            <div className="flex items-center gap-2">
-              <code className="text-sm text-gray-700 bg-gray-50 px-3 py-2 rounded-lg flex-1 truncate">
-                pricehunt.app/request/{newRequestId}
-              </code>
-              <button
-                onClick={() => navigator.clipboard?.writeText(`pricehunt.app/request/${newRequestId}`)}
-                className="text-primary-600 text-sm font-medium"
-              >
-                複製
-              </button>
-            </div>
-          </div>
           <div className="flex flex-col gap-3">
             <button
               onClick={() => navigate(`/request/${newRequestId}`)}
@@ -106,14 +118,10 @@ export function CreateRequestPage() {
               查看需求頁面
             </button>
             <button
-              onClick={() => {
-                setForm(initialForm);
-                setStep(1);
-                setSuccess(false);
-              }}
+              onClick={() => navigate('/')}
               className="btn-secondary w-full"
             >
-              再發一個需求
+              回到首頁
             </button>
           </div>
         </div>
@@ -122,7 +130,7 @@ export function CreateRequestPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-gray-50 pb-24 pt-14">
       <PageHeader title="發起格價需求" showBack />
 
       {/* Step indicator */}
@@ -160,13 +168,6 @@ export function CreateRequestPage() {
                 <span>什麼商品？</span>
               </h3>
 
-              {/* Image placeholder */}
-              <button className="w-full border-2 border-dashed border-gray-300 rounded-2xl p-6 flex flex-col items-center gap-2 text-gray-400 hover:border-primary-400 hover:text-primary-500 transition-colors active:scale-[0.98]">
-                <span className="text-4xl">📷</span>
-                <span className="text-sm font-medium">上傳商品照片</span>
-                <span className="text-xs">Upload photo (optional)</span>
-              </button>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   商品名稱 <span className="text-red-500">*</span>
@@ -174,7 +175,7 @@ export function CreateRequestPage() {
                 <input
                   value={form.productName}
                   onChange={e => update('productName', e.target.value)}
-                  placeholder="例如：義美小泡芙"
+                  placeholder="例如：義美小泡芙 / Product name"
                   className="input-field"
                   required
                 />
@@ -185,7 +186,7 @@ export function CreateRequestPage() {
                 <input
                   value={form.brand}
                   onChange={e => update('brand', e.target.value)}
-                  placeholder="例如：義美、光泉、桂格..."
+                  placeholder="例如：義美、光泉..."
                   className="input-field"
                 />
               </div>
@@ -258,7 +259,6 @@ export function CreateRequestPage() {
                     >
                       <span>{city.flag}</span>
                       <span>{city.labelZh}</span>
-                      <span className="text-xs text-gray-400">{city.labelEn}</span>
                     </button>
                   ))}
                 </div>
@@ -297,7 +297,7 @@ export function CreateRequestPage() {
                       setShowSuggestions(true);
                     }}
                     onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                    placeholder="例如：全聯、家樂福..."
+                    placeholder="例如：百佳、惠康..."
                     className="input-field"
                   />
                   {showSuggestions && storeSuggestions.length > 0 && (
@@ -326,7 +326,7 @@ export function CreateRequestPage() {
                 <input
                   value={form.district}
                   onChange={e => update('district', e.target.value)}
-                  placeholder="例如：信義區、旺角、新宿..."
+                  placeholder="例如：旺角、灣仔、尖沙咀..."
                   className="input-field"
                 />
               </div>
@@ -354,7 +354,6 @@ export function CreateRequestPage() {
                 <span>附加設定</span>
               </h3>
 
-              {/* Urgency */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">緊急程度</label>
                 <div className="flex gap-3">
@@ -381,7 +380,6 @@ export function CreateRequestPage() {
                 </div>
               </div>
 
-              {/* Note */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">給回報者的話（選填）</label>
                 <textarea
@@ -393,30 +391,6 @@ export function CreateRequestPage() {
                 />
               </div>
 
-              {/* Tip toggle */}
-              <div
-                className="flex items-center gap-3 p-4 bg-yellow-50 rounded-xl cursor-pointer"
-                onClick={() => update('tipEnabled', !form.tipEnabled)}
-              >
-                <button
-                  type="button"
-                  className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ${
-                    form.tipEnabled ? 'bg-accent-500' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-all ${
-                      form.tipEnabled ? 'right-1' : 'left-1'
-                    }`}
-                  />
-                </button>
-                <div>
-                  <div className="text-sm font-semibold text-charcoal">💰 我願意給NT$10小費</div>
-                  <div className="text-xs text-gray-600">鼓勵格價獵人更快回覆你</div>
-                </div>
-              </div>
-
-              {/* Summary */}
               <div className="bg-gray-50 rounded-xl p-4 text-sm space-y-2">
                 <div className="font-semibold text-gray-700 mb-2">📋 需求摘要</div>
                 <div className="flex justify-between">

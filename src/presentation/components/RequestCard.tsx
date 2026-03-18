@@ -25,7 +25,13 @@ export function RequestCard({ request }: Props) {
         {/* Header */}
         <div className="flex items-start justify-between gap-2 mb-2">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="text-2xl flex-shrink-0">{request.avatarEmoji}</span>
+            {request.avatarEmoji && request.avatarEmoji.startsWith('http') ? (
+              <img src={request.avatarEmoji} alt="avatar" className="w-7 h-7 rounded-full flex-shrink-0" />
+            ) : (
+              <div className="w-7 h-7 rounded-full bg-primary-100 flex items-center justify-center text-base flex-shrink-0">
+                {request.avatarEmoji || '👤'}
+              </div>
+            )}
             <div className="min-w-0">
               <span className="text-sm font-medium text-gray-700 truncate block">{request.username}</span>
               <span className="text-xs text-gray-400">{formatRelativeTime(request.createdAt)}</span>

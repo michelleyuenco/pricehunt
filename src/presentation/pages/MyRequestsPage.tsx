@@ -3,17 +3,32 @@ import { Link } from 'react-router-dom';
 import { PageHeader } from '../components/PageHeader';
 import { RequestCard } from '../components/RequestCard';
 import { FloatingButton } from '../components/FloatingButton';
-import { MOCK_REQUESTS } from '../../infrastructure/data/mockRequests';
-
-// Treat 'u1' as the current logged-in user
-const CURRENT_USER_ID = 'u1';
+import { LoadingSpinner } from '../components/LoadingSpinner';
+import { useAuth } from '../../application/context/AuthContext';
+import { useUserRequests } from '../../application/hooks/useRequests';
 
 type FilterTab = 'all' | 'waiting' | 'answered';
 
 export function MyRequestsPage() {
+  const { user, signInWithGoogle } = useAuth();
   const [tab, setTab] = useState<FilterTab>('all');
+  const { requests: myRequests, loading } = useUserRequests(user?.uid ?? '');
 
-  const myRequests = MOCK_REQUESTS.filter(r => r.userId === CURRENT_USER_ID);
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gray-50 pb-24 pt-14">
+        <PageHeader title="我的需求 My Requests" subtitle="查看你發起的格價需求" />
+        <div className="px-4 py-12 max-w-lg mx-auto text-center">
+          <div className="text-6xl mb-4">🔑</div>
+          <h2 className="text-xl font-bold text-charcoal mb-2">請先登入</h2>
+          <p className="text-gray-500 mb-6 text-sm">Sign in to view your price requests.</p>
+          <button onClick={signInWithGoogle} className="btn-primary px-8 py-3">
+            Google 登入 Sign In
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const filtered = tab === 'all'
     ? myRequests
@@ -29,7 +44,7 @@ export function MyRequestsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-gray-50 pb-24 pt-14">
       <PageHeader title="我的需求 My Requests" subtitle="查看你發起的格價需求" />
 
       {/* Stats summary */}
@@ -78,7 +93,9 @@ export function MyRequestsPage() {
 
       <div className="px-4 py-4">
         <div className="max-w-lg mx-auto">
-          {filtered.length === 0 ? (
+          {loading ? (
+            <LoadingSpinner />
+          ) : filtered.length === 0 ? (
             <div className="text-center py-16 text-gray-400">
               <div className="text-5xl mb-4">📋</div>
               <p className="font-medium">

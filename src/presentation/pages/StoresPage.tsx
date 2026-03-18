@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../components/PageHeader';
-import { MOCK_STORES } from '../../infrastructure/data/mockStores';
+import { STATIC_STORES } from '../../domain/constants/stores';
 import { CITIES } from '../../domain/constants/cities';
 
 export function StoresPage() {
   const [selectedCity, setSelectedCity] = useState<string>('all');
 
   const filteredStores = selectedCity === 'all'
-    ? MOCK_STORES
-    : MOCK_STORES.filter(s => s.city === selectedCity);
+    ? STATIC_STORES
+    : STATIC_STORES.filter(s => s.city === selectedCity);
 
   const getCityFlag = (cityValue: string) => {
     const city = CITIES.find(c => c.value === cityValue);
@@ -22,7 +22,7 @@ export function StoresPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-gray-50 pb-24 pt-14">
       <PageHeader title="商店目錄 Stores" subtitle="瀏覽各城市商店" />
 
       {/* City tabs */}
@@ -83,10 +83,6 @@ export function StoresPage() {
                           {getCityFlag(store.city)} {getCityLabel(store.city)}
                         </div>
                       </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-lg font-bold text-primary-600">{store.requestCount}</div>
-                      <div className="text-xs text-gray-400">格價需求</div>
                     </div>
                   </div>
                   {store.mostRequestedTags && store.mostRequestedTags.length > 0 && (

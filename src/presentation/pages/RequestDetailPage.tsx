@@ -7,6 +7,7 @@ import { formatRelativeTime } from '../../shared/utils/formatDate';
 import { formatPrice } from '../../shared/utils/formatPrice';
 import { getCategoryInfo } from '../../domain/constants/categories';
 import { getCityInfo } from '../../domain/constants/cities';
+import { useAuth } from '../../application/context/AuthContext';
 import { type Availability, type Currency } from '../../domain/entities/Response';
 
 const availabilityLabels: Record<Availability, { zh: string; cls: string }> = {
@@ -15,14 +16,15 @@ const availabilityLabels: Record<Availability, { zh: string; cls: string }> = {
   limited: { zh: '⚠️ 少量', cls: 'text-yellow-600 bg-yellow-50' },
 };
 
-const CURRENCIES: Currency[] = ['NT$', 'HK$', 'S$', '¥'];
+const CURRENCIES: Currency[] = ['HK$', 'NT$', 'S$', '¥'];
 
 export function RequestDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { request, responses, loading, addResponse, markHelpful } = useRequestDetail(id ?? '');
+  const { user, signInWithGoogle } = useAuth();
 
   const [price, setPrice] = useState('');
-  const [currency, setCurrency] = useState<Currency>('NT$');
+  const [currency, setCurrency] = useState<Currency>('HK$');
   const [availability, setAvailability] = useState<Availability>('in_stock');
   const [note, setNote] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -31,13 +33,16 @@ export function RequestDetailPage() {
 
   const handleSubmitResponse = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) { await signInWithGoogle(); return; }
     if (!request || !price) return;
     setSubmitting(true);
     await addResponse({
       requestId: request.id,
-      userId: 'current_user',
-      username: '我的帳號',
-      avatarEmoji: '😊',
+      userId: user.uid,
+      userName: user.displayName ?? '用戶',
+      userPhoto: user.photoURL ?? '',
+      username: user.displayName ?? '用戶',
+      avatarEmoji: user.photoURL ?? '👤',
       price: parseFloat(price),
       currency,
       availability,
@@ -59,7 +64,7 @@ export function RequestDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 pb-24">
+      <div className="min-h-screen bg-gray-50 pb-24 pt-14">
         <PageHeader title="需求詳情" showBack />
         <LoadingSpinner />
       </div>
@@ -68,7 +73,7 @@ export function RequestDetailPage() {
 
   if (!request) {
     return (
-      <div className="min-h-screen bg-gray-50 pb-24">
+      <div className="min-h-screen bg-gray-50 pb-24 pt-14">
         <PageHeader title="需求詳情" showBack />
         <div className="text-center py-16 text-gray-400">
           <div className="text-5xl mb-4">😕</div>
@@ -82,7 +87,7 @@ export function RequestDetailPage() {
   const city = getCityInfo(request.city);
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-gray-50 pb-24 pt-14">
       <PageHeader title="需求詳情" showBack />
 
       <div className="px-4 py-4 max-w-lg mx-auto space-y-4">
@@ -90,7 +95,13 @@ export function RequestDetailPage() {
         <div className="card p-4">
           <div className="flex items-start justify-between gap-2 mb-3">
             <div className="flex items-center gap-2">
-              <span className="text-3xl">{request.avatarEmoji}</span>
+              {request.avatarEmoji && request.avatarEmoji.startsWith('http') ? (
+                <img src={request.avatarEmoji} alt="avatar" className="w-8 h-8 rounded-full" />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-lg">
+                  {request.avatarEmoji || '👤'}
+                </div>
+              )}
               <div>
                 <span className="font-semibold text-charcoal">{request.username}</span>
                 <div className="text-xs text-gray-400">{formatRelativeTime(request.createdAt)}</div>
@@ -134,11 +145,6 @@ export function RequestDetailPage() {
             <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-lg">
               {category.emoji} {category.labelZh}
             </span>
-            {request.tipEnabled && (
-              <span className="text-xs bg-yellow-50 text-yellow-700 font-medium px-2 py-1 rounded-lg">
-                💰 提供NT$10小費
-              </span>
-            )}
           </div>
 
           {request.note && (
@@ -168,19 +174,16 @@ export function RequestDetailPage() {
                 const avail = availabilityLabels[res.availability];
                 const voted = votedIds.has(res.id);
                 return (
-                  <div
-                    key={res.id}
-                    className={`card p-4 ${res.isBestAnswer ? 'border-2 border-primary-400' : ''}`}
-                  >
-                    {res.isBestAnswer && (
-                      <div className="flex items-center gap-1 text-primary-600 text-xs font-bold mb-2">
-                        <span>⭐</span>
-                        <span>最佳回覆 Best Answer</span>
-                      </div>
-                    )}
+                  <div key={res.id} className="card p-4">
                     <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2">
-                        <span className="text-2xl">{res.avatarEmoji}</span>
+                        {res.avatarEmoji && res.avatarEmoji.startsWith('http') ? (
+                          <img src={res.avatarEmoji} alt="avatar" className="w-7 h-7 rounded-full" />
+                        ) : (
+                          <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-sm">
+                            {res.avatarEmoji || '👤'}
+                          </div>
+                        )}
                         <div>
                           <span className="font-medium text-sm">{res.username}</span>
                           <div className="text-xs text-gray-400">{formatRelativeTime(res.createdAt)}</div>
@@ -222,85 +225,93 @@ export function RequestDetailPage() {
             <span>提供格價資訊</span>
           </h3>
 
-          {submitted && (
-            <div className="bg-green-50 text-green-700 rounded-xl p-3 mb-4 text-sm font-medium">
-              ✅ 感謝您的回覆！已成功提交。
+          {!user ? (
+            <div className="text-center py-4">
+              <p className="text-sm text-gray-500 mb-3">登入後才能提交格價資訊</p>
+              <button onClick={signInWithGoogle} className="btn-primary px-6">
+                Google 登入 Sign In
+              </button>
             </div>
-          )}
+          ) : (
+            <>
+              {submitted && (
+                <div className="bg-green-50 text-green-700 rounded-xl p-3 mb-4 text-sm font-medium">
+                  ✅ 感謝您的回覆！已成功提交。
+                </div>
+              )}
 
-          <form onSubmit={handleSubmitResponse} className="space-y-3">
-            {/* Price + Currency */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                價格 Price <span className="text-red-500">*</span>
-              </label>
-              <div className="flex gap-2">
-                <select
-                  value={currency}
-                  onChange={e => setCurrency(e.target.value as Currency)}
-                  className="text-sm border border-gray-200 rounded-xl px-3 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-primary-400 w-20"
-                >
-                  {CURRENCIES.map(c => (
-                    <option key={c} value={c}>{c}</option>
-                  ))}
-                </select>
-                <input
-                  type="number"
-                  value={price}
-                  onChange={e => setPrice(e.target.value)}
-                  placeholder="輸入價格"
-                  className="input-field flex-1"
-                  min="0"
-                  step="0.1"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Availability */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">庫存狀態</label>
-              <div className="flex gap-2">
-                {(['in_stock', 'out_of_stock', 'limited'] as Availability[]).map(a => {
-                  const info = availabilityLabels[a];
-                  return (
-                    <button
-                      key={a}
-                      type="button"
-                      onClick={() => setAvailability(a)}
-                      className={`flex-1 text-sm py-2 px-2 rounded-xl border-2 font-medium transition-all ${
-                        availability === a
-                          ? 'border-primary-500 bg-primary-50 text-primary-700'
-                          : 'border-gray-200 text-gray-600'
-                      }`}
+              <form onSubmit={handleSubmitResponse} className="space-y-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    價格 Price <span className="text-red-500">*</span>
+                  </label>
+                  <div className="flex gap-2">
+                    <select
+                      value={currency}
+                      onChange={e => setCurrency(e.target.value as Currency)}
+                      className="text-sm border border-gray-200 rounded-xl px-3 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-primary-400 w-20"
                     >
-                      {info.zh}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+                      {CURRENCIES.map(c => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                    </select>
+                    <input
+                      type="number"
+                      value={price}
+                      onChange={e => setPrice(e.target.value)}
+                      placeholder="輸入價格"
+                      className="input-field flex-1"
+                      min="0"
+                      step="0.1"
+                      required
+                    />
+                  </div>
+                </div>
 
-            {/* Note */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">備注（選填）</label>
-              <textarea
-                value={note}
-                onChange={e => setNote(e.target.value)}
-                placeholder="例如：現正特價、快要缺貨、是否有特定口味..."
-                className="input-field resize-none"
-                rows={2}
-              />
-            </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">庫存狀態</label>
+                  <div className="flex gap-2">
+                    {(['in_stock', 'out_of_stock', 'limited'] as Availability[]).map(a => {
+                      const info = availabilityLabels[a];
+                      return (
+                        <button
+                          key={a}
+                          type="button"
+                          onClick={() => setAvailability(a)}
+                          className={`flex-1 text-sm py-2 px-2 rounded-xl border-2 font-medium transition-all ${
+                            availability === a
+                              ? 'border-primary-500 bg-primary-50 text-primary-700'
+                              : 'border-gray-200 text-gray-600'
+                          }`}
+                        >
+                          {info.zh}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
 
-            <button
-              type="submit"
-              disabled={submitting || !price}
-              className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {submitting ? '提交中...' : '提交格價資訊'}
-            </button>
-          </form>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">備注（選填）</label>
+                  <textarea
+                    value={note}
+                    onChange={e => setNote(e.target.value)}
+                    placeholder="例如：現正特價、快要缺貨..."
+                    className="input-field resize-none"
+                    rows={2}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={submitting || !price}
+                  className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {submitting ? '提交中...' : '提交格價資訊'}
+                </button>
+              </form>
+            </>
+          )}
         </div>
       </div>
     </div>
