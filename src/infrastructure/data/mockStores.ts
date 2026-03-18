@@ -29,9 +29,5 @@ export const MOCK_STORES: Store[] = [
   { id: 's21', nameZh: 'ローソン', nameEn: 'Lawson', city: 'tokyo', requestCount: 145, responseCount: 132, mostRequestedTags: ['便當', '飲料', '點心'] },
   { id: 's22', nameZh: 'セブン', nameEn: '7-Eleven', city: 'tokyo', requestCount: 178, responseCount: 165, mostRequestedTags: ['飲料', '泡麵'] },
   { id: 's23', nameZh: 'マツキヨ', nameEn: 'Matsumoto Kiyoshi', city: 'tokyo', requestCount: 198, responseCount: 176, mostRequestedTags: ['藥品', '美妝', '保健品'] },
-  // Singapore
-  { id: 's24', nameZh: 'FairPrice', nameEn: 'FairPrice', city: 'singapore', requestCount: 167, responseCount: 145, mostRequestedTags: ['日用品', '生鮮'] },
-  { id: 's25', nameZh: 'Cold Storage', nameEn: 'Cold Storage', city: 'singapore', requestCount: 123, responseCount: 109, mostRequestedTags: ['進口食品', '生鮮'] },
-  { id: 's26', nameZh: 'Mustafa Centre', nameEn: 'Mustafa Centre', city: 'singapore', requestCount: 89, responseCount: 78, mostRequestedTags: ['日用品', '零食'] },
-  { id: 's27', nameZh: 'Don Don Donki', nameEn: 'Don Don Donki', city: 'singapore', requestCount: 112, responseCount: 98, mostRequestedTags: ['日本食品', '零食', '美妝'] },
+  { id: 's24', nameZh: 'ファミマ', nameEn: 'FamilyMart', city: 'tokyo', requestCount: 112, responseCount: 98, mostRequestedTags: ['飲料', '便當', '點心'] },
 ];

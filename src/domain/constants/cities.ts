@@ -12,7 +12,6 @@ export const CITIES: CityInfo[] = [
   { value: 'kaohsiung', labelZh: '高雄', labelEn: 'Kaohsiung', currency: 'NT$', flag: '🇹🇼' },
   { value: 'tainan', labelZh: '台南', labelEn: 'Tainan', currency: 'NT$', flag: '🇹🇼' },
   { value: 'hongkong', labelZh: '香港', labelEn: 'Hong Kong', currency: 'HK$', flag: '🇭🇰' },
-  { value: 'singapore', labelZh: '新加坡', labelEn: 'Singapore', currency: 'S$', flag: '🇸🇬' },
   { value: 'tokyo', labelZh: '東京', labelEn: 'Tokyo', currency: '¥', flag: '🇯🇵' },
 ];
 
