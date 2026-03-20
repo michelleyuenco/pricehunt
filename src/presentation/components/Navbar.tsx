@@ -1,8 +1,9 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { Home, Search, Plus, FileText, User, Lock, type LucideIcon } from 'lucide-react';
 import { useAuth } from '../../application/context/AuthContext';
 import { useLanguage } from '../../application/context/LanguageContext';
+import { LocaleLink } from './LocaleLink';
 
 export function Navbar() {
   const location = useLocation();
@@ -17,6 +18,9 @@ export function Navbar() {
     { to: '/blog', label: t('nav.blog'), icon: FileText, highlight: false },
     { to: '/my-requests', label: t('nav.me'), icon: User, highlight: false },
   ];
+
+  // Active state: compare the path without the locale prefix
+  const pathWithoutLang = location.pathname.replace(/^\/(en|zh)/, '') || '/';
 
   const LangToggle = ({ className = '' }: { className?: string }) => (
     <button
@@ -91,10 +95,10 @@ export function Navbar() {
       <nav className="fixed bottom-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-2xl border-t border-white/[0.04] safe-area-pb shadow-[0_-10px_30px_rgba(0,0,0,0.3)] lg:hidden">
         <div className="max-w-lg mx-auto flex items-center justify-around px-2 py-2">
           {navItems.map(item => {
-            const isActive = location.pathname === item.to;
+            const isActive = pathWithoutLang === item.to;
             if (item.highlight) {
               return (
-                <Link
+                <LocaleLink
                   key={item.to}
                   to={item.to}
                   className="relative flex flex-col items-center gap-0.5 px-3 py-1 -mt-3"
@@ -103,11 +107,11 @@ export function Navbar() {
                     <item.icon size={20} className="text-white" />
                   </div>
                   <span className="text-[10px] font-semibold text-shimmer mt-0.5">{item.label}</span>
-                </Link>
+                </LocaleLink>
               );
             }
             return (
-              <Link
+              <LocaleLink
                 key={item.to}
                 to={item.to}
                 className={`relative flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl transition-all duration-200 ${
@@ -121,7 +125,7 @@ export function Navbar() {
                 <span className={`text-xs font-medium ${isActive ? 'text-shimmer' : ''}`}>
                   {item.label}
                 </span>
-              </Link>
+              </LocaleLink>
             );
           })}
         </div>
@@ -131,32 +135,32 @@ export function Navbar() {
       <nav className="hidden lg:flex fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
         <div className="w-full max-w-7xl mx-auto px-8 h-16 flex items-center justify-between gap-8 border-b border-white/[0.04]">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 shrink-0">
+          <LocaleLink to="/" className="flex items-center gap-2 shrink-0">
             <Search size={20} className="text-green-400" />
             <span className="gradient-text font-bold text-lg tracking-wide">PriceHunt</span>
             {lang === 'zh' && (
               <span className="text-white/30 text-sm font-medium hidden xl:block">格價獵人</span>
             )}
-          </Link>
+          </LocaleLink>
 
           {/* Nav links */}
           <div className="flex items-center gap-1">
             {navItems.map(item => {
-              const isActive = location.pathname === item.to;
+              const isActive = pathWithoutLang === item.to;
               if (item.highlight) {
                 return (
-                  <Link
+                  <LocaleLink
                     key={item.to}
                     to={item.to}
                     className="relative flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 text-green-400 hover:from-green-500/30 hover:to-emerald-500/30 hover:scale-105 active:scale-95"
                   >
                     <item.icon size={16} className="text-current" />
                     <span>{item.label}</span>
-                  </Link>
+                  </LocaleLink>
                 );
               }
               return (
-                <Link
+                <LocaleLink
                   key={item.to}
                   to={item.to}
                   className={`relative flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
@@ -170,7 +174,7 @@ export function Navbar() {
                   )}
                   <item.icon size={16} className="text-current" />
                   <span className={isActive ? 'text-shimmer' : ''}>{item.label}</span>
-                </Link>
+                </LocaleLink>
               );
             })}
           </div>
@@ -178,13 +182,13 @@ export function Navbar() {
           {/* Auth area */}
           <div className="shrink-0 flex items-center gap-3">
             <LangToggle />
-            <Link
+            <LocaleLink
               to="/request/new"
               className="glow-btn flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full transition-all hover:scale-105 active:scale-95"
             >
               <Plus size={16} className="text-current" />
               <span>{t('nav.newRequest')}</span>
-            </Link>
+            </LocaleLink>
             {user ? (
               <div className="relative">
                 <button

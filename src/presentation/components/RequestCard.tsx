@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { LocaleLink } from './LocaleLink';
 import { Store, MapPin, MessageSquare, Zap } from 'lucide-react';
 import { type PriceRequest } from '../../domain/entities/Request';
 import { formatRelativeTime } from '../../shared/utils/formatDate';
@@ -36,7 +36,7 @@ export function RequestCard({ request }: Props) {
   const status = statusConfig[request.status] ?? statusConfig.waiting;
 
   return (
-    <Link to={`/request/${request.id}`} className="block group">
+    <LocaleLink to={`/request/${request.id}`} className="block group">
       <div className="bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.14] rounded-2xl p-4 transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] card-lift shine-sweep gradient-border">
         {/* Header */}
         <div className="flex items-start justify-between gap-2 mb-2">
@@ -129,6 +129,6 @@ export function RequestCard({ request }: Props) {
           ) : null}
         </div>
       </div>
-    </Link>
+    </LocaleLink>
   );
 }

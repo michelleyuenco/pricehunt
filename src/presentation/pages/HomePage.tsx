@@ -2,9 +2,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { useRequests } from '../../application/hooks/useRequests';
 import { useOfficialPrices } from '../../application/hooks/useOfficialPrices';
 import { RequestCard } from '../components/RequestCard';
-import { FloatingButton } from '../components/FloatingButton';
 import { LoadingSpinner } from '../components/LoadingSpinner';
-import { Link } from 'react-router-dom';
+import { LocaleLink } from '../components/LocaleLink';
 import { useAuth } from '../../application/context/AuthContext';
 import { useLanguage } from '../../application/context/LanguageContext';
 import { CATEGORIES } from '../../domain/constants/categories';
@@ -17,7 +16,7 @@ function OfficialPriceCard({ product }: { product: ReturnType<typeof useOfficial
   const { t } = useLanguage();
   const storeCount = Object.values(product.stores ?? {}).filter(Boolean).length;
   return (
-    <Link
+    <LocaleLink
       to={`/official-price/${product.code}`}
       className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-green-500/30 hover:bg-green-500/5 transition-all duration-200 active:scale-[0.98] shine-sweep gradient-border card-lift"
     >
@@ -34,7 +33,7 @@ function OfficialPriceCard({ product }: { product: ReturnType<typeof useOfficial
           <p className="text-[10px] text-white/30">{t('home.prices.lowest')}</p>
         </div>
       )}
-    </Link>
+    </LocaleLink>
   );
 }
 
@@ -138,13 +137,13 @@ export function HomePage() {
           </p>
 
           {user ? (
-            <Link
+            <LocaleLink
               to="/request/new"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-6 py-3 rounded-xl shadow-[0_0_25px_rgba(34,197,94,0.35)] hover:shadow-[0_0_35px_rgba(34,197,94,0.5)] hover:scale-[1.02] active:scale-95 transition-all duration-200 glow-pulse"
             >
               <ClipboardList size={18} className="text-current" />
               <span>{t('home.hero.cta')}</span>
-            </Link>
+            </LocaleLink>
           ) : (
             <button
               onClick={signInWithGoogle}
@@ -217,12 +216,12 @@ export function HomePage() {
                   <Flame size={16} className="text-orange-400" />
                   <span>{t('home.prices.title')}</span>
                 </h3>
-                <Link
+                <LocaleLink
                   to="/prices"
                   className="text-xs text-green-400 hover:text-green-300 font-medium transition-colors flex items-center gap-1"
                 >
                   {t('common.viewAll')} <ChevronRight size={14} className="text-current" />
-                </Link>
+                </LocaleLink>
               </div>
 
               {pricesLoading ? (
@@ -251,14 +250,14 @@ export function HomePage() {
             <div className="lg:hidden">
               <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
                 {CATEGORIES.map(cat => (
-                  <Link
+                  <LocaleLink
                     key={cat.value}
                     to={`/explore?category=${cat.value}`}
                     className="flex-shrink-0 flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-sm font-medium text-white/60 hover:border-green-500/40 hover:text-green-400 hover:bg-green-500/10 transition-all duration-200"
                   >
                     <span>{cat.emoji}</span>
                     <span>{lang === 'zh' ? cat.labelZh : cat.labelEn}</span>
-                  </Link>
+                  </LocaleLink>
                 ))}
               </div>
             </div>
@@ -282,13 +281,13 @@ export function HomePage() {
                       : t('home.requests.empty')}
                   </p>
                   {!searchQuery && !loading && (
-                    <Link
+                    <LocaleLink
                       to="/request/new"
                       className="mt-6 inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-5 py-2.5 rounded-xl shadow-[0_0_20px_rgba(34,197,94,0.3)] active:scale-95 transition-all duration-200"
                     >
                       <Plus size={16} className="text-current" />
                       <span>{t('home.requests.emptyBtn')}</span>
-                    </Link>
+                    </LocaleLink>
                   )}
                 </div>
               ) : (
@@ -310,14 +309,14 @@ export function HomePage() {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {CATEGORIES.map(cat => (
-                  <Link
+                  <LocaleLink
                     key={cat.value}
                     to={`/explore?category=${cat.value}`}
                     className="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-sm font-medium text-white/60 hover:border-green-500/40 hover:text-green-400 hover:bg-green-500/10 transition-all duration-200"
                   >
                     <span>{cat.emoji}</span>
                     <span>{lang === 'zh' ? cat.labelZh : cat.labelEn}</span>
-                  </Link>
+                  </LocaleLink>
                 ))}
               </div>
             </div>
@@ -328,22 +327,21 @@ export function HomePage() {
                 <span>{t('home.sidebar.links')}</span>
               </h3>
               <div className="flex flex-col gap-2">
-                <Link to="/explore" className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/60 hover:text-white/90 hover:border-white/20 transition-all">
+                <LocaleLink to="/explore" className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/60 hover:text-white/90 hover:border-white/20 transition-all">
                   <Search size={16} className="text-current" /><span>{t('home.sidebar.explore')}</span>
-                </Link>
-                <Link to="/stores" className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/60 hover:text-white/90 hover:border-white/20 transition-all">
+                </LocaleLink>
+                <LocaleLink to="/stores" className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/60 hover:text-white/90 hover:border-white/20 transition-all">
                   <Store size={16} className="text-current" /><span>{t('home.sidebar.stores')}</span>
-                </Link>
-                <Link to="/community" className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/60 hover:text-white/90 hover:border-white/20 transition-all">
+                </LocaleLink>
+                <LocaleLink to="/community" className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/60 hover:text-white/90 hover:border-white/20 transition-all">
                   <MessageCircle size={16} className="text-current" /><span>{t('home.sidebar.community')}</span>
-                </Link>
+                </LocaleLink>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <FloatingButton />
     </div>
   );
 }

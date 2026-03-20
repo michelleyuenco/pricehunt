@@ -1,6 +1,6 @@
 import { Search, Store } from "lucide-react";
 import { useState, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { LocaleLink } from '../components/LocaleLink';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { db } from '../../infrastructure/firebase/config';
 import { type OfficialPrice } from '../../application/hooks/useOfficialPrices';
@@ -119,7 +119,7 @@ export function AllPricesPage() {
         {/* Product grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
           {paginated.map(product => (
-            <Link
+            <LocaleLink
               key={product.code}
               to={`/official-price/${product.code}`}
               className="glass rounded-2xl p-4 hover:scale-[1.01] transition-all duration-300 block shine-sweep gradient-border card-lift"
@@ -144,7 +144,7 @@ export function AllPricesPage() {
                   {product.source}
                 </span>
               </div>
-            </Link>
+            </LocaleLink>
           ))}
         </div>
 

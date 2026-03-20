@@ -206,13 +206,13 @@ export function CreateRequestPage() {
           </p>
           <div className="flex flex-col gap-3">
             <button
-              onClick={() => navigate(`/request/${newRequestId}`)}
+              onClick={() => navigate(`/${lang}/request/${newRequestId}`)}
               className="btn-primary w-full"
             >
               {t('create.success.view')}
             </button>
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate(`/${lang}/`)}
               className="btn-secondary w-full"
             >
               {t('create.success.home')}

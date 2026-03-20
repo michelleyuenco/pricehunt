@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLanguage } from '../../application/context/LanguageContext';
-import { Link, useParams, Navigate } from 'react-router-dom';
-import { Navbar } from '../components/Navbar';
+import { useParams, Navigate } from 'react-router-dom';
+import { LocaleLink } from '../components/LocaleLink';
 import { blogPosts } from '../../infrastructure/data/blogPosts';
 import type { BlogPost } from '../../domain/entities/BlogPost';
 
@@ -38,7 +38,7 @@ function extractToc(html: string): { id: string; text: string }[] {
 }
 
 export function BlogArticlePage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { slug } = useParams<{ slug: string }>();
   const post = blogPosts.find(p => p.slug === slug);
 
@@ -63,7 +63,7 @@ export function BlogArticlePage() {
     };
   }, [post]);
 
-  if (!post) return <Navigate to="/blog" replace />;
+  if (!post) return <Navigate to={`/${lang}/blog`} replace />;
 
   const handleCopyLink = async () => {
     await navigator.clipboard.writeText(window.location.href);
@@ -83,9 +83,9 @@ export function BlogArticlePage() {
       <div className="max-w-7xl mx-auto px-4 py-8 pb-24 lg:pb-12">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-white/30 mb-6">
-          <Link to="/" className="hover:text-white/60 transition-colors">{t("nav.home")}</Link>
+          <LocaleLink to="/" className="hover:text-white/60 transition-colors">{t("nav.home")}</LocaleLink>
           <span>/</span>
-          <Link to="/blog" className="hover:text-white/60 transition-colors">{t("nav.blog")}</Link>
+          <LocaleLink to="/blog" className="hover:text-white/60 transition-colors">{t("nav.blog")}</LocaleLink>
           <span>/</span>
           <span className="text-white/50 truncate max-w-xs">{post.title}</span>
         </nav>
@@ -157,12 +157,12 @@ export function BlogArticlePage() {
             <div className="mt-8 p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
               <p className="text-white font-bold text-lg mb-2">💡 想即時格價？</p>
               <p className="text-white/60 text-sm mb-4">唔使逐間超市行！格價獵人即時比較香港各大超市、藥妝、街市最新價格。</p>
-              <Link
+              <LocaleLink
                 to="/"
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold px-5 py-2.5 rounded-full hover:from-green-400 hover:to-emerald-400 transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(34,197,94,0.3)]"
               >
                 用格價獵人即時格價 →
-              </Link>
+              </LocaleLink>
             </div>
 
             {/* Share again at bottom */}
@@ -182,7 +182,7 @@ export function BlogArticlePage() {
                 <h2 className="text-xl font-bold text-white mb-5">📚 相關文章</h2>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {related.map(r => (
-                    <Link
+                    <LocaleLink
                       key={r.slug}
                       to={`/blog/${r.slug}`}
                       className="group bg-white/[0.03] border border-white/[0.08] rounded-xl p-4 hover:border-green-500/30 hover:bg-green-500/[0.03] transition-all"
@@ -194,7 +194,7 @@ export function BlogArticlePage() {
                         {r.title}
                       </p>
                       <p className="text-white/30 text-xs mt-2">{r.readingTime} 分鐘閱讀</p>
-                    </Link>
+                    </LocaleLink>
                   ))}
                 </div>
               </section>
@@ -218,12 +218,12 @@ export function BlogArticlePage() {
                   ))}
                 </nav>
                 <div className="mt-6 pt-5 border-t border-white/[0.08]">
-                  <Link
+                  <LocaleLink
                     to="/"
                     className="block text-center text-sm font-semibold text-green-400 bg-green-500/10 border border-green-500/20 rounded-xl py-2.5 hover:bg-green-500/20 transition-all"
                   >
                     即時格價
-                  </Link>
+                  </LocaleLink>
                 </div>
               </div>
             </aside>
@@ -231,7 +231,6 @@ export function BlogArticlePage() {
         </div>
       </div>
 
-      <Navbar />
     </div>
   );
 }

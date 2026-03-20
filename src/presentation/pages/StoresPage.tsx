@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { LocaleLink } from '../components/LocaleLink';
 import { PageHeader } from '../components/PageHeader';
 import { STATIC_STORES } from '../../domain/constants/stores';
 import { CITIES } from '../../domain/constants/locations';
@@ -63,7 +63,7 @@ export function StoresPage() {
         <p className="text-sm text-white/30 mb-3">{lang === 'zh' ? `共 ${filteredStores.length} ${t('stores.count')}` : `${filteredStores.length} ${t('stores.count')}`}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredStores.map(store => (
-            <Link
+            <LocaleLink
               key={store.id}
               to={`/explore?store=${encodeURIComponent(store.nameZh)}`}
               className="block group"
@@ -100,7 +100,7 @@ export function StoresPage() {
                   </div>
                 )}
               </div>
-            </Link>
+            </LocaleLink>
           ))}
         </div>
       </div>

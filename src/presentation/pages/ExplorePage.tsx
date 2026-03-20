@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useRequests } from '../../application/hooks/useRequests';
 import { RequestCard } from '../components/RequestCard';
-import { FloatingButton } from '../components/FloatingButton';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { PageHeader } from '../components/PageHeader';
 import { CITIES } from '../../domain/constants/locations';
@@ -227,7 +226,6 @@ export function ExplorePage() {
         </div>
       </div>
 
-      <FloatingButton />
     </div>
   );
 }

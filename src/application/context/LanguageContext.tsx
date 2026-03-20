@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { zh } from '../../shared/i18n/zh';
 import { en } from '../../shared/i18n/en';
 
@@ -29,15 +30,22 @@ const LanguageContext = createContext<LanguageContextType>({
   t: (key: string) => key,
 });
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Language>(getInitialLang);
+export function LanguageProvider({ children, initialLang }: { children: ReactNode; initialLang?: Language }) {
+  const [lang, setLangState] = useState<Language>(initialLang ?? getInitialLang());
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const setLang = (newLang: Language) => {
+  const setLang = useCallback((newLang: Language) => {
     setLangState(newLang);
     try {
       localStorage.setItem(LS_KEY, newLang);
     } catch {}
-  };
+
+    // Update URL: replace /:lang/ prefix
+    const currentPath = location.pathname;
+    const pathWithoutLang = currentPath.replace(/^\/(en|zh)/, '');
+    navigate(`/${newLang}${pathWithoutLang || '/'}`, { replace: true });
+  }, [navigate, location.pathname]);
 
   const translations = lang === 'zh' ? zh : en;
 

@@ -1,7 +1,6 @@
 import { FileText } from "lucide-react";
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Navbar } from '../components/Navbar';
+import { LocaleLink } from '../components/LocaleLink';
 import { blogPosts } from '../../infrastructure/data/blogPosts';
 import type { BlogPost } from '../../domain/entities/BlogPost';
 import { useLanguage } from '../../application/context/LanguageContext';
@@ -86,7 +85,7 @@ export function BlogPage() {
         {/* Blog grid */}
         <div className="grid md:grid-cols-2 gap-5">
           {filtered.map(post => (
-            <Link
+            <LocaleLink
               key={post.slug}
               to={`/blog/${post.slug}`}
               className="group bg-white/[0.03] border border-white/[0.08] rounded-2xl p-5 hover:border-green-500/30 hover:bg-green-500/[0.03] transition-all duration-200 active:scale-[0.98] flex flex-col card-lift shine-sweep gradient-border"
@@ -120,7 +119,7 @@ export function BlogPage() {
                 </div>
                 <span className="text-white/30 text-xs">{formatDate(post.publishedAt, lang)}</span>
               </div>
-            </Link>
+            </LocaleLink>
           ))}
         </div>
 
@@ -132,7 +131,6 @@ export function BlogPage() {
         )}
       </div>
 
-      <Navbar />
     </div>
   );
 }

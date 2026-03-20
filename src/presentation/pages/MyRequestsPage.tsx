@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { LocaleLink } from '../components/LocaleLink';
 import { PageHeader } from '../components/PageHeader';
 import { RequestCard } from '../components/RequestCard';
-import { FloatingButton } from '../components/FloatingButton';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { useAuth } from '../../application/context/AuthContext';
 import { useUserRequests } from '../../application/hooks/useRequests';
@@ -110,13 +109,13 @@ export function MyRequestsPage() {
               {tab === 'all' ? t('my.empty') : tab === 'waiting' ? t('my.empty.waiting') : t('my.empty.answered')}
             </p>
             {tab === 'all' && (
-              <Link
+              <LocaleLink
                 to="/request/new"
                 className="mt-6 inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-5 py-2.5 rounded-xl shadow-[0_0_20px_rgba(34,197,94,0.3)] active:scale-95 transition-all duration-200"
               >
                 <Plus size={16} className="text-current" />
                 <span>{t('my.emptyBtn')}</span>
-              </Link>
+              </LocaleLink>
             )}
           </div>
         ) : (
@@ -128,7 +127,6 @@ export function MyRequestsPage() {
         )}
       </div>
 
-      <FloatingButton />
     </div>
   );
 }
