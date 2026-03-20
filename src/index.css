@@ -198,3 +198,58 @@
   background: linear-gradient(90deg, transparent, rgba(34,197,94,0.3), transparent);
   margin: 0.5rem 0;
 }
+
+/* Blog article content styles */
+.blog-content h2 {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  scroll-margin-top: 80px;
+}
+.blog-content h3 {
+  color: rgba(255,255,255,0.85);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.blog-content p {
+  color: rgba(255,255,255,0.65);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+.blog-content strong {
+  color: rgba(255,255,255,0.9);
+  font-weight: 600;
+}
+.blog-content a {
+  color: rgba(74,222,128,0.9);
+  text-decoration: none;
+}
+.blog-content a:hover {
+  text-decoration: underline;
+}
+.blog-content ul, .blog-content ol {
+  margin-bottom: 1rem;
+}
+.blog-content table {
+  width: 100%;
+  font-size: 0.875rem;
+}
+.blog-content table th {
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  text-align: left;
+  background: rgba(255,255,255,0.04);
+}
+.blog-content table td {
+  padding: 0.75rem 1rem;
+  color: rgba(255,255,255,0.65);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.blog-content table tr:hover td {
+  background: rgba(255,255,255,0.03);
+}

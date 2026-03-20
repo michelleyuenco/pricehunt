@@ -6,7 +6,7 @@ const navItems = [
   { to: '/', label: '首頁', icon: '🏠', highlight: false },
   { to: '/explore', label: '探索', icon: '🔍', highlight: false },
   { to: '/request/new', label: '發問', icon: '➕', highlight: true },
-  { to: '/stores', label: '商店', icon: '🏪', highlight: false },
+  { to: '/blog', label: 'Blog', icon: '📝', highlight: false },
   { to: '/my-requests', label: '我的', icon: '👤', highlight: false },
 ];
 
