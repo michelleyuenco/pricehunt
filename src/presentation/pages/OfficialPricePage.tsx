@@ -41,7 +41,7 @@ export function OfficialPricePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] pt-14 flex items-center justify-center">
+      <div className="min-h-screen bg-[#0A0A0A] pt-14 lg:pt-20 flex items-center justify-center">
         <LoadingSpinner />
       </div>
     );
@@ -49,7 +49,7 @@ export function OfficialPricePage() {
 
   if (notFound || !product) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] pt-14">
+      <div className="min-h-screen bg-[#0A0A0A] pt-14 lg:pt-20">
         <PageHeader title="官方價格" showBack />
         <div className="px-4 py-12 text-center text-white/40">
           <div className="text-5xl mb-4">🔍</div>
@@ -64,20 +64,20 @@ export function OfficialPricePage() {
   const unavailableStores = storeEntries.filter(([, v]) => !v);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
+    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
       <PageHeader title="官方價格" showBack />
 
-      <div className="px-4 py-6 max-w-lg mx-auto">
+      <div className="px-4 py-6 max-w-3xl mx-auto lg:px-6">
         {/* Product Card */}
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 mb-6">
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 mb-6 lg:p-8">
           <div className="flex items-start justify-between gap-3 mb-3">
             <div className="flex-1 min-w-0">
               <p className="text-xs text-white/40 mb-1">{product.brand}</p>
-              <h2 className="font-bold text-white text-base leading-snug">{product.name}</h2>
+              <h2 className="font-bold text-white text-base leading-snug lg:text-xl">{product.name}</h2>
             </div>
             {product.minPrice != null && (
               <div className="text-right shrink-0">
-                <p className="text-2xl font-extrabold text-green-400">
+                <p className="text-2xl font-extrabold text-green-400 lg:text-4xl">
                   {product.currency}{product.minPrice.toFixed(1)}
                 </p>
                 <p className="text-[10px] text-white/30">最低價 min</p>
@@ -106,7 +106,7 @@ export function OfficialPricePage() {
           <span>商店供應情況</span>
         </h3>
 
-        <div className="flex flex-col gap-2 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
           {availableStores.map(([key]) => (
             <div key={key} className="flex items-center gap-3 bg-green-500/5 border border-green-500/20 rounded-xl px-4 py-3">
               <span className="text-green-400 text-base">✓</span>

@@ -27,12 +27,12 @@ export function ExplorePage() {
   });
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
+    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
       <PageHeader title="探索 Explore" subtitle="搜尋商品格價需求" />
 
-      <div className="px-4 py-3 bg-[#0A0A0A]/95 border-b border-white/10 space-y-3">
-        <div className="max-w-lg mx-auto">
-          {/* Search */}
+      {/* Search bar — full width */}
+      <div className="px-4 py-3 bg-[#0A0A0A]/95 border-b border-white/10">
+        <div className="max-w-7xl mx-auto lg:px-4">
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30">🔍</span>
             <input
@@ -42,103 +42,186 @@ export function ExplorePage() {
               className="input-field pl-10"
             />
           </div>
-
-          {/* Filters row */}
-          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-            <select
-              value={city}
-              onChange={e => setCity(e.target.value)}
-              className="flex-shrink-0 text-sm border border-white/10 rounded-xl px-3 py-2 bg-white/5 text-white/70 focus:outline-none focus:ring-2 focus:ring-green-500/50"
-            >
-              <option value="" className="bg-[#111111]">🌍 全部城市</option>
-              {CITIES.map(c => (
-                <option key={c.value} value={c.value} className="bg-[#111111]">
-                  {c.flag} {c.labelZh}
-                </option>
-              ))}
-            </select>
-
-            <select
-              value={category}
-              onChange={e => setCategory(e.target.value as Category | '')}
-              className="flex-shrink-0 text-sm border border-white/10 rounded-xl px-3 py-2 bg-white/5 text-white/70 focus:outline-none focus:ring-2 focus:ring-green-500/50"
-            >
-              <option value="" className="bg-[#111111]">📦 全部分類</option>
-              {CATEGORIES.map(c => (
-                <option key={c.value} value={c.value} className="bg-[#111111]">
-                  {c.emoji} {c.labelZh}
-                </option>
-              ))}
-            </select>
-
-            <select
-              value={status}
-              onChange={e => setStatus(e.target.value as typeof status)}
-              className="flex-shrink-0 text-sm border border-white/10 rounded-xl px-3 py-2 bg-white/5 text-white/70 focus:outline-none focus:ring-2 focus:ring-green-500/50"
-            >
-              <option value="all" className="bg-[#111111]">全部狀態</option>
-              <option value="waiting" className="bg-[#111111]">待回覆</option>
-              <option value="answered" className="bg-[#111111]">已回覆</option>
-            </select>
-          </div>
-
-          {/* Sort + View toggle */}
-          <div className="flex items-center justify-between">
-            <select
-              value={sort}
-              onChange={e => setSort(e.target.value as typeof sort)}
-              className="text-sm border border-white/10 rounded-xl px-3 py-1.5 bg-white/5 text-white/70 focus:outline-none focus:ring-2 focus:ring-green-500/50"
-            >
-              <option value="newest" className="bg-[#111111]">最新</option>
-              <option value="urgent" className="bg-[#111111]">最急需</option>
-              <option value="most_responses" className="bg-[#111111]">最多回覆</option>
-            </select>
-            <div className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-xl p-1">
-              <button
-                onClick={() => setViewMode('list')}
-                className={`px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  viewMode === 'list'
-                    ? 'bg-white/10 text-white shadow-sm'
-                    : 'text-white/40 hover:text-white/60'
-                }`}
-              >
-                ≡ 清單
-              </button>
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  viewMode === 'grid'
-                    ? 'bg-white/10 text-white shadow-sm'
-                    : 'text-white/40 hover:text-white/60'
-                }`}
-              >
-                ⊞ 格狀
-              </button>
-            </div>
-          </div>
         </div>
       </div>
 
-      <div className="px-4 py-4">
-        <div className="max-w-lg mx-auto">
-          {loading ? (
-            <LoadingSpinner />
-          ) : requests.length === 0 ? (
-            <div className="text-center py-16">
-              <div className="text-5xl mb-4 opacity-30">🔍</div>
-              <p className="font-medium text-white/50">找不到相關需求</p>
-              <p className="text-sm mt-1 text-white/30">試試其他搜尋條件</p>
-            </div>
-          ) : (
-            <>
-              <p className="text-sm text-white/30 mb-3">找到 {requests.length} 個需求</p>
-              <div className={viewMode === 'grid' ? 'grid grid-cols-2 gap-3' : 'flex flex-col gap-3'}>
-                {requests.map(r => (
-                  <RequestCard key={r.id} request={r} />
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4">
+        <div className="lg:grid lg:grid-cols-4 lg:gap-6">
+
+          {/* ===== FILTERS SIDEBAR (desktop: sticky left col; mobile: horizontal scroll) ===== */}
+
+          {/* Mobile filters row */}
+          <div className="lg:hidden space-y-3 mb-4">
+            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+              <select
+                value={city}
+                onChange={e => setCity(e.target.value)}
+                className="flex-shrink-0 text-sm border border-white/10 rounded-xl px-3 py-2 bg-white/5 text-white/70 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+              >
+                <option value="" className="bg-[#111111]">🌍 全部城市</option>
+                {CITIES.map(c => (
+                  <option key={c.value} value={c.value} className="bg-[#111111]">
+                    {c.flag} {c.labelZh}
+                  </option>
                 ))}
+              </select>
+
+              <select
+                value={category}
+                onChange={e => setCategory(e.target.value as Category | '')}
+                className="flex-shrink-0 text-sm border border-white/10 rounded-xl px-3 py-2 bg-white/5 text-white/70 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+              >
+                <option value="" className="bg-[#111111]">📦 全部分類</option>
+                {CATEGORIES.map(c => (
+                  <option key={c.value} value={c.value} className="bg-[#111111]">
+                    {c.emoji} {c.labelZh}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={status}
+                onChange={e => setStatus(e.target.value as typeof status)}
+                className="flex-shrink-0 text-sm border border-white/10 rounded-xl px-3 py-2 bg-white/5 text-white/70 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+              >
+                <option value="all" className="bg-[#111111]">全部狀態</option>
+                <option value="waiting" className="bg-[#111111]">待回覆</option>
+                <option value="answered" className="bg-[#111111]">已回覆</option>
+              </select>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <select
+                value={sort}
+                onChange={e => setSort(e.target.value as typeof sort)}
+                className="text-sm border border-white/10 rounded-xl px-3 py-1.5 bg-white/5 text-white/70 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+              >
+                <option value="newest" className="bg-[#111111]">最新</option>
+                <option value="urgent" className="bg-[#111111]">最急需</option>
+                <option value="most_responses" className="bg-[#111111]">最多回覆</option>
+              </select>
+              <div className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-xl p-1">
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    viewMode === 'list'
+                      ? 'bg-white/10 text-white shadow-sm'
+                      : 'text-white/40 hover:text-white/60'
+                  }`}
+                >
+                  ≡ 清單
+                </button>
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    viewMode === 'grid'
+                      ? 'bg-white/10 text-white shadow-sm'
+                      : 'text-white/40 hover:text-white/60'
+                  }`}
+                >
+                  ⊞ 格狀
+                </button>
               </div>
-            </>
-          )}
+            </div>
+          </div>
+
+          {/* Desktop filters sidebar */}
+          <div className="hidden lg:block lg:col-span-1 lg:sticky lg:top-20 lg:self-start space-y-4">
+            <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-4 space-y-4">
+              <h3 className="font-bold text-white/70 text-sm uppercase tracking-widest">篩選 Filters</h3>
+
+              <div>
+                <label className="block text-xs text-white/40 mb-1.5 font-medium">城市</label>
+                <select
+                  value={city}
+                  onChange={e => setCity(e.target.value)}
+                  className="w-full text-sm border border-white/10 rounded-xl px-3 py-2 bg-white/5 text-white/70 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                >
+                  <option value="" className="bg-[#111111]">🌍 全部城市</option>
+                  {CITIES.map(c => (
+                    <option key={c.value} value={c.value} className="bg-[#111111]">
+                      {c.flag} {c.labelZh}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/40 mb-1.5 font-medium">分類</label>
+                <select
+                  value={category}
+                  onChange={e => setCategory(e.target.value as Category | '')}
+                  className="w-full text-sm border border-white/10 rounded-xl px-3 py-2 bg-white/5 text-white/70 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                >
+                  <option value="" className="bg-[#111111]">📦 全部分類</option>
+                  {CATEGORIES.map(c => (
+                    <option key={c.value} value={c.value} className="bg-[#111111]">
+                      {c.emoji} {c.labelZh}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/40 mb-1.5 font-medium">狀態</label>
+                <div className="flex flex-col gap-1.5">
+                  {(['all', 'waiting', 'answered'] as const).map(s => (
+                    <button
+                      key={s}
+                      onClick={() => setStatus(s)}
+                      className={`w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+                        status === s
+                          ? 'bg-green-500/10 border border-green-500/20 text-green-400'
+                          : 'bg-white/5 border border-white/10 text-white/50 hover:text-white/70 hover:bg-white/8'
+                      }`}
+                    >
+                      {s === 'all' ? '全部狀態' : s === 'waiting' ? '⏳ 待回覆' : '✅ 已回覆'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/40 mb-1.5 font-medium">排序</label>
+                <select
+                  value={sort}
+                  onChange={e => setSort(e.target.value as typeof sort)}
+                  className="w-full text-sm border border-white/10 rounded-xl px-3 py-2 bg-white/5 text-white/70 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                >
+                  <option value="newest" className="bg-[#111111]">最新</option>
+                  <option value="urgent" className="bg-[#111111]">最急需</option>
+                  <option value="most_responses" className="bg-[#111111]">最多回覆</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* ===== RESULTS (desktop: 3 cols) ===== */}
+          <div className="lg:col-span-3">
+            {loading ? (
+              <LoadingSpinner />
+            ) : requests.length === 0 ? (
+              <div className="text-center py-16">
+                <div className="text-5xl mb-4 opacity-30">🔍</div>
+                <p className="font-medium text-white/50">找不到相關需求</p>
+                <p className="text-sm mt-1 text-white/30">試試其他搜尋條件</p>
+              </div>
+            ) : (
+              <>
+                <p className="text-sm text-white/30 mb-3">找到 {requests.length} 個需求</p>
+                {/* Mobile: respects viewMode toggle; Desktop: always grid */}
+                <div className={
+                  viewMode === 'grid'
+                    ? 'grid grid-cols-2 gap-3 lg:grid-cols-2 xl:grid-cols-3'
+                    : 'flex flex-col gap-3 lg:grid lg:grid-cols-2 xl:grid-cols-3 lg:gap-4'
+                }>
+                  {requests.map(r => (
+                    <RequestCard key={r.id} request={r} />
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
 

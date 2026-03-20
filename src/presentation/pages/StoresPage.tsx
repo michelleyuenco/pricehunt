@@ -22,12 +22,12 @@ export function StoresPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
+    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
       <PageHeader title="商店目錄 Stores" subtitle="瀏覽各城市商店" />
 
       {/* City tabs */}
       <div className="bg-[#0A0A0A]/95 border-b border-white/10 px-4 py-3">
-        <div className="max-w-lg mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
             <button
               onClick={() => setSelectedCity('all')}
@@ -56,51 +56,49 @@ export function StoresPage() {
         </div>
       </div>
 
-      <div className="px-4 py-4">
-        <div className="max-w-lg mx-auto">
-          <p className="text-sm text-white/30 mb-3">共 {filteredStores.length} 間商店</p>
-          <div className="flex flex-col gap-3">
-            {filteredStores.map(store => (
-              <Link
-                key={store.id}
-                to={`/explore?store=${encodeURIComponent(store.nameZh)}`}
-                className="block group"
-              >
-                <div className="bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.14] rounded-2xl p-4 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-green-500/10 border border-green-500/20 rounded-xl flex items-center justify-center text-xl">
-                        🏪
+      <div className="px-4 py-4 max-w-7xl mx-auto lg:px-8">
+        <p className="text-sm text-white/30 mb-3">共 {filteredStores.length} 間商店</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredStores.map(store => (
+            <Link
+              key={store.id}
+              to={`/explore?store=${encodeURIComponent(store.nameZh)}`}
+              className="block group"
+            >
+              <div className="bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.14] rounded-2xl p-4 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-green-500/10 border border-green-500/20 rounded-xl flex items-center justify-center text-xl">
+                      🏪
+                    </div>
+                    <div>
+                      <div className="font-bold text-white">
+                        {store.nameZh}
+                        {store.nameEn !== store.nameZh && (
+                          <span className="font-normal text-white/40 text-sm"> · {store.nameEn}</span>
+                        )}
                       </div>
-                      <div>
-                        <div className="font-bold text-white">
-                          {store.nameZh}
-                          {store.nameEn !== store.nameZh && (
-                            <span className="font-normal text-white/40 text-sm"> · {store.nameEn}</span>
-                          )}
-                        </div>
-                        <div className="text-sm text-white/40">
-                          {getCityFlag(store.city)} {getCityLabel(store.city)}
-                        </div>
+                      <div className="text-sm text-white/40">
+                        {getCityFlag(store.city)} {getCityLabel(store.city)}
                       </div>
                     </div>
                   </div>
-                  {store.mostRequestedTags && store.mostRequestedTags.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-1.5">
-                      {store.mostRequestedTags.map(tag => (
-                        <span
-                          key={tag}
-                          className="text-xs bg-white/5 border border-white/10 text-white/40 px-2 py-0.5 rounded-full"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
                 </div>
-              </Link>
-            ))}
-          </div>
+                {store.mostRequestedTags && store.mostRequestedTags.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {store.mostRequestedTags.map(tag => (
+                      <span
+                        key={tag}
+                        className="text-xs bg-white/5 border border-white/10 text-white/40 px-2 py-0.5 rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

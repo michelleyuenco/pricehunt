@@ -94,9 +94,9 @@ export function CreateRequestPage() {
   // Not signed in gate
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
+      <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
         <PageHeader title="發起格價需求" showBack />
-        <div className="px-4 py-12 max-w-lg mx-auto text-center">
+        <div className="px-4 py-12 max-w-2xl mx-auto text-center">
           <div className="text-6xl mb-4 opacity-60">🔑</div>
           <h2 className="text-xl font-bold text-white mb-2">請先登入</h2>
           <p className="text-white/40 mb-6 text-sm">Please sign in to create a price request.</p>
@@ -113,9 +113,9 @@ export function CreateRequestPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
+      <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
         <PageHeader title="發起成功！" />
-        <div className="px-4 py-8 max-w-lg mx-auto text-center">
+        <div className="px-4 py-8 max-w-2xl mx-auto text-center">
           <div className="text-7xl mb-4">🎉</div>
           <h2 className="text-2xl font-bold text-white mb-2">需求已發出！</h2>
           <p className="text-white/50 mb-8 leading-relaxed">
@@ -142,12 +142,12 @@ export function CreateRequestPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14">
+    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
       <PageHeader title="發起格價需求" showBack />
 
       {/* Step indicator */}
       <div className="bg-[#0A0A0A]/95 border-b border-white/10 px-4 py-3">
-        <div className="max-w-lg mx-auto flex items-center gap-2">
+        <div className="max-w-2xl mx-auto flex items-center gap-2">
           {([1, 2, 3] as Step[]).map(s => (
             <div key={s} className="flex items-center gap-2 flex-1">
               <div
@@ -170,11 +170,11 @@ export function CreateRequestPage() {
         </div>
       </div>
 
-      <div className="px-4 py-4 max-w-lg mx-auto">
+      <div className="px-4 py-4 max-w-2xl mx-auto">
         {/* Step 1 */}
         {step === 1 && (
           <div className="space-y-4">
-            <div className="card p-5 space-y-4">
+            <div className="card p-5 lg:p-8 space-y-4">
               <h3 className="font-bold text-white flex items-center gap-2">
                 <span>📦</span>
                 <span>什麼商品？</span>
@@ -324,7 +324,7 @@ export function CreateRequestPage() {
         {/* Step 2 */}
         {step === 2 && (
           <div className="space-y-4">
-            <div className="card p-5 space-y-4">
+            <div className="card p-5 lg:p-8 space-y-4">
               <h3 className="font-bold text-white flex items-center gap-2">
                 <span>📍</span>
                 <span>在哪裡？</span>
@@ -422,7 +422,7 @@ export function CreateRequestPage() {
         {/* Step 3 */}
         {step === 3 && (
           <div className="space-y-4">
-            <div className="card p-5 space-y-4">
+            <div className="card p-5 lg:p-8 space-y-4">
               <h3 className="font-bold text-white flex items-center gap-2">
                 <span>⚙️</span>
                 <span>附加設定</span>
