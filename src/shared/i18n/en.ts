@@ -257,4 +257,8 @@ export const en: Record<string, string> = {
   // OfficialPrice
   'official.min': 'Lowest',
   'official.ref': 'Official min price',
+  'prices.products': 'products',
+  'prices.storesAvailable': 'stores available',
+  'prices.loadMore': 'Load more',
+  'prices.remaining': 'remaining',
 };

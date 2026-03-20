@@ -257,4 +257,8 @@ export const zh: Record<string, string> = {
   // OfficialPrice
   'official.min': '最低',
   'official.ref': '官方最低價',
+  'prices.products': '個產品',
+  'prices.storesAvailable': '間商店有售',
+  'prices.loadMore': '載入更多',
+  'prices.remaining': '個剩餘',
 };

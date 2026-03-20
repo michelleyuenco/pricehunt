@@ -9,6 +9,7 @@ import { CreateRequestPage } from './presentation/pages/CreateRequestPage';
 import { StoresPage } from './presentation/pages/StoresPage';
 import { CommunityPage } from './presentation/pages/CommunityPage';
 import { MyRequestsPage } from './presentation/pages/MyRequestsPage';
+import { AllPricesPage } from './presentation/pages/AllPricesPage';
 import { OfficialPricePage } from './presentation/pages/OfficialPricePage';
 import { BlogPage } from './presentation/pages/BlogPage';
 import { BlogArticlePage } from './presentation/pages/BlogArticlePage';
@@ -27,7 +28,8 @@ function App() {
               <Route path="/stores" element={<StoresPage />} />
               <Route path="/community" element={<CommunityPage />} />
               <Route path="/my-requests" element={<MyRequestsPage />} />
-              <Route path="/official-price/:code" element={<OfficialPricePage />} />
+              <Route path="/prices" element={<AllPricesPage />} />
+          <Route path="/official-price/:code" element={<OfficialPricePage />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:slug" element={<BlogArticlePage />} />
             </Routes>
