@@ -8,6 +8,7 @@ import { CITIES } from '../../domain/constants/locations';
 import { CATEGORIES } from '../../domain/constants/categories';
 import { useLanguage } from '../../application/context/LanguageContext';
 import { type Category } from '../../domain/entities/Request';
+import { Search } from 'lucide-react';
 
 type ViewMode = 'list' | 'grid';
 
@@ -36,7 +37,7 @@ export function ExplorePage() {
       <div className="px-4 py-3 bg-[#0A0A0A]/95 border-b border-white/10">
         <div className="max-w-7xl mx-auto lg:px-4">
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30">🔍</span>
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
@@ -202,7 +203,9 @@ export function ExplorePage() {
               <LoadingSpinner />
             ) : requests.length === 0 ? (
               <div className="text-center py-16">
-                <div className="text-5xl mb-4 opacity-30">🔍</div>
+                <div className="flex justify-center mb-4 opacity-30">
+                  <Search size={48} className="text-white/40" />
+                </div>
                 <p className="font-medium text-white/50">{t('explore.noResults')}</p>
                 <p className="text-sm mt-1 text-white/30">{t('explore.noResults.hint')}</p>
               </div>

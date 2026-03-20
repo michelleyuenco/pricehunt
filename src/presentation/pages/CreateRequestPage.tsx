@@ -13,6 +13,10 @@ import { useLanguage } from '../../application/context/LanguageContext';
 import { type MainCategory, type Urgency } from '../../domain/entities/Request';
 import { type StoreLocation } from '../../domain/constants/storeLocations';
 import { REGIONS } from '../../domain/constants/locations';
+import {
+  Lock, PartyPopper, Package, MapPin, Settings, BarChart3, Zap, Store,
+  ClipboardList, X, Check
+} from 'lucide-react';
 
 /** Map a store name (Chinese or English) to its brand code */
 function storeToBrandCode(storeName: string): string {
@@ -172,7 +176,9 @@ export function CreateRequestPage() {
       <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
         <PageHeader title={t('create.title')} showBack />
         <div className="px-4 py-12 max-w-2xl mx-auto text-center">
-          <div className="text-6xl mb-4 opacity-60">🔑</div>
+          <div className="flex justify-center mb-4 opacity-60">
+            <Lock size={64} className="text-white/40" />
+          </div>
           <h2 className="text-xl font-bold text-white mb-2">{t('create.signIn.title')}</h2>
           <p className="text-white/40 mb-6 text-sm">{t('create.signIn.desc')}</p>
           <button
@@ -191,7 +197,9 @@ export function CreateRequestPage() {
       <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
         <PageHeader title={t('create.success.title')} />
         <div className="px-4 py-8 max-w-2xl mx-auto text-center">
-          <div className="text-7xl mb-4">🎉</div>
+          <div className="flex justify-center mb-4">
+            <PartyPopper size={72} className="text-green-400" />
+          </div>
           <h2 className="text-2xl font-bold text-white mb-2">{t('create.success.title')}</h2>
           <p className="text-white/50 mb-8 leading-relaxed">
             {t('create.success.desc')}
@@ -223,7 +231,7 @@ export function CreateRequestPage() {
       <div className="px-4 pt-4 max-w-2xl mx-auto">
         <div className={`card p-5 space-y-4 border-2 transition-all duration-200 ${mode === 'quick' ? 'border-green-500/30' : 'border-white/10'}`}>
           <div className="flex items-center gap-2">
-            <span className="text-lg">⚡</span>
+            <Zap size={18} className="text-amber-400" />
             <h3 className="font-bold text-white">{t('create.quick.title')}</h3>
           </div>
 
@@ -297,7 +305,7 @@ export function CreateRequestPage() {
                         : 'bg-white/5 text-white/30 border border-white/10'
                     }`}
                   >
-                    {step > s ? '✓' : s}
+                    {step > s ? <Check size={12} className="text-current" /> : s}
                   </div>
                   <span className={`text-xs font-medium ${step === s ? 'text-white' : 'text-white/30'}`}>
                     {s === 1 ? t('create.step.info') : s === 2 ? t('create.step.location') : t('create.step.options')}
@@ -314,7 +322,7 @@ export function CreateRequestPage() {
               <div className="space-y-4">
                 <div className="card p-5 lg:p-8 space-y-4">
                   <h3 className="font-bold text-white flex items-center gap-2">
-                    <span>📦</span>
+                    <Package size={18} className="text-white/70" />
                     <span>{t('create.step1.title')}</span>
                   </h3>
 
@@ -337,8 +345,8 @@ export function CreateRequestPage() {
                     />
                     {showPriceSuggestions && officialSuggestions.length > 0 && (
                       <div className="absolute z-20 left-0 right-0 bg-[#111111] border border-green-500/20 rounded-xl shadow-2xl mt-1 overflow-hidden">
-                        <div className="px-3 py-2 text-[10px] text-green-400/60 font-semibold uppercase tracking-widest border-b border-white/5">
-                          📊 {t('create.step1.officialPrices')}
+                        <div className="px-3 py-2 text-[10px] text-green-400/60 font-semibold uppercase tracking-widest border-b border-white/5 flex items-center gap-1.5">
+                          <BarChart3 size={12} className="text-current" /> {t('create.step1.officialPrices')}
                         </div>
                         {officialSuggestions.slice(0, 5).map(p => (
                           <button
@@ -367,7 +375,7 @@ export function CreateRequestPage() {
                     )}
                     {selectedOfficialPrice && selectedOfficialPrice.minPrice != null && (
                       <div className="mt-2 flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-lg px-3 py-2">
-                        <span className="text-green-400 text-sm">📊</span>
+                        <BarChart3 size={14} className="text-green-400" />
                         <p className="text-xs text-green-400">
                           {t('create.step1.officialMin')}: <strong>{selectedOfficialPrice.currency}{selectedOfficialPrice.minPrice.toFixed(1)}</strong>
                         </p>
@@ -461,7 +469,7 @@ export function CreateRequestPage() {
               <div className="space-y-4">
                 <div className="card p-5 lg:p-8 space-y-4">
                   <h3 className="font-bold text-white flex items-center gap-2">
-                    <span>📍</span>
+                    <MapPin size={18} className="text-white/70" />
                     <span>{t('create.step2.title')}</span>
                   </h3>
 
@@ -516,7 +524,7 @@ export function CreateRequestPage() {
                             <button
                               key={name}
                               type="button"
-                              className="w-full text-left px-4 py-2.5 text-sm text-white/70 hover:bg-white/5 border-b border-white/5 last:border-0 transition-colors"
+                              className="w-full text-left px-4 py-2.5 text-sm text-white/70 hover:bg-white/5 border-b border-white/5 last:border-0 transition-colors flex items-center gap-2"
                               onClick={() => {
                                 setStoreInput(name);
                                 update('storeName', name);
@@ -524,7 +532,7 @@ export function CreateRequestPage() {
                                 setSelectedStoreLocation(null);
                               }}
                             >
-                              🏪 {name}
+                              <Store size={14} className="text-white/40 flex-shrink-0" /> {name}
                             </button>
                           ))}
                         </div>
@@ -553,7 +561,7 @@ export function CreateRequestPage() {
 
                   {selectedStoreLocation && (
                     <div className="flex items-start gap-2 bg-green-500/10 border border-green-500/20 rounded-xl px-3 py-2.5">
-                      <span className="text-green-400 text-sm mt-0.5">📍</span>
+                      <MapPin size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
                       <div className="min-w-0 flex-1">
                         <p className="text-xs font-semibold text-green-400">{selectedStoreLocation.name}</p>
                         <p className="text-xs text-green-400/70 leading-snug">{selectedStoreLocation.address}</p>
@@ -561,9 +569,9 @@ export function CreateRequestPage() {
                       <button
                         type="button"
                         onClick={() => setSelectedStoreLocation(null)}
-                        className="text-white/30 hover:text-white/60 text-xs flex-shrink-0 mt-0.5"
+                        className="text-white/30 hover:text-white/60 flex-shrink-0 mt-0.5"
                       >
-                        ✕
+                        <X size={14} className="text-current" />
                       </button>
                     </div>
                   )}
@@ -587,7 +595,7 @@ export function CreateRequestPage() {
               <div className="space-y-4">
                 <div className="card p-5 lg:p-8 space-y-4">
                   <h3 className="font-bold text-white flex items-center gap-2">
-                    <span>⚙️</span>
+                    <Settings size={18} className="text-white/70" />
                     <span>{t('create.step3.title')}</span>
                   </h3>
 
@@ -595,8 +603,8 @@ export function CreateRequestPage() {
                     <label className="block text-sm font-medium text-white/60 mb-2">{t('create.step3.urgency')}</label>
                     <div className="flex gap-3">
                       {[
-                        { value: 'normal' as Urgency, label: t('create.step3.normal'), emoji: '🟢' },
-                        { value: 'urgent' as Urgency, label: t('create.step3.urgent'), emoji: '⚡' },
+                        { value: 'normal' as Urgency, label: t('create.step3.normal'), icon: '🟢' },
+                        { value: 'urgent' as Urgency, label: t('create.step3.urgent'), icon: null, isZap: true },
                       ].map(opt => (
                         <button
                           key={opt.value}
@@ -610,7 +618,7 @@ export function CreateRequestPage() {
                               : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20'
                           }`}
                         >
-                          <span>{opt.emoji}</span>
+                          {opt.isZap ? <Zap size={16} className="text-current" /> : <span>{opt.icon}</span>}
                           <span>{opt.label}</span>
                         </button>
                       ))}
@@ -629,7 +637,10 @@ export function CreateRequestPage() {
                   </div>
 
                   <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-sm space-y-2">
-                    <div className="font-semibold text-white/80 mb-2">📋 {t('create.step3.summary')}</div>
+                    <div className="font-semibold text-white/80 mb-2 flex items-center gap-2">
+                      <ClipboardList size={16} className="text-white/60" />
+                      {t('create.step3.summary')}
+                    </div>
                     <div className="flex justify-between">
                       <span className="text-white/40">{t('create.step3.product')}</span>
                       <span className="font-medium text-white">{form.productName}</span>

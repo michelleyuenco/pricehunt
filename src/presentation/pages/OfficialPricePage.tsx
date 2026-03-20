@@ -1,3 +1,4 @@
+import { Store } from "lucide-react";
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
@@ -102,7 +103,7 @@ export function OfficialPricePage() {
 
         {/* Store Availability */}
         <h3 className="font-bold text-white/70 text-sm mb-3 flex items-center gap-2">
-          <span>🏪</span>
+          <Store size={16} className="text-current" />
           <span>商店供應情況</span>
         </h3>
 

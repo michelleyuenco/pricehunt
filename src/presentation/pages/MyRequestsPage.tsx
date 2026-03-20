@@ -7,6 +7,7 @@ import { LoadingSpinner } from '../components/LoadingSpinner';
 import { useAuth } from '../../application/context/AuthContext';
 import { useUserRequests } from '../../application/hooks/useRequests';
 import { useLanguage } from '../../application/context/LanguageContext';
+import { Lock, ClipboardList, Plus } from 'lucide-react';
 
 type FilterTab = 'all' | 'waiting' | 'answered';
 
@@ -21,7 +22,9 @@ export function MyRequestsPage() {
       <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
         <PageHeader title={t('my.title')} subtitle={t('my.subtitle')} />
         <div className="px-4 py-12 max-w-lg mx-auto text-center">
-          <div className="text-6xl mb-4 opacity-30">🔑</div>
+          <div className="flex justify-center mb-4 opacity-30">
+            <Lock size={64} className="text-white/40" />
+          </div>
           <h2 className="text-xl font-bold text-white mb-2">{t('my.signIn')}</h2>
           <p className="text-white/40 mb-6 text-sm">{t('my.signIn.desc')}</p>
           <button onClick={signInWithGoogle} className="btn-primary px-8 py-3">
@@ -100,7 +103,9 @@ export function MyRequestsPage() {
           <LoadingSpinner />
         ) : filtered.length === 0 ? (
           <div className="text-center py-16">
-            <div className="text-5xl mb-4 opacity-30">📋</div>
+            <div className="flex justify-center mb-4 opacity-30">
+              <ClipboardList size={48} className="text-white/40" />
+            </div>
             <p className="font-medium text-white/50">
               {tab === 'all' ? t('my.empty') : tab === 'waiting' ? t('my.empty.waiting') : t('my.empty.answered')}
             </p>
@@ -109,7 +114,7 @@ export function MyRequestsPage() {
                 to="/request/new"
                 className="mt-6 inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-5 py-2.5 rounded-xl shadow-[0_0_20px_rgba(34,197,94,0.3)] active:scale-95 transition-all duration-200"
               >
-                <span>＋</span>
+                <Plus size={16} className="text-current" />
                 <span>{t('my.emptyBtn')}</span>
               </Link>
             )}

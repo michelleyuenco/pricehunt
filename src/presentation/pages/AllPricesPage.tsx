@@ -1,3 +1,4 @@
+import { Search, Store } from "lucide-react";
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
@@ -79,7 +80,7 @@ export function AllPricesPage() {
             placeholder={t('common.search')}
             className="w-full bg-white/[0.03] border border-white/[0.06] rounded-2xl px-5 py-4 pl-12 text-base text-white placeholder-white/30 focus:border-green-500/40 focus:outline-none transition-all"
           />
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 text-lg">🔍</span>
+          <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
         </div>
 
         {/* Store filter */}
@@ -136,7 +137,7 @@ export function AllPricesPage() {
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <span className="text-[10px] text-white/30">
-                  🏪 {countStores(product.stores)} {t('prices.storesAvailable') || 'stores'}
+                  <Store size={14} className="inline text-current" /> {countStores(product.stores)} {t('prices.storesAvailable') || 'stores'}
                 </span>
                 <span className="text-[10px] text-white/20">·</span>
                 <span className="text-[10px] text-green-400/60">

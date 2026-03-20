@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { ChevronLeft } from 'lucide-react';
 
 interface Props {
   title: string;
@@ -17,7 +18,7 @@ export function PageHeader({ title, subtitle, showBack }: Props) {
             onClick={() => navigate(-1)}
             className="text-white/50 hover:text-white p-1 -ml-1 rounded-lg hover:bg-white/5 transition-colors"
           >
-            ← 
+            <ChevronLeft size={20} className="text-current" />
           </button>
         )}
         <div>

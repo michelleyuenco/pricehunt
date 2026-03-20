@@ -1,3 +1,4 @@
+import { MapPin, Check } from 'lucide-react';
 import { type StoreLocation, getStoreLocations, STORE_LOCATIONS } from '../../domain/constants/storeLocations';
 
 interface Props {
@@ -31,7 +32,7 @@ export function StoreLocationPicker({ brand, district, region, onSelect, selecte
   return (
     <div className="mt-3 space-y-2">
       <p className="text-xs text-green-400/70 font-semibold uppercase tracking-widest flex items-center gap-1.5">
-        <span>📍</span>
+        <MapPin size={14} className="text-current" />
         <span>選擇分店 Select Branch</span>
       </p>
       <div className="flex flex-col gap-2 max-h-60 overflow-y-auto pr-1">
@@ -50,8 +51,9 @@ export function StoreLocationPicker({ brand, district, region, onSelect, selecte
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
-                  <p className={`text-sm font-semibold leading-tight ${isSelected ? 'text-green-400' : 'text-white/80'}`}>
-                    📍 {loc.name}
+                  <p className={`text-sm font-semibold leading-tight flex items-center gap-1 ${isSelected ? 'text-green-400' : 'text-white/80'}`}>
+                    <MapPin size={12} className="flex-shrink-0 text-current" />
+                    {loc.name}
                   </p>
                   <p className="text-xs text-white/40 mt-0.5 leading-snug line-clamp-2">{loc.address}</p>
                   {loc.hours && (
@@ -60,8 +62,8 @@ export function StoreLocationPicker({ brand, district, region, onSelect, selecte
                 </div>
                 <div className="flex-shrink-0">
                   {isSelected ? (
-                    <span className="text-xs bg-green-500/20 text-green-400 border border-green-500/30 font-semibold px-2 py-0.5 rounded-full">
-                      ✓ 已選
+                    <span className="text-xs bg-green-500/20 text-green-400 border border-green-500/30 font-semibold px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <Check size={10} className="text-current" /> 已選
                     </span>
                   ) : (
                     <span className="text-xs bg-white/5 text-white/40 border border-white/10 font-medium px-2 py-0.5 rounded-full hover:bg-white/10 hover:text-white/60 transition-colors">

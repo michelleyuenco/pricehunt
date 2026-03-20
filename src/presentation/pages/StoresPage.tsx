@@ -4,6 +4,7 @@ import { PageHeader } from '../components/PageHeader';
 import { STATIC_STORES } from '../../domain/constants/stores';
 import { CITIES } from '../../domain/constants/locations';
 import { useLanguage } from '../../application/context/LanguageContext';
+import { Store } from 'lucide-react';
 
 export function StoresPage() {
   const { lang, t } = useLanguage();
@@ -70,8 +71,8 @@ export function StoresPage() {
               <div className="bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.14] rounded-2xl p-4 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-green-500/10 border border-green-500/20 rounded-xl flex items-center justify-center text-xl">
-                      🏪
+                    <div className="w-10 h-10 bg-green-500/10 border border-green-500/20 rounded-xl flex items-center justify-center">
+                      <Store size={20} className="text-green-400" />
                     </div>
                     <div>
                       <div className="font-bold text-white">

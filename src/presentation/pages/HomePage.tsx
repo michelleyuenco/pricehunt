@@ -8,6 +8,10 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../application/context/AuthContext';
 import { useLanguage } from '../../application/context/LanguageContext';
 import { CATEGORIES } from '../../domain/constants/categories';
+import {
+  Search, Flame, BarChart3, MessageCircle, Package, Store,
+  ClipboardList, Lock, Plus, Sparkles, X, Globe, ChevronRight
+} from 'lucide-react';
 
 function OfficialPriceCard({ product }: { product: ReturnType<typeof useOfficialPrices>['prices'][0] }) {
   const { t } = useLanguage();
@@ -93,7 +97,7 @@ export function HomePage() {
       {/* ===== Onboarding Banner ===== */}
       {showOnboarding && (
         <div className="mx-4 mt-3 mb-1 flex items-start gap-3 bg-black/60 border-l-4 border-green-500 rounded-2xl px-4 py-3 backdrop-blur-sm shadow-lg">
-          <span className="text-xl mt-0.5">👋</span>
+          <Sparkles size={20} className="text-green-400 mt-0.5 flex-shrink-0" />
           <div className="flex-1 min-w-0">
             <p className="text-sm text-white/80 leading-relaxed">
               {t('home.onboarding')}
@@ -101,10 +105,10 @@ export function HomePage() {
           </div>
           <button
             onClick={dismissOnboarding}
-            className="flex-shrink-0 text-white/30 hover:text-white/60 text-xl leading-none ml-1 mt-0.5 transition-colors"
+            className="flex-shrink-0 text-white/30 hover:text-white/60 ml-1 mt-0.5 transition-colors"
             aria-label="Dismiss"
           >
-            ×
+            <X size={18} className="text-current" />
           </button>
         </div>
       )}
@@ -116,7 +120,7 @@ export function HomePage() {
 
         <div className="max-w-7xl mx-auto relative">
           <div className="flex items-center gap-2 mb-4">
-            <span className="text-3xl">🔍</span>
+            <Search size={30} className="text-green-400" />
             <div>
               <span className="text-xs font-semibold text-white/40 uppercase tracking-widest">PriceHunt</span>
               <h1 className="text-xl font-bold leading-none bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">{t('common.appName')}</h1>
@@ -138,7 +142,7 @@ export function HomePage() {
               to="/request/new"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-6 py-3 rounded-xl shadow-[0_0_25px_rgba(34,197,94,0.35)] hover:shadow-[0_0_35px_rgba(34,197,94,0.5)] hover:scale-[1.02] active:scale-95 transition-all duration-200"
             >
-              <span>📋</span>
+              <ClipboardList size={18} className="text-current" />
               <span>{t('home.hero.cta')}</span>
             </Link>
           ) : (
@@ -146,7 +150,7 @@ export function HomePage() {
               onClick={signInWithGoogle}
               className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-6 py-3 rounded-xl shadow-[0_0_25px_rgba(34,197,94,0.35)] hover:shadow-[0_0_35px_rgba(34,197,94,0.5)] hover:scale-[1.02] active:scale-95 transition-all duration-200"
             >
-              <span>🔑</span>
+              <Lock size={18} className="text-current" />
               <span>{t('home.hero.signIn')}</span>
             </button>
           )}
@@ -161,7 +165,7 @@ export function HomePage() {
                   : 'bg-white/5 border-white/10 text-white/50 hover:border-white/20 hover:text-white/70'
               }`}
             >
-              🌏 {t('home.cities.all')}
+              <Globe size={14} className="text-current" /> {t('home.cities.all')}
             </button>
             {CITY_PILLS.map(city => (
               <button
@@ -186,13 +190,13 @@ export function HomePage() {
               placeholder={t('common.search')}
               className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 pl-12 text-base text-white placeholder:text-white/30 focus:outline-none focus:border-green-500/40 focus:bg-white/8 transition-all duration-200"
             />
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 text-lg pointer-events-none">🔍</span>
+            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors text-xl leading-none"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
               >
-                ×
+                <X size={18} className="text-current" />
               </button>
             )}
           </div>
@@ -210,14 +214,14 @@ export function HomePage() {
             <div>
               <div className="flex items-center justify-between mb-3">
                 <h3 className="font-bold text-white/90 text-base flex items-center gap-2 tracking-tight">
-                  <span>🔥</span>
+                  <Flame size={16} className="text-orange-400" />
                   <span>{t('home.prices.title')}</span>
                 </h3>
                 <Link
                   to="/prices"
                   className="text-xs text-green-400 hover:text-green-300 font-medium transition-colors flex items-center gap-1"
                 >
-                  {t('common.viewAll')} →
+                  {t('common.viewAll')} <ChevronRight size={14} className="text-current" />
                 </Link>
               </div>
 
@@ -227,7 +231,9 @@ export function HomePage() {
                 </div>
               ) : filteredOfficialPrices.length === 0 ? (
                 <div className="bg-white/3 border border-white/8 rounded-xl p-5 text-center">
-                  <div className="text-3xl mb-2 opacity-40">📊</div>
+                  <div className="flex justify-center mb-2 opacity-40">
+                    <BarChart3 size={32} className="text-white/40" />
+                  </div>
                   <p className="text-sm text-white/30">
                     {searchQuery ? t('home.prices.noResults') : t('home.prices.notLoaded')}
                   </p>
@@ -260,14 +266,16 @@ export function HomePage() {
             {/* Request feed */}
             <div>
               <h3 className="font-bold text-white/90 text-base mb-3 flex items-center gap-2 tracking-tight">
-                <span>🙋</span>
+                <MessageCircle size={16} className="text-green-400" />
                 <span>{t('home.requests.title')}</span>
               </h3>
               {loading ? (
                 <LoadingSpinner />
               ) : filteredRequests.length === 0 ? (
                 <div className="text-center py-12 bg-white/[0.02] border border-white/[0.06] rounded-2xl">
-                  <div className="text-5xl mb-4 opacity-30">🙋</div>
+                  <div className="flex justify-center mb-4 opacity-30">
+                    <MessageCircle size={48} className="text-white/40" />
+                  </div>
                   <p className="font-medium text-white/50">
                     {searchQuery || selectedCity !== 'all'
                       ? t('home.requests.notFound')
@@ -278,7 +286,7 @@ export function HomePage() {
                       to="/request/new"
                       className="mt-6 inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-5 py-2.5 rounded-xl shadow-[0_0_20px_rgba(34,197,94,0.3)] active:scale-95 transition-all duration-200"
                     >
-                      <span>➕</span>
+                      <Plus size={16} className="text-current" />
                       <span>{t('home.requests.emptyBtn')}</span>
                     </Link>
                   )}
@@ -297,7 +305,7 @@ export function HomePage() {
           <div className="lg:col-span-1 space-y-6 mt-6 lg:mt-0">
             <div className="hidden lg:block">
               <h3 className="font-bold text-white/80 text-base mb-3 flex items-center gap-2 tracking-tight">
-                <span>📦</span>
+                <Package size={16} className="text-white/60" />
                 <span>{t('home.sidebar.category')}</span>
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -321,13 +329,13 @@ export function HomePage() {
               </h3>
               <div className="flex flex-col gap-2">
                 <Link to="/explore" className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/60 hover:text-white/90 hover:border-white/20 transition-all">
-                  <span>🔍</span><span>{t('home.sidebar.explore')}</span>
+                  <Search size={16} className="text-current" /><span>{t('home.sidebar.explore')}</span>
                 </Link>
                 <Link to="/stores" className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/60 hover:text-white/90 hover:border-white/20 transition-all">
-                  <span>🏪</span><span>{t('home.sidebar.stores')}</span>
+                  <Store size={16} className="text-current" /><span>{t('home.sidebar.stores')}</span>
                 </Link>
                 <Link to="/community" className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/60 hover:text-white/90 hover:border-white/20 transition-all">
-                  <span>👥</span><span>{t('home.sidebar.community')}</span>
+                  <MessageCircle size={16} className="text-current" /><span>{t('home.sidebar.community')}</span>
                 </Link>
               </div>
             </div>

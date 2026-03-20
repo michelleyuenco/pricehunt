@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Store, MapPin, MessageSquare, Zap } from 'lucide-react';
 import { type PriceRequest } from '../../domain/entities/Request';
 import { formatRelativeTime } from '../../shared/utils/formatDate';
 import { getCategoryInfo, getSubCategoryLabel } from '../../domain/constants/categories';
@@ -54,8 +55,8 @@ export function RequestCard({ request }: Props) {
           </div>
           <div className="flex items-center gap-1.5 flex-shrink-0">
             {request.urgency === 'urgent' && (
-              <span className="text-xs bg-red-500/20 text-red-400 border border-red-500/30 font-semibold px-2 py-0.5 rounded-full">
-                ⚡ 急需
+              <span className="text-xs bg-red-500/20 text-red-400 border border-red-500/30 font-semibold px-2 py-0.5 rounded-full flex items-center gap-1">
+                <Zap size={12} className="text-current" /> 急需
               </span>
             )}
             <span className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${status.bgClass}`}>
@@ -79,7 +80,7 @@ export function RequestCard({ request }: Props) {
         {/* Store & location */}
         <div className="flex items-center gap-3 text-sm text-white/60 mb-3">
           <span className="flex items-center gap-1">
-            <span>🏪</span>
+            <Store size={14} className="text-current flex-shrink-0" />
             <span className="font-medium">{request.storeName}</span>
           </span>
           <span className="text-white/20">·</span>
@@ -91,7 +92,7 @@ export function RequestCard({ request }: Props) {
         {/* Store address pill */}
         {request.storeAddress && (
           <div className="flex items-center gap-1 text-xs text-white/35 mb-2 truncate">
-            <span className="flex-shrink-0">📍</span>
+            <MapPin size={12} className="flex-shrink-0 text-current" />
             <span className="truncate">{request.storeAddress.length > 30 ? request.storeAddress.slice(0, 30) + '…' : request.storeAddress}</span>
           </div>
         )}
@@ -107,7 +108,7 @@ export function RequestCard({ request }: Props) {
                 <span className="text-amber-400 font-medium">💰 贈NT$10</span>
               )}
               <span className="flex items-center gap-1">
-                <span>💬</span>
+                <MessageSquare size={12} className="text-current" />
                 <span>{request.responseCount}</span>
               </span>
             </div>
@@ -121,7 +122,7 @@ export function RequestCard({ request }: Props) {
           ) : request.status === 'answered' && request.responseCount > 0 ? (
             <div className="shrink-0 text-right">
               <p className="text-sm font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent leading-tight">
-                💬 {request.responseCount} 回報
+                <span className="flex items-center gap-1"><MessageSquare size={12} className="text-green-400" /> {request.responseCount} 回報</span>
               </p>
               <p className="text-[10px] text-green-400/60">已有價格</p>
             </div>

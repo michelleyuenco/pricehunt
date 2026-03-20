@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
+import { Home, Search, Plus, FileText, User, Lock, type LucideIcon } from 'lucide-react';
 import { useAuth } from '../../application/context/AuthContext';
 import { useLanguage } from '../../application/context/LanguageContext';
 
@@ -9,12 +10,12 @@ export function Navbar() {
   const { lang, setLang, t } = useLanguage();
   const [showMenu, setShowMenu] = useState(false);
 
-  const navItems = [
-    { to: '/', label: t('nav.home'), icon: '🏠', highlight: false },
-    { to: '/explore', label: t('nav.explore'), icon: '🔍', highlight: false },
-    { to: '/request/new', label: t('nav.ask'), icon: '➕', highlight: true },
-    { to: '/blog', label: t('nav.blog'), icon: '📝', highlight: false },
-    { to: '/my-requests', label: t('nav.me'), icon: '👤', highlight: false },
+  const navItems: { to: string; label: string; icon: LucideIcon; highlight: boolean }[] = [
+    { to: '/', label: t('nav.home'), icon: Home, highlight: false },
+    { to: '/explore', label: t('nav.explore'), icon: Search, highlight: false },
+    { to: '/request/new', label: t('nav.ask'), icon: Plus, highlight: true },
+    { to: '/blog', label: t('nav.blog'), icon: FileText, highlight: false },
+    { to: '/my-requests', label: t('nav.me'), icon: User, highlight: false },
   ];
 
   const LangToggle = ({ className = '' }: { className?: string }) => (
@@ -35,7 +36,7 @@ export function Navbar() {
       <div className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-2xl border-b border-white/[0.04] px-4 py-2 lg:hidden">
         <div className="max-w-lg mx-auto flex items-center justify-between">
           <span className="font-bold text-sm flex items-center gap-1.5">
-            <span>🔍</span>
+            <Search size={16} className="text-green-400" />
             <span className="gradient-text tracking-wide font-bold">PriceHunt</span>
           </span>
           <div className="flex items-center gap-2">
@@ -53,8 +54,8 @@ export function Navbar() {
                       className="w-7 h-7 rounded-full ring-2 ring-green-500/60"
                     />
                   ) : (
-                    <div className="w-7 h-7 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-sm">
-                      👤
+                    <div className="w-7 h-7 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center">
+                      <User size={14} className="text-green-400" />
                     </div>
                   )}
                   <span className="text-xs font-medium text-white/70 max-w-[100px] truncate">
@@ -78,7 +79,7 @@ export function Navbar() {
                 onClick={signInWithGoogle}
                 className="glow-btn flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full active:scale-95 transition-all"
               >
-                <span>🔑</span>
+                <Lock size={14} className="text-current" />
                 <span>{t('common.signIn')}</span>
               </button>
             )}
@@ -99,7 +100,7 @@ export function Navbar() {
                   className="relative flex flex-col items-center gap-0.5 px-3 py-1 -mt-3"
                 >
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-[0_0_20px_rgba(34,197,94,0.5)] active:scale-95 transition-all duration-200">
-                    <span className="text-xl text-white">{item.icon}</span>
+                    <item.icon size={20} className="text-white" />
                   </div>
                   <span className="text-[10px] font-semibold gradient-text mt-0.5">{item.label}</span>
                 </Link>
@@ -116,7 +117,7 @@ export function Navbar() {
                 {isActive && (
                   <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-green-400 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.9)]" />
                 )}
-                <span className="text-xl">{item.icon}</span>
+                <item.icon size={20} className="text-current" />
                 <span className={`text-xs font-medium ${isActive ? 'gradient-text' : ''}`}>
                   {item.label}
                 </span>
@@ -131,7 +132,7 @@ export function Navbar() {
         <div className="w-full max-w-7xl mx-auto px-8 h-16 flex items-center justify-between gap-8">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 shrink-0">
-            <span className="text-xl">🔍</span>
+            <Search size={20} className="text-green-400" />
             <span className="gradient-text font-bold text-lg tracking-wide">PriceHunt</span>
             {lang === 'zh' && (
               <span className="text-white/30 text-sm font-medium hidden xl:block">格價獵人</span>
@@ -149,7 +150,7 @@ export function Navbar() {
                     to={item.to}
                     className="relative flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 text-green-400 hover:from-green-500/30 hover:to-emerald-500/30 hover:scale-105 active:scale-95"
                   >
-                    <span>{item.icon}</span>
+                    <item.icon size={16} className="text-current" />
                     <span>{item.label}</span>
                   </Link>
                 );
@@ -167,7 +168,7 @@ export function Navbar() {
                   {isActive && (
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.9)]" />
                   )}
-                  <span>{item.icon}</span>
+                  <item.icon size={16} className="text-current" />
                   <span className={isActive ? 'gradient-text' : ''}>{item.label}</span>
                 </Link>
               );
@@ -181,7 +182,7 @@ export function Navbar() {
               to="/request/new"
               className="glow-btn flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full transition-all hover:scale-105 active:scale-95"
             >
-              <span>＋</span>
+              <Plus size={16} className="text-current" />
               <span>{t('nav.newRequest')}</span>
             </Link>
             {user ? (
@@ -197,8 +198,8 @@ export function Navbar() {
                       className="w-8 h-8 rounded-full ring-2 ring-green-500/60"
                     />
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-sm">
-                      👤
+                    <div className="w-8 h-8 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center">
+                      <User size={16} className="text-green-400" />
                     </div>
                   )}
                   <span className="text-sm font-medium text-white/70 max-w-[120px] truncate">
@@ -222,7 +223,7 @@ export function Navbar() {
                 onClick={signInWithGoogle}
                 className="flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-all active:scale-95"
               >
-                <span>🔑</span>
+                <Lock size={16} className="text-current" />
                 <span>{t('common.signIn')}</span>
               </button>
             )}

@@ -222,7 +222,7 @@ export function BlogArticlePage() {
                     to="/"
                     className="block text-center text-sm font-semibold text-green-400 bg-green-500/10 border border-green-500/20 rounded-xl py-2.5 hover:bg-green-500/20 transition-all"
                   >
-                    🔍 即時格價
+                    即時格價
                   </Link>
                 </div>
               </div>

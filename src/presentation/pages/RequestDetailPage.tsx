@@ -10,6 +10,7 @@ import { getCityInfo } from '../../domain/constants/locations';
 import { useAuth } from '../../application/context/AuthContext';
 import { useLanguage } from '../../application/context/LanguageContext';
 import { type Availability, type Currency } from '../../domain/entities/Response';
+import { Store, MapPin, MessageSquare, FileText, ThumbsUp, User } from 'lucide-react';
 
 const CURRENCIES: Currency[] = ['HK$', 'NT$', 'S$', '¥'];
 
@@ -100,8 +101,8 @@ export function RequestDetailPage() {
               {request.avatarEmoji && request.avatarEmoji.startsWith('http') ? (
                 <img src={request.avatarEmoji} alt="avatar" className="w-8 h-8 rounded-full ring-1 ring-white/10" />
               ) : (
-                <div className="w-8 h-8 rounded-full bg-green-500/20 border border-green-500/20 flex items-center justify-center text-lg">
-                  {request.avatarEmoji || '👤'}
+                <div className="w-8 h-8 rounded-full bg-green-500/20 border border-green-500/20 flex items-center justify-center">
+                  <User size={16} className="text-green-400" />
                 </div>
               )}
               <div>
@@ -140,7 +141,9 @@ export function RequestDetailPage() {
           <div className="grid grid-cols-2 gap-2 text-sm mb-3">
             <div className="bg-white/5 border border-white/10 rounded-xl p-3">
               <div className="text-xs text-white/30 mb-0.5">{t('detail.store')}</div>
-              <div className="font-semibold text-white">🏪 {request.storeName}</div>
+              <div className="font-semibold text-white flex items-center gap-1.5">
+                <Store size={14} className="text-white/60 flex-shrink-0" /> {request.storeName}
+              </div>
               {request.storeAddress && (
                 <p className="text-xs text-white/40 mt-1 leading-snug">{request.storeAddress}</p>
               )}
@@ -151,7 +154,7 @@ export function RequestDetailPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 mt-1.5 text-xs text-green-400 hover:text-green-300 transition-colors font-medium"
                 >
-                  <span>📍</span>
+                  <MapPin size={12} className="text-current" />
                   <span>{t('detail.viewMap')}</span>
                 </a>
               )}
@@ -172,8 +175,9 @@ export function RequestDetailPage() {
           </div>
 
           {request.note && (
-            <div className="mt-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl text-sm text-blue-300">
-              📝 {request.note}
+            <div className="mt-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl text-sm text-blue-300 flex items-start gap-2">
+              <FileText size={14} className="text-blue-300 flex-shrink-0 mt-0.5" />
+              <span>{request.note}</span>
             </div>
           )}
         </div>
@@ -183,14 +187,16 @@ export function RequestDetailPage() {
           {/* Responses */}
           <div>
             <h3 className="font-bold text-white/80 text-base mb-3 flex items-center gap-2 tracking-tight">
-              <span>💬</span>
+              <MessageSquare size={16} className="text-white/60" />
               <span>{t('detail.responses')}</span>
               <span className="text-sm font-normal text-white/30">({responses.length})</span>
             </h3>
 
             {responses.length === 0 ? (
               <div className="card p-6 text-center">
-                <div className="text-4xl mb-2 opacity-30">🙋</div>
+                <div className="flex justify-center mb-2 opacity-30">
+                  <MessageSquare size={40} className="text-white/40" />
+                </div>
                 <p className="font-medium text-white/50">{t('detail.noResponses')}</p>
                 <p className="text-sm mt-1 text-white/30">{t('detail.noResponses.desc')}</p>
               </div>
@@ -206,8 +212,8 @@ export function RequestDetailPage() {
                           {res.avatarEmoji && res.avatarEmoji.startsWith('http') ? (
                             <img src={res.avatarEmoji} alt="avatar" className="w-7 h-7 rounded-full ring-1 ring-white/10" />
                           ) : (
-                            <div className="w-7 h-7 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-sm">
-                              {res.avatarEmoji || '👤'}
+                            <div className="w-7 h-7 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                              <User size={14} className="text-white/40" />
                             </div>
                           )}
                           <div>
@@ -224,17 +230,19 @@ export function RequestDetailPage() {
                           </div>
                         </div>
                       </div>
-                      <div className="text-xs text-white/40 mb-2">📍 {res.storeConfirmed}</div>
+                      <div className="text-xs text-white/40 mb-2 flex items-center gap-1">
+                        <MapPin size={12} className="text-current flex-shrink-0" /> {res.storeConfirmed}
+                      </div>
                       {res.note && <p className="text-sm text-white/60 mb-3">{res.note}</p>}
                       <button
                         onClick={() => handleVote(res.id)}
-                        className={`flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-lg transition-all duration-200 ${
+                        className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg transition-all duration-200 ${
                           voted
                             ? 'bg-green-500/20 text-green-400 border border-green-500/30'
                             : 'bg-white/5 text-white/40 border border-white/10 hover:bg-white/10 hover:text-white/60'
                         }`}
                       >
-                        <span>👍</span>
+                        <ThumbsUp size={12} className="text-current" />
                         <span>{t('detail.helpful')} ({res.helpfulVotes})</span>
                       </button>
                     </div>
@@ -247,7 +255,7 @@ export function RequestDetailPage() {
           {/* Add response form */}
           <div className="card p-5 lg:p-6 lg:self-start">
             <h3 className="font-bold text-white text-base mb-4 flex items-center gap-2">
-              <span>📝</span>
+              <FileText size={16} className="text-white/70" />
               <span>{t('detail.addResponse')}</span>
             </h3>
 

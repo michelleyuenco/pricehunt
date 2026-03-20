@@ -1,3 +1,4 @@
+import { FileText } from "lucide-react";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
@@ -44,7 +45,7 @@ export function BlogPage() {
         {/* Hero header */}
         <div className="mb-10 text-center">
           <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-1.5 text-green-400 text-sm font-medium mb-4">
-            <span>📝</span>
+            <FileText size={16} className="text-current" />
             <span>{t('blog.title')}</span>
           </div>
           <h1 className="text-3xl lg:text-4xl font-extrabold text-white mb-3">
