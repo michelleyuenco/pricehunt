@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './application/context/AuthContext';
+import { LanguageProvider } from './application/context/LanguageContext';
 import { Navbar } from './presentation/components/Navbar';
 import { HomePage } from './presentation/pages/HomePage';
 import { ExplorePage } from './presentation/pages/ExplorePage';
@@ -14,25 +15,27 @@ import { BlogArticlePage } from './presentation/pages/BlogArticlePage';
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <div className="min-h-screen bg-[#0A0A0A]">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/explore" element={<ExplorePage />} />
-            <Route path="/request/:id" element={<RequestDetailPage />} />
-            <Route path="/request/new" element={<CreateRequestPage />} />
-            <Route path="/stores" element={<StoresPage />} />
-            <Route path="/community" element={<CommunityPage />} />
-            <Route path="/my-requests" element={<MyRequestsPage />} />
-            <Route path="/official-price/:code" element={<OfficialPricePage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<BlogArticlePage />} />
-          </Routes>
-          <Navbar />
-        </div>
-      </BrowserRouter>
-    </AuthProvider>
+    <LanguageProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <div className="min-h-screen bg-[#0A0A0A]">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/explore" element={<ExplorePage />} />
+              <Route path="/request/:id" element={<RequestDetailPage />} />
+              <Route path="/request/new" element={<CreateRequestPage />} />
+              <Route path="/stores" element={<StoresPage />} />
+              <Route path="/community" element={<CommunityPage />} />
+              <Route path="/my-requests" element={<MyRequestsPage />} />
+              <Route path="/official-price/:code" element={<OfficialPricePage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<BlogArticlePage />} />
+            </Routes>
+            <Navbar />
+          </div>
+        </BrowserRouter>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
 

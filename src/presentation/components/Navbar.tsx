@@ -1,19 +1,33 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../../application/context/AuthContext';
-
-const navItems = [
-  { to: '/', label: '首頁', icon: '🏠', highlight: false },
-  { to: '/explore', label: '探索', icon: '🔍', highlight: false },
-  { to: '/request/new', label: '發問', icon: '➕', highlight: true },
-  { to: '/blog', label: 'Blog', icon: '📝', highlight: false },
-  { to: '/my-requests', label: '我的', icon: '👤', highlight: false },
-];
+import { useLanguage } from '../../application/context/LanguageContext';
 
 export function Navbar() {
   const location = useLocation();
   const { user, signInWithGoogle, signOut } = useAuth();
+  const { lang, setLang, t } = useLanguage();
   const [showMenu, setShowMenu] = useState(false);
+
+  const navItems = [
+    { to: '/', label: t('nav.home'), icon: '🏠', highlight: false },
+    { to: '/explore', label: t('nav.explore'), icon: '🔍', highlight: false },
+    { to: '/request/new', label: t('nav.ask'), icon: '➕', highlight: true },
+    { to: '/blog', label: t('nav.blog'), icon: '📝', highlight: false },
+    { to: '/my-requests', label: t('nav.me'), icon: '👤', highlight: false },
+  ];
+
+  const LangToggle = ({ className = '' }: { className?: string }) => (
+    <button
+      onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}
+      className={`flex items-center gap-0.5 text-xs font-bold px-2.5 py-1 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-all active:scale-95 ${className}`}
+      title={lang === 'zh' ? 'Switch to English' : '切換中文'}
+    >
+      <span className={lang === 'zh' ? 'text-green-400' : 'text-white/40'}>繁</span>
+      <span className="text-white/20 mx-0.5">/</span>
+      <span className={lang === 'en' ? 'text-green-400' : 'text-white/40'}>EN</span>
+    </button>
+  );
 
   return (
     <>
@@ -24,48 +38,51 @@ export function Navbar() {
             <span>🔍</span>
             <span className="gradient-text tracking-wide font-bold">PriceHunt</span>
           </span>
-          {user ? (
-            <div className="relative">
-              <button
-                onClick={() => setShowMenu(v => !v)}
-                className="flex items-center gap-2"
-              >
-                {user.photoURL ? (
-                  <img
-                    src={user.photoURL}
-                    alt="avatar"
-                    className="w-7 h-7 rounded-full ring-2 ring-green-500/60"
-                  />
-                ) : (
-                  <div className="w-7 h-7 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-sm">
-                    👤
+          <div className="flex items-center gap-2">
+            <LangToggle />
+            {user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setShowMenu(v => !v)}
+                  className="flex items-center gap-2"
+                >
+                  {user.photoURL ? (
+                    <img
+                      src={user.photoURL}
+                      alt="avatar"
+                      className="w-7 h-7 rounded-full ring-2 ring-green-500/60"
+                    />
+                  ) : (
+                    <div className="w-7 h-7 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-sm">
+                      👤
+                    </div>
+                  )}
+                  <span className="text-xs font-medium text-white/70 max-w-[100px] truncate">
+                    {user.displayName ?? user.email}
+                  </span>
+                  <span className="text-white/30 text-xs">▾</span>
+                </button>
+                {showMenu && (
+                  <div className="absolute right-0 top-9 bg-black/90 border border-white/10 rounded-xl shadow-2xl py-2 w-36 z-50 backdrop-blur-2xl">
+                    <button
+                      onClick={() => { signOut(); setShowMenu(false); }}
+                      className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
+                    >
+                      {t('common.signOut')}
+                    </button>
                   </div>
                 )}
-                <span className="text-xs font-medium text-white/70 max-w-[100px] truncate">
-                  {user.displayName ?? user.email}
-                </span>
-                <span className="text-white/30 text-xs">▾</span>
+              </div>
+            ) : (
+              <button
+                onClick={signInWithGoogle}
+                className="glow-btn flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full active:scale-95 transition-all"
+              >
+                <span>🔑</span>
+                <span>{t('common.signIn')}</span>
               </button>
-              {showMenu && (
-                <div className="absolute right-0 top-9 bg-black/90 border border-white/10 rounded-xl shadow-2xl py-2 w-36 z-50 backdrop-blur-2xl">
-                  <button
-                    onClick={() => { signOut(); setShowMenu(false); }}
-                    className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
-                  >
-                    登出 Sign Out
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <button
-              onClick={signInWithGoogle}
-              className="glow-btn flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full active:scale-95 transition-all"
-            >
-              <span>🔑</span>
-              <span>登入 Sign In</span>
-            </button>
-          )}
+            )}
+          </div>
         </div>
       </div>
 
@@ -116,7 +133,9 @@ export function Navbar() {
           <Link to="/" className="flex items-center gap-2 shrink-0">
             <span className="text-xl">🔍</span>
             <span className="gradient-text font-bold text-lg tracking-wide">PriceHunt</span>
-            <span className="text-white/30 text-sm font-medium hidden xl:block">格價獵人</span>
+            {lang === 'zh' && (
+              <span className="text-white/30 text-sm font-medium hidden xl:block">格價獵人</span>
+            )}
           </Link>
 
           {/* Nav links */}
@@ -157,12 +176,13 @@ export function Navbar() {
 
           {/* Auth area */}
           <div className="shrink-0 flex items-center gap-3">
+            <LangToggle />
             <Link
               to="/request/new"
               className="glow-btn flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full transition-all hover:scale-105 active:scale-95"
             >
               <span>＋</span>
-              <span>發起需求</span>
+              <span>{t('nav.newRequest')}</span>
             </Link>
             {user ? (
               <div className="relative">
@@ -192,7 +212,7 @@ export function Navbar() {
                       onClick={() => { signOut(); setShowMenu(false); }}
                       className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
                     >
-                      登出 Sign Out
+                      {t('common.signOut')}
                     </button>
                   </div>
                 )}
@@ -203,7 +223,7 @@ export function Navbar() {
                 className="flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-all active:scale-95"
               >
                 <span>🔑</span>
-                <span>登入 Sign In</span>
+                <span>{t('common.signIn')}</span>
               </button>
             )}
           </div>

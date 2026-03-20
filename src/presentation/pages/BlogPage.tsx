@@ -3,14 +3,7 @@ import { Link } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { blogPosts } from '../../infrastructure/data/blogPosts';
 import type { BlogPost } from '../../domain/entities/BlogPost';
-
-const CATEGORY_LABELS: Record<BlogPost['category'], string> = {
-  comparison: '比較',
-  guide: '指南',
-  tips: '慳錢貼士',
-  trend: '趨勢',
-  tutorial: '教學',
-};
+import { useLanguage } from '../../application/context/LanguageContext';
 
 const CATEGORY_COLORS: Record<BlogPost['category'], string> = {
   comparison: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
@@ -20,8 +13,8 @@ const CATEGORY_COLORS: Record<BlogPost['category'], string> = {
   tutorial: 'bg-orange-500/20 text-orange-300 border-orange-500/30',
 };
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('zh-HK', {
+function formatDate(iso: string, lang: string) {
+  return new Date(iso).toLocaleDateString(lang === 'zh' ? 'zh-HK' : 'en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -29,7 +22,13 @@ function formatDate(iso: string) {
 }
 
 export function BlogPage() {
+  const { lang, t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<BlogPost['category'] | 'all'>('all');
+
+  const getCategoryLabel = (cat: BlogPost['category']): string => {
+    const key = `blog.cat.${cat}` as string;
+    return t(key);
+  };
 
   const categories = Array.from(new Set(blogPosts.map(p => p.category)));
 
@@ -39,7 +38,6 @@ export function BlogPage() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
-      {/* Top spacer for mobile */}
       <div className="h-12 lg:h-16" />
 
       <div className="max-w-5xl mx-auto px-4 py-8 pb-24 lg:pb-8">
@@ -47,13 +45,13 @@ export function BlogPage() {
         <div className="mb-10 text-center">
           <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-1.5 text-green-400 text-sm font-medium mb-4">
             <span>📝</span>
-            <span>格價知識庫</span>
+            <span>{t('blog.title')}</span>
           </div>
           <h1 className="text-3xl lg:text-4xl font-extrabold text-white mb-3">
-            格價獵人 <span className="gradient-text">Blog</span>
+            {t('blog.heading')} <span className="gradient-text">Blog</span>
           </h1>
           <p className="text-white/50 text-base max-w-xl mx-auto">
-            最新超市格價攻略、慳錢秘技、香港台灣價格比較分析
+            {t('blog.subtitle')}
           </p>
         </div>
 
@@ -67,7 +65,7 @@ export function BlogPage() {
                 : 'bg-white/5 text-white/40 border-white/10 hover:text-white/70 hover:bg-white/10'
             }`}
           >
-            全部
+            {t('blog.filter.all')}
           </button>
           {categories.map(cat => (
             <button
@@ -79,7 +77,7 @@ export function BlogPage() {
                   : 'bg-white/5 text-white/40 border-white/10 hover:text-white/70 hover:bg-white/10'
               }`}
             >
-              {CATEGORY_LABELS[cat]}
+              {getCategoryLabel(cat)}
             </button>
           ))}
         </div>
@@ -95,14 +93,15 @@ export function BlogPage() {
               {/* Category + reading time */}
               <div className="flex items-center justify-between mb-3">
                 <span className={`px-2.5 py-1 rounded-full text-xs font-medium border ${CATEGORY_COLORS[post.category]}`}>
-                  {CATEGORY_LABELS[post.category]}
+                  {getCategoryLabel(post.category)}
                 </span>
-                <span className="text-white/30 text-xs">{post.readingTime} 分鐘閱讀</span>
+                <span className="text-white/30 text-xs">{post.readingTime} {t('blog.readTime')}</span>
               </div>
 
-              {/* Title */}
+              {/* Title — always show Chinese; add "(Chinese)" label in English mode */}
               <h2 className="text-white font-bold text-base leading-snug mb-2 group-hover:text-green-300 transition-colors line-clamp-2">
                 {post.title}
+                {lang === 'en' && <span className="text-white/30 text-xs font-normal ml-1">(Chinese)</span>}
               </h2>
 
               {/* Excerpt */}
@@ -118,7 +117,7 @@ export function BlogPage() {
                   </div>
                   <span className="text-white/40 text-xs">{post.author}</span>
                 </div>
-                <span className="text-white/30 text-xs">{formatDate(post.publishedAt)}</span>
+                <span className="text-white/30 text-xs">{formatDate(post.publishedAt, lang)}</span>
               </div>
             </Link>
           ))}
@@ -127,7 +126,7 @@ export function BlogPage() {
         {filtered.length === 0 && (
           <div className="text-center py-20 text-white/30">
             <p className="text-4xl mb-3">📭</p>
-            <p>暫無此分類文章</p>
+            <p>{t('blog.empty')}</p>
           </div>
         )}
       </div>

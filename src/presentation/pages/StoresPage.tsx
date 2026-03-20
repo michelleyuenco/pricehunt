@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { PageHeader } from '../components/PageHeader';
 import { STATIC_STORES } from '../../domain/constants/stores';
 import { CITIES } from '../../domain/constants/locations';
+import { useLanguage } from '../../application/context/LanguageContext';
 
 export function StoresPage() {
+  const { lang, t } = useLanguage();
   const [selectedCity, setSelectedCity] = useState<string>('all');
 
   const filteredStores = selectedCity === 'all'
@@ -18,12 +20,12 @@ export function StoresPage() {
 
   const getCityLabel = (cityValue: string) => {
     const city = CITIES.find(c => c.value === cityValue);
-    return city?.labelZh ?? cityValue;
+    return lang === 'zh' ? (city?.labelZh ?? cityValue) : (city?.labelEn ?? cityValue);
   };
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
-      <PageHeader title="商店目錄 Stores" subtitle="瀏覽各城市商店" />
+      <PageHeader title={t('stores.title')} subtitle={t('stores.subtitle')} />
 
       {/* City tabs */}
       <div className="bg-[#0A0A0A]/95 border-b border-white/10 px-4 py-3">
@@ -37,7 +39,7 @@ export function StoresPage() {
                   : 'bg-white/5 border border-white/10 text-white/50 hover:text-white/70 hover:bg-white/8'
               }`}
             >
-              🌍 全部
+              {t('stores.all')}
             </button>
             {CITIES.map(city => (
               <button
@@ -49,7 +51,7 @@ export function StoresPage() {
                     : 'bg-white/5 border border-white/10 text-white/50 hover:text-white/70 hover:bg-white/8'
                 }`}
               >
-                {city.flag} {city.labelZh}
+                {city.flag} {lang === 'zh' ? city.labelZh : city.labelEn}
               </button>
             ))}
           </div>
@@ -57,7 +59,7 @@ export function StoresPage() {
       </div>
 
       <div className="px-4 py-4 max-w-7xl mx-auto lg:px-8">
-        <p className="text-sm text-white/30 mb-3">共 {filteredStores.length} 間商店</p>
+        <p className="text-sm text-white/30 mb-3">{lang === 'zh' ? `共 ${filteredStores.length} ${t('stores.count')}` : `${filteredStores.length} ${t('stores.count')}`}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredStores.map(store => (
             <Link
@@ -73,9 +75,9 @@ export function StoresPage() {
                     </div>
                     <div>
                       <div className="font-bold text-white">
-                        {store.nameZh}
-                        {store.nameEn !== store.nameZh && (
-                          <span className="font-normal text-white/40 text-sm"> · {store.nameEn}</span>
+                        {lang === 'zh' ? store.nameZh : (store.nameEn || store.nameZh)}
+                        {lang === 'en' && store.nameEn !== store.nameZh && store.nameEn && (
+                          <span className="font-normal text-white/40 text-sm"> · {store.nameZh}</span>
                         )}
                       </div>
                       <div className="text-sm text-white/40">

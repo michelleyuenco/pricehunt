@@ -8,13 +8,8 @@ import { formatPrice } from '../../shared/utils/formatPrice';
 import { getCategoryInfo } from '../../domain/constants/categories';
 import { getCityInfo } from '../../domain/constants/locations';
 import { useAuth } from '../../application/context/AuthContext';
+import { useLanguage } from '../../application/context/LanguageContext';
 import { type Availability, type Currency } from '../../domain/entities/Response';
-
-const availabilityLabels: Record<Availability, { zh: string; cls: string }> = {
-  in_stock: { zh: '✅ 有貨', cls: 'text-green-400 bg-green-500/10 border border-green-500/20' },
-  out_of_stock: { zh: '❌ 缺貨', cls: 'text-red-400 bg-red-500/10 border border-red-500/20' },
-  limited: { zh: '⚠️ 少量', cls: 'text-amber-400 bg-amber-500/10 border border-amber-500/20' },
-};
 
 const CURRENCIES: Currency[] = ['HK$', 'NT$', 'S$', '¥'];
 
@@ -22,6 +17,7 @@ export function RequestDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { request, responses, loading, addResponse, markHelpful } = useRequestDetail(id ?? '');
   const { user, signInWithGoogle } = useAuth();
+  const { lang, t } = useLanguage();
 
   const [price, setPrice] = useState('');
   const [currency, setCurrency] = useState<Currency>('HK$');
@@ -31,6 +27,12 @@ export function RequestDetailPage() {
   const [submitted, setSubmitted] = useState(false);
   const [votedIds, setVotedIds] = useState<Set<string>>(new Set());
 
+  const availabilityLabels: Record<Availability, { label: string; cls: string }> = {
+    in_stock: { label: t('detail.inStock'), cls: 'text-green-400 bg-green-500/10 border border-green-500/20' },
+    out_of_stock: { label: t('detail.outOfStock'), cls: 'text-red-400 bg-red-500/10 border border-red-500/20' },
+    limited: { label: t('detail.limited'), cls: 'text-amber-400 bg-amber-500/10 border border-amber-500/20' },
+  };
+
   const handleSubmitResponse = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) { await signInWithGoogle(); return; }
@@ -39,9 +41,9 @@ export function RequestDetailPage() {
     await addResponse({
       requestId: request.id,
       userId: user.uid,
-      userName: user.displayName ?? '用戶',
+      userName: user.displayName ?? (lang === 'zh' ? '用戶' : 'User'),
       userPhoto: user.photoURL ?? '',
-      username: user.displayName ?? '用戶',
+      username: user.displayName ?? (lang === 'zh' ? '用戶' : 'User'),
       avatarEmoji: user.photoURL ?? '👤',
       price: parseFloat(price),
       currency,
@@ -65,7 +67,7 @@ export function RequestDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
-        <PageHeader title="需求詳情" showBack />
+        <PageHeader title={t('detail.title')} showBack />
         <LoadingSpinner />
       </div>
     );
@@ -74,10 +76,10 @@ export function RequestDetailPage() {
   if (!request) {
     return (
       <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
-        <PageHeader title="需求詳情" showBack />
+        <PageHeader title={t('detail.title')} showBack />
         <div className="text-center py-16">
           <div className="text-5xl mb-4 opacity-30">😕</div>
-          <p className="text-white/40">找不到此需求</p>
+          <p className="text-white/40">{t('detail.notFound')}</p>
         </div>
       </div>
     );
@@ -88,7 +90,7 @@ export function RequestDetailPage() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
-      <PageHeader title="需求詳情" showBack />
+      <PageHeader title={t('detail.title')} showBack />
 
       <div className="px-4 py-4 max-w-3xl mx-auto lg:px-6 space-y-4">
         {/* Request card */}
@@ -110,18 +112,18 @@ export function RequestDetailPage() {
             <div className="flex flex-col items-end gap-1">
               {request.urgency === 'urgent' && (
                 <span className="text-xs bg-red-500/20 text-red-400 border border-red-500/30 font-semibold px-2 py-0.5 rounded-full">
-                  ⚡ 急需
+                  {t('detail.urgent')}
                 </span>
               )}
               {request.status === 'waiting' ? (
                 <span className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(245,158,11,0.8)]" />
-                  <span className="text-amber-400">等待中</span>
+                  <span className="text-amber-400">{t('detail.waiting')}</span>
                 </span>
               ) : (
                 <span className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_6px_rgba(34,197,94,0.8)]" />
-                  <span className="text-green-400">已回覆</span>
+                  <span className="text-green-400">{t('detail.answered')}</span>
                 </span>
               )}
             </div>
@@ -137,7 +139,7 @@ export function RequestDetailPage() {
 
           <div className="grid grid-cols-2 gap-2 text-sm mb-3">
             <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-              <div className="text-xs text-white/30 mb-0.5">商店</div>
+              <div className="text-xs text-white/30 mb-0.5">{t('detail.store')}</div>
               <div className="font-semibold text-white">🏪 {request.storeName}</div>
               {request.storeAddress && (
                 <p className="text-xs text-white/40 mt-1 leading-snug">{request.storeAddress}</p>
@@ -150,14 +152,14 @@ export function RequestDetailPage() {
                   className="inline-flex items-center gap-1 mt-1.5 text-xs text-green-400 hover:text-green-300 transition-colors font-medium"
                 >
                   <span>📍</span>
-                  <span>查看地圖</span>
+                  <span>{t('detail.viewMap')}</span>
                 </a>
               )}
             </div>
             <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-              <div className="text-xs text-white/30 mb-0.5">城市</div>
+              <div className="text-xs text-white/30 mb-0.5">{t('detail.city')}</div>
               <div className="font-semibold text-white">
-                {city?.flag} {city?.labelZh ?? request.city}
+                {city?.flag} {lang === 'zh' ? (city?.labelZh ?? request.city) : (city?.labelEn ?? request.city)}
                 {request.district && ` · ${request.district}`}
               </div>
             </div>
@@ -165,7 +167,7 @@ export function RequestDetailPage() {
 
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-xs bg-white/5 border border-white/10 text-white/50 px-2 py-1 rounded-lg">
-              {category.emoji} {category.labelZh}
+              {category.emoji} {lang === 'zh' ? category.labelZh : category.labelEn}
             </span>
           </div>
 
@@ -182,15 +184,15 @@ export function RequestDetailPage() {
           <div>
             <h3 className="font-bold text-white/80 text-base mb-3 flex items-center gap-2 tracking-tight">
               <span>💬</span>
-              <span>格價回覆</span>
+              <span>{t('detail.responses')}</span>
               <span className="text-sm font-normal text-white/30">({responses.length})</span>
             </h3>
 
             {responses.length === 0 ? (
               <div className="card p-6 text-center">
                 <div className="text-4xl mb-2 opacity-30">🙋</div>
-                <p className="font-medium text-white/50">還沒有人回覆</p>
-                <p className="text-sm mt-1 text-white/30">你去逛店時，幫忙記錄一下價格吧！</p>
+                <p className="font-medium text-white/50">{t('detail.noResponses')}</p>
+                <p className="text-sm mt-1 text-white/30">{t('detail.noResponses.desc')}</p>
               </div>
             ) : (
               <div className="flex flex-col gap-3">
@@ -218,7 +220,7 @@ export function RequestDetailPage() {
                             {formatPrice(res.price, res.currency)}
                           </div>
                           <div className={`text-xs font-medium px-2 py-0.5 rounded-full ${avail.cls}`}>
-                            {avail.zh}
+                            {avail.label}
                           </div>
                         </div>
                       </div>
@@ -233,7 +235,7 @@ export function RequestDetailPage() {
                         }`}
                       >
                         <span>👍</span>
-                        <span>有幫助 ({res.helpfulVotes})</span>
+                        <span>{t('detail.helpful')} ({res.helpfulVotes})</span>
                       </button>
                     </div>
                   );
@@ -246,28 +248,28 @@ export function RequestDetailPage() {
           <div className="card p-5 lg:p-6 lg:self-start">
             <h3 className="font-bold text-white text-base mb-4 flex items-center gap-2">
               <span>📝</span>
-              <span>提供格價資訊</span>
+              <span>{t('detail.addResponse')}</span>
             </h3>
 
             {!user ? (
               <div className="text-center py-4">
-                <p className="text-sm text-white/40 mb-3">登入後才能提交格價資訊</p>
+                <p className="text-sm text-white/40 mb-3">{t('detail.signIn.desc')}</p>
                 <button onClick={signInWithGoogle} className="btn-primary px-6">
-                  Google 登入 Sign In
+                  {t('detail.signIn.btn')}
                 </button>
               </div>
             ) : (
               <>
                 {submitted && (
                   <div className="bg-green-500/10 border border-green-500/20 text-green-400 rounded-xl p-3 mb-4 text-sm font-medium">
-                    ✅ 感謝您的回覆！已成功提交。
+                    {t('detail.submitted')}
                   </div>
                 )}
 
                 <form onSubmit={handleSubmitResponse} className="space-y-3">
                   <div>
                     <label className="block text-sm font-medium text-white/60 mb-1.5">
-                      價格 Price <span className="text-red-400">*</span>
+                      {t('detail.price')} <span className="text-red-400">*</span>
                     </label>
                     <div className="flex gap-2">
                       <select
@@ -283,7 +285,7 @@ export function RequestDetailPage() {
                         type="number"
                         value={price}
                         onChange={e => setPrice(e.target.value)}
-                        placeholder="輸入價格"
+                        placeholder={t('detail.price.placeholder')}
                         className="input-field flex-1"
                         min="0"
                         step="0.1"
@@ -293,7 +295,7 @@ export function RequestDetailPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-white/60 mb-1.5">庫存狀態</label>
+                    <label className="block text-sm font-medium text-white/60 mb-1.5">{t('detail.availability')}</label>
                     <div className="flex gap-2">
                       {(['in_stock', 'out_of_stock', 'limited'] as Availability[]).map(a => {
                         const info = availabilityLabels[a];
@@ -308,7 +310,7 @@ export function RequestDetailPage() {
                                 : 'border-white/10 bg-white/5 text-white/50 hover:border-white/20'
                             }`}
                           >
-                            {info.zh}
+                            {info.label}
                           </button>
                         );
                       })}
@@ -316,11 +318,11 @@ export function RequestDetailPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-white/60 mb-1.5">備注（選填）</label>
+                    <label className="block text-sm font-medium text-white/60 mb-1.5">{t('detail.note')}</label>
                     <textarea
                       value={note}
                       onChange={e => setNote(e.target.value)}
-                      placeholder="例如：現正特價、快要缺貨..."
+                      placeholder={t('detail.note.placeholder')}
                       className="input-field resize-none"
                       rows={2}
                     />
@@ -331,7 +333,7 @@ export function RequestDetailPage() {
                     disabled={submitting || !price}
                     className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"
                   >
-                    {submitting ? '提交中...' : '提交格價資訊'}
+                    {submitting ? t('detail.submitting') : t('detail.submitResponse')}
                   </button>
                 </form>
               </>

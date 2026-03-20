@@ -6,24 +6,26 @@ import { FloatingButton } from '../components/FloatingButton';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { useAuth } from '../../application/context/AuthContext';
 import { useUserRequests } from '../../application/hooks/useRequests';
+import { useLanguage } from '../../application/context/LanguageContext';
 
 type FilterTab = 'all' | 'waiting' | 'answered';
 
 export function MyRequestsPage() {
   const { user, signInWithGoogle } = useAuth();
+  const { t } = useLanguage();
   const [tab, setTab] = useState<FilterTab>('all');
   const { requests: myRequests, loading } = useUserRequests(user?.uid ?? '');
 
   if (!user) {
     return (
       <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
-        <PageHeader title="我的需求 My Requests" subtitle="查看你發起的格價需求" />
+        <PageHeader title={t('my.title')} subtitle={t('my.subtitle')} />
         <div className="px-4 py-12 max-w-lg mx-auto text-center">
           <div className="text-6xl mb-4 opacity-30">🔑</div>
-          <h2 className="text-xl font-bold text-white mb-2">請先登入</h2>
-          <p className="text-white/40 mb-6 text-sm">Sign in to view your price requests.</p>
+          <h2 className="text-xl font-bold text-white mb-2">{t('my.signIn')}</h2>
+          <p className="text-white/40 mb-6 text-sm">{t('my.signIn.desc')}</p>
           <button onClick={signInWithGoogle} className="btn-primary px-8 py-3">
-            Google 登入 Sign In
+            {t('my.signIn.btn')}
           </button>
         </div>
       </div>
@@ -38,31 +40,31 @@ export function MyRequestsPage() {
   const answeredCount = myRequests.filter(r => r.status === 'answered').length;
 
   const tabs: { key: FilterTab; label: string; count: number }[] = [
-    { key: 'all', label: '全部', count: myRequests.length },
-    { key: 'waiting', label: '待回覆', count: waitingCount },
-    { key: 'answered', label: '已回覆', count: answeredCount },
+    { key: 'all', label: t('my.filter.all'), count: myRequests.length },
+    { key: 'waiting', label: t('my.filter.waiting'), count: waitingCount },
+    { key: 'answered', label: t('my.filter.answered'), count: answeredCount },
   ];
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
-      <PageHeader title="我的需求 My Requests" subtitle="查看你發起的格價需求" />
+      <PageHeader title={t('my.title')} subtitle={t('my.subtitle')} />
 
       {/* Stats summary */}
       <div className="border-b border-white/10 px-4 py-4">
         <div className="max-w-7xl mx-auto lg:px-4 flex items-center justify-around lg:justify-start lg:gap-12">
           <div className="text-center">
             <div className="text-xl font-bold text-green-400">{myRequests.length}</div>
-            <div className="text-xs text-white/40">全部需求</div>
+            <div className="text-xs text-white/40">{t('my.stats.all')}</div>
           </div>
           <div className="w-px h-8 bg-white/10" />
           <div className="text-center">
             <div className="text-xl font-bold text-amber-400">{waitingCount}</div>
-            <div className="text-xs text-white/40">待回覆</div>
+            <div className="text-xs text-white/40">{t('my.stats.waiting')}</div>
           </div>
           <div className="w-px h-8 bg-white/10" />
           <div className="text-center">
             <div className="text-xl font-bold text-green-400">{answeredCount}</div>
-            <div className="text-xs text-white/40">已回覆</div>
+            <div className="text-xs text-white/40">{t('my.stats.answered')}</div>
           </div>
         </div>
       </div>
@@ -70,23 +72,23 @@ export function MyRequestsPage() {
       {/* Filter tabs */}
       <div className="border-b border-white/10 px-4 py-2">
         <div className="max-w-7xl mx-auto lg:px-4 flex gap-1">
-          {tabs.map(t => (
+          {tabs.map(t_ => (
             <button
-              key={t.key}
-              onClick={() => setTab(t.key)}
+              key={t_.key}
+              onClick={() => setTab(t_.key)}
               className={`flex-1 lg:flex-none flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl text-sm font-medium transition-all duration-200 ${
-                tab === t.key
+                tab === t_.key
                   ? 'bg-green-500/10 text-green-400 border border-green-500/20'
                   : 'text-white/40 hover:text-white/60 hover:bg-white/5'
               }`}
             >
-              <span>{t.label}</span>
+              <span>{t_.label}</span>
               <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                tab === t.key
+                tab === t_.key
                   ? 'bg-green-500/20 text-green-400'
                   : 'bg-white/5 text-white/30'
               }`}>
-                {t.count}
+                {t_.count}
               </span>
             </button>
           ))}
@@ -100,7 +102,7 @@ export function MyRequestsPage() {
           <div className="text-center py-16">
             <div className="text-5xl mb-4 opacity-30">📋</div>
             <p className="font-medium text-white/50">
-              {tab === 'all' ? '還沒有格價需求' : tab === 'waiting' ? '沒有待回覆的需求' : '沒有已回覆的需求'}
+              {tab === 'all' ? t('my.empty') : tab === 'waiting' ? t('my.empty.waiting') : t('my.empty.answered')}
             </p>
             {tab === 'all' && (
               <Link
@@ -108,7 +110,7 @@ export function MyRequestsPage() {
                 className="mt-6 inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-5 py-2.5 rounded-xl shadow-[0_0_20px_rgba(34,197,94,0.3)] active:scale-95 transition-all duration-200"
               >
                 <span>＋</span>
-                <span>發起第一個格價需求</span>
+                <span>{t('my.emptyBtn')}</span>
               </Link>
             )}
           </div>
