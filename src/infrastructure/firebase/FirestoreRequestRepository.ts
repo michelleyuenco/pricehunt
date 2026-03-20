@@ -40,6 +40,10 @@ function toRequest(id: string, data: Record<string, unknown>): PriceRequest {
     createdAt: data.createdAt instanceof Timestamp
       ? data.createdAt.toDate()
       : new Date(),
+    storeLocationId: data.storeLocationId as string | undefined,
+    storeAddress: data.storeAddress as string | undefined,
+    storeLat: data.storeLat as number | undefined,
+    storeLng: data.storeLng as number | undefined,
   };
 }
 
@@ -125,6 +129,10 @@ export class FirestoreRequestRepository {
       status: 'waiting',
       responseCount: 0,
       createdAt: serverTimestamp(),
+      ...(data.storeLocationId ? { storeLocationId: data.storeLocationId } : {}),
+      ...(data.storeAddress ? { storeAddress: data.storeAddress } : {}),
+      ...(data.storeLat != null ? { storeLat: data.storeLat } : {}),
+      ...(data.storeLng != null ? { storeLng: data.storeLng } : {}),
     });
     return {
       id: docRef.id,

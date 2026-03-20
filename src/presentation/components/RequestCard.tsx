@@ -88,6 +88,13 @@ export function RequestCard({ request }: Props) {
             {request.district && ` · ${request.district}`}
           </span>
         </div>
+        {/* Store address pill */}
+        {request.storeAddress && (
+          <div className="flex items-center gap-1 text-xs text-white/35 mb-2 truncate">
+            <span className="flex-shrink-0">📍</span>
+            <span className="truncate">{request.storeAddress.length > 30 ? request.storeAddress.slice(0, 30) + '…' : request.storeAddress}</span>
+          </div>
+        )}
 
         {/* Footer */}
         <div className="flex items-center justify-between gap-2">

@@ -7,8 +7,29 @@ import { PageHeader } from '../components/PageHeader';
 import { CATEGORIES } from '../../domain/constants/categories';
 import { getLocationLabel, getFlagForLocation } from '../../domain/constants/locations';
 import { LocationSelector } from '../components/LocationSelector';
+import { StoreLocationPicker } from '../components/StoreLocationPicker';
 import { useAuth } from '../../application/context/AuthContext';
 import { type MainCategory, type Urgency } from '../../domain/entities/Request';
+import { type StoreLocation } from '../../domain/constants/storeLocations';
+
+/** Map a store name (Chinese or English) to its brand code */
+function storeToBrandCode(storeName: string): string {
+  const name = storeName.toLowerCase();
+  if (name.includes('惠康') || name.includes('wellcome')) return 'wellcome';
+  if (name.includes('百佳') || name.includes('parknshop') || name.includes('park n shop')) return 'parknshop';
+  if (name.includes('market place') || name.includes('marketplace') || name.includes('jasons')) return 'marketplace';
+  if (name.includes('屈臣氏') || name.includes('watsons')) return 'watsons';
+  if (name.includes('萬寧') || name.includes('mannings')) return 'mannings';
+  if (name.includes('aeon')) return 'aeon';
+  if (name.includes('大昌') || name.includes('dch')) return 'dchfood';
+  if (name.includes('莎莎') || name.includes('sasa')) return 'sasa';
+  if (name.includes('龍豐') || name.includes('lung fung')) return 'lungfung';
+  if (name.includes('全聯') || name.includes('px mart') || name.includes('pxmart')) return 'pxmart';
+  if (name.includes('家樂福') || name.includes('carrefour')) return 'carrefour';
+  if (name.includes('好市多') || name.includes('costco')) return 'costco';
+  if (name.includes('康是美') || name.includes('cosmed')) return 'cosmed';
+  return '';
+}
 
 type Step = 1 | 2 | 3;
 type Mode = 'quick' | 'full';
@@ -57,6 +78,7 @@ export function CreateRequestPage() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showPriceSuggestions, setShowPriceSuggestions] = useState(false);
   const [selectedOfficialPrice, setSelectedOfficialPrice] = useState<{ name: string; minPrice: number | null; currency: string } | null>(null);
+  const [selectedStoreLocation, setSelectedStoreLocation] = useState<StoreLocation | null>(null);
 
   const { results: officialSuggestions } = useOfficialPriceSearch(
     showPriceSuggestions ? form.productName : ''
@@ -86,6 +108,10 @@ export function CreateRequestPage() {
       anyStoreInCity: !form.storeName,
       subCategory: undefined,
       tipEnabled: false,
+      storeLocationId: selectedStoreLocation?.id,
+      storeAddress: selectedStoreLocation?.address,
+      storeLat: selectedStoreLocation?.lat,
+      storeLng: selectedStoreLocation?.lng,
     });
     setNewRequestId(req.id);
     setSuccess(true);
@@ -109,6 +135,10 @@ export function CreateRequestPage() {
         : form.storeName,
       subCategory: form.subCategory || undefined,
       tipEnabled: false,
+      storeLocationId: selectedStoreLocation?.id,
+      storeAddress: selectedStoreLocation?.address,
+      storeLat: selectedStoreLocation?.lat,
+      storeLng: selectedStoreLocation?.lng,
     });
     setNewRequestId(req.id);
     setSuccess(true);
@@ -457,6 +487,8 @@ export function CreateRequestPage() {
                       setStoreInput(e.target.value);
                       update('storeName', e.target.value);
                       setShowSuggestions(true);
+                      // Reset store location when store changes
+                      setSelectedStoreLocation(null);
                     }}
                     onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
                     placeholder="例如：百佳、惠康..."
@@ -473,12 +505,23 @@ export function CreateRequestPage() {
                             setStoreInput(name);
                             update('storeName', name);
                             setShowSuggestions(false);
+                            setSelectedStoreLocation(null);
                           }}
                         >
                           🏪 {name}
                         </button>
                       ))}
                     </div>
+                  )}
+                  {/* Store location picker — shown when a recognized brand is selected */}
+                  {form.storeName && storeToBrandCode(form.storeName) && (
+                    <StoreLocationPicker
+                      brand={storeToBrandCode(form.storeName)}
+                      district={form.district || undefined}
+                      region={form.location}
+                      selectedId={selectedStoreLocation?.id}
+                      onSelect={loc => setSelectedStoreLocation(prev => prev?.id === loc.id ? null : loc)}
+                    />
                   )}
                 </div>
               )}
@@ -492,6 +535,24 @@ export function CreateRequestPage() {
                   className="input-field"
                 />
               </div>
+
+              {/* Selected store location confirmation */}
+              {selectedStoreLocation && (
+                <div className="flex items-start gap-2 bg-green-500/10 border border-green-500/20 rounded-xl px-3 py-2.5">
+                  <span className="text-green-400 text-sm mt-0.5">📍</span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-semibold text-green-400">{selectedStoreLocation.name}</p>
+                    <p className="text-xs text-green-400/70 leading-snug">{selectedStoreLocation.address}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedStoreLocation(null)}
+                    className="text-white/30 hover:text-white/60 text-xs flex-shrink-0 mt-0.5"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="flex gap-3">

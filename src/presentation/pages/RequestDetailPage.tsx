@@ -139,6 +139,20 @@ export function RequestDetailPage() {
             <div className="bg-white/5 border border-white/10 rounded-xl p-3">
               <div className="text-xs text-white/30 mb-0.5">商店</div>
               <div className="font-semibold text-white">🏪 {request.storeName}</div>
+              {request.storeAddress && (
+                <p className="text-xs text-white/40 mt-1 leading-snug">{request.storeAddress}</p>
+              )}
+              {request.storeLat != null && request.storeLng != null && (
+                <a
+                  href={`https://www.google.com/maps?q=${request.storeLat},${request.storeLng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 mt-1.5 text-xs text-green-400 hover:text-green-300 transition-colors font-medium"
+                >
+                  <span>📍</span>
+                  <span>查看地圖</span>
+                </a>
+              )}
             </div>
             <div className="bg-white/5 border border-white/10 rounded-xl p-3">
               <div className="text-xs text-white/30 mb-0.5">城市</div>

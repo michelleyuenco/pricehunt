@@ -124,6 +124,10 @@ export function useCreateRequest() {
     urgency: PriceRequest['urgency'];
     note?: string;
     tipEnabled: boolean;
+    storeLocationId?: string;
+    storeAddress?: string;
+    storeLat?: number;
+    storeLng?: number;
   }): Promise<PriceRequest> => {
     return firestoreRepo.create({
       userId: data.userId,
@@ -143,6 +147,10 @@ export function useCreateRequest() {
       urgency: data.urgency,
       note: data.note,
       tipEnabled: false,
+      storeLocationId: data.storeLocationId,
+      storeAddress: data.storeAddress,
+      storeLat: data.storeLat,
+      storeLng: data.storeLng,
     });
   }, []);
   return { create };

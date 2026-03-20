@@ -26,4 +26,9 @@ export interface PriceRequest {
   status: RequestStatus;
   responseCount: number;
   createdAt: Date;
+  // Store location fields
+  storeLocationId?: string;
+  storeAddress?: string;
+  storeLat?: number;
+  storeLng?: number;
 }
