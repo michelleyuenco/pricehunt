@@ -102,7 +102,7 @@ export function Navbar() {
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-[0_0_20px_rgba(34,197,94,0.5)] active:scale-95 transition-all duration-200">
                     <item.icon size={20} className="text-white" />
                   </div>
-                  <span className="text-[10px] font-semibold gradient-text mt-0.5">{item.label}</span>
+                  <span className="text-[10px] font-semibold text-shimmer mt-0.5">{item.label}</span>
                 </Link>
               );
             }
@@ -118,7 +118,7 @@ export function Navbar() {
                   <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-green-400 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.9)]" />
                 )}
                 <item.icon size={20} className="text-current" />
-                <span className={`text-xs font-medium ${isActive ? 'gradient-text' : ''}`}>
+                <span className={`text-xs font-medium ${isActive ? 'text-shimmer' : ''}`}>
                   {item.label}
                 </span>
               </Link>
@@ -128,8 +128,8 @@ export function Navbar() {
       </nav>
 
       {/* ===== DESKTOP: top horizontal navbar (hidden on mobile) ===== */}
-      <nav className="hidden lg:flex fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-2xl border-b border-white/[0.04] shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
-        <div className="w-full max-w-7xl mx-auto px-8 h-16 flex items-center justify-between gap-8">
+      <nav className="hidden lg:flex fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
+        <div className="w-full max-w-7xl mx-auto px-8 h-16 flex items-center justify-between gap-8 border-b border-white/[0.04]">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 shrink-0">
             <Search size={20} className="text-green-400" />
@@ -169,7 +169,7 @@ export function Navbar() {
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.9)]" />
                   )}
                   <item.icon size={16} className="text-current" />
-                  <span className={isActive ? 'gradient-text' : ''}>{item.label}</span>
+                  <span className={isActive ? 'text-shimmer' : ''}>{item.label}</span>
                 </Link>
               );
             })}

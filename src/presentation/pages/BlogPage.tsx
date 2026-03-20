@@ -89,7 +89,7 @@ export function BlogPage() {
             <Link
               key={post.slug}
               to={`/blog/${post.slug}`}
-              className="group bg-white/[0.03] border border-white/[0.08] rounded-2xl p-5 hover:border-green-500/30 hover:bg-green-500/[0.03] transition-all duration-200 active:scale-[0.98] flex flex-col"
+              className="group bg-white/[0.03] border border-white/[0.08] rounded-2xl p-5 hover:border-green-500/30 hover:bg-green-500/[0.03] transition-all duration-200 active:scale-[0.98] flex flex-col card-lift shine-sweep gradient-border"
             >
               {/* Category + reading time */}
               <div className="flex items-center justify-between mb-3">

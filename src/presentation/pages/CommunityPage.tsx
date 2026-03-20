@@ -43,20 +43,20 @@ export function CommunityPage() {
             <BarChart3 size={16} className="text-white/50" /> {t('community.stats.title')}
           </h2>
           <div className="grid grid-cols-3 gap-3">
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center lg:p-6">
-              <div className="text-3xl font-extrabold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent lg:text-4xl">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center lg:p-6 gradient-border card-lift">
+              <div className="text-3xl font-extrabold text-shimmer lg:text-4xl animate-count">
                 {totalRequests}
               </div>
               <div className="text-xs text-white/40 mt-1 lg:text-sm">{t('community.stats.requests')}</div>
             </div>
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center lg:p-6">
-              <div className="text-3xl font-extrabold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent lg:text-4xl">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center lg:p-6 gradient-border card-lift">
+              <div className="text-3xl font-extrabold text-shimmer lg:text-4xl animate-count">
                 {totalResponses}
               </div>
               <div className="text-xs text-white/40 mt-1 lg:text-sm">{t('community.stats.responses')}</div>
             </div>
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center lg:p-6">
-              <div className="text-3xl font-extrabold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent lg:text-4xl">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center lg:p-6 gradient-border card-lift">
+              <div className="text-3xl font-extrabold text-shimmer lg:text-4xl animate-count">
                 {citiesCovered}
               </div>
               <div className="text-xs text-white/40 mt-1 lg:text-sm">{t('community.stats.cities')}</div>
@@ -79,7 +79,7 @@ export function CommunityPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {leaders.map((leader, index) => (
-              <div key={leader.userId} className={`card p-4 ${index === 0 ? 'border-amber-500/20 bg-amber-500/5' : ''}`}>
+              <div key={leader.userId} className={`card p-4 card-lift gradient-border ${index === 0 ? 'border-amber-500/20 bg-amber-500/5 glow-pulse' : ''}`}>
                 <div className="flex items-center gap-3">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 ${
                     index === 0 ? 'bg-amber-500/20 text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.3)]' :

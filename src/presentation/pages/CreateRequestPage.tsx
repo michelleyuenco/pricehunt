@@ -299,7 +299,7 @@ export function CreateRequestPage() {
                   <div
                     className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 transition-all duration-200 ${
                       step === s
-                        ? 'bg-gradient-to-br from-green-500 to-emerald-500 text-white shadow-[0_0_12px_rgba(34,197,94,0.4)]'
+                        ? 'bg-gradient-to-br from-green-500 to-emerald-500 text-white shadow-[0_0_12px_rgba(34,197,94,0.4)] glow-pulse'
                         : step > s
                         ? 'bg-green-500/30 text-green-400 border border-green-500/30'
                         : 'bg-white/5 text-white/30 border border-white/10'
@@ -320,7 +320,7 @@ export function CreateRequestPage() {
             {/* Step 1 */}
             {step === 1 && (
               <div className="space-y-4">
-                <div className="card p-5 lg:p-8 space-y-4">
+                <div className="card p-5 lg:p-8 space-y-4 gradient-border">
                   <h3 className="font-bold text-white flex items-center gap-2">
                     <Package size={18} className="text-white/70" />
                     <span>{t('create.step1.title')}</span>
@@ -467,7 +467,7 @@ export function CreateRequestPage() {
             {/* Step 2 */}
             {step === 2 && (
               <div className="space-y-4">
-                <div className="card p-5 lg:p-8 space-y-4">
+                <div className="card p-5 lg:p-8 space-y-4 gradient-border">
                   <h3 className="font-bold text-white flex items-center gap-2">
                     <MapPin size={18} className="text-white/70" />
                     <span>{t('create.step2.title')}</span>
@@ -593,7 +593,7 @@ export function CreateRequestPage() {
             {/* Step 3 */}
             {step === 3 && (
               <div className="space-y-4">
-                <div className="card p-5 lg:p-8 space-y-4">
+                <div className="card p-5 lg:p-8 space-y-4 gradient-border">
                   <h3 className="font-bold text-white flex items-center gap-2">
                     <Settings size={18} className="text-white/70" />
                     <span>{t('create.step3.title')}</span>
@@ -679,7 +679,7 @@ export function CreateRequestPage() {
                   <button
                     onClick={handleSubmit}
                     disabled={submitting}
-                    className="btn-accent flex-1 disabled:opacity-40"
+                    className="btn-accent flex-1 disabled:opacity-40 glow-pulse"
                   >
                     {submitting ? t('create.step3.submitting') : t('create.step3.submit')}
                   </button>

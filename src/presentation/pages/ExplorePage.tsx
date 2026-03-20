@@ -42,7 +42,7 @@ export function ExplorePage() {
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder={t('explore.search')}
-              className="input-field pl-10"
+              className="input-field pl-10 focus-ring"
             />
           </div>
         </div>

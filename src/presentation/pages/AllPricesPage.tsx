@@ -78,7 +78,7 @@ export function AllPricesPage() {
             value={searchQuery}
             onChange={e => { setSearchQuery(e.target.value); setPage(1); }}
             placeholder={t('common.search')}
-            className="w-full bg-white/[0.03] border border-white/[0.06] rounded-2xl px-5 py-4 pl-12 text-base text-white placeholder-white/30 focus:border-green-500/40 focus:outline-none transition-all"
+            className="w-full bg-white/[0.03] border border-white/[0.06] rounded-2xl px-5 py-4 pl-12 text-base text-white placeholder-white/30 focus:border-green-500/40 focus:outline-none transition-all focus-ring"
           />
           <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
         </div>
@@ -122,7 +122,7 @@ export function AllPricesPage() {
             <Link
               key={product.code}
               to={`/official-price/${product.code}`}
-              className="glass rounded-2xl p-4 hover:scale-[1.01] transition-all duration-300 block"
+              className="glass rounded-2xl p-4 hover:scale-[1.01] transition-all duration-300 block shine-sweep gradient-border card-lift"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">

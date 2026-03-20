@@ -37,7 +37,7 @@ export function RequestCard({ request }: Props) {
 
   return (
     <Link to={`/request/${request.id}`} className="block group">
-      <div className="bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.14] rounded-2xl p-4 transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99]">
+      <div className="bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.14] rounded-2xl p-4 transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] card-lift shine-sweep gradient-border">
         {/* Header */}
         <div className="flex items-start justify-between gap-2 mb-2">
           <div className="flex items-center gap-2 min-w-0">

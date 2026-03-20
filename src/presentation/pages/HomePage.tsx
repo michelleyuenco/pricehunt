@@ -19,7 +19,7 @@ function OfficialPriceCard({ product }: { product: ReturnType<typeof useOfficial
   return (
     <Link
       to={`/official-price/${product.code}`}
-      className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-green-500/30 hover:bg-green-500/5 transition-all duration-200 active:scale-[0.98]"
+      className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-green-500/30 hover:bg-green-500/5 transition-all duration-200 active:scale-[0.98] shine-sweep gradient-border card-lift"
     >
       <div className="flex-1 min-w-0">
         <p className="text-[11px] text-white/30 truncate mb-0.5">{product.brand}</p>
@@ -92,7 +92,7 @@ export function HomePage() {
   }, [officialPrices, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
+    <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20 dot-grid">
 
       {/* ===== Onboarding Banner ===== */}
       {showOnboarding && (
@@ -114,7 +114,7 @@ export function HomePage() {
       )}
 
       {/* Hero */}
-      <div className="relative px-4 pt-8 pb-6 overflow-hidden">
+      <div className="relative px-4 pt-8 pb-6 overflow-hidden noise-overlay">
         <div className="absolute -top-20 -right-20 w-64 h-64 bg-green-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute top-10 -left-10 w-40 h-40 bg-emerald-500/8 rounded-full blur-2xl pointer-events-none" />
 
@@ -130,7 +130,7 @@ export function HomePage() {
           <h2 className="text-5xl md:text-7xl font-extrabold mb-1 leading-tight text-white">
             {t('home.hero.title1')}
           </h2>
-          <h2 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight text-shimmer">
             {t('home.hero.title2')}
           </h2>
           <p className="text-sm text-white/40 mb-5 leading-relaxed">
@@ -140,7 +140,7 @@ export function HomePage() {
           {user ? (
             <Link
               to="/request/new"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-6 py-3 rounded-xl shadow-[0_0_25px_rgba(34,197,94,0.35)] hover:shadow-[0_0_35px_rgba(34,197,94,0.5)] hover:scale-[1.02] active:scale-95 transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-6 py-3 rounded-xl shadow-[0_0_25px_rgba(34,197,94,0.35)] hover:shadow-[0_0_35px_rgba(34,197,94,0.5)] hover:scale-[1.02] active:scale-95 transition-all duration-200 glow-pulse"
             >
               <ClipboardList size={18} className="text-current" />
               <span>{t('home.hero.cta')}</span>
@@ -148,7 +148,7 @@ export function HomePage() {
           ) : (
             <button
               onClick={signInWithGoogle}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-6 py-3 rounded-xl shadow-[0_0_25px_rgba(34,197,94,0.35)] hover:shadow-[0_0_35px_rgba(34,197,94,0.5)] hover:scale-[1.02] active:scale-95 transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-6 py-3 rounded-xl shadow-[0_0_25px_rgba(34,197,94,0.35)] hover:shadow-[0_0_35px_rgba(34,197,94,0.5)] hover:scale-[1.02] active:scale-95 transition-all duration-200 glow-pulse"
             >
               <Lock size={18} className="text-current" />
               <span>{t('home.hero.signIn')}</span>
