@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { useAuth } from '../../application/context/AuthContext';
 
 const navItems = [
-  { to: '/', label: '首頁', icon: '🏠' },
-  { to: '/explore', label: '探索', icon: '🔍' },
-  { to: '/stores', label: '商店', icon: '🏪' },
-  { to: '/community', label: '社群', icon: '👥' },
-  { to: '/my-requests', label: '我的', icon: '📋' },
+  { to: '/', label: '首頁', icon: '🏠', highlight: false },
+  { to: '/explore', label: '探索', icon: '🔍', highlight: false },
+  { to: '/request/new', label: '發問', icon: '➕', highlight: true },
+  { to: '/stores', label: '商店', icon: '🏪', highlight: false },
+  { to: '/my-requests', label: '我的', icon: '👤', highlight: false },
 ];
 
 export function Navbar() {
@@ -74,6 +74,20 @@ export function Navbar() {
         <div className="max-w-lg mx-auto flex items-center justify-around px-2 py-2">
           {navItems.map(item => {
             const isActive = location.pathname === item.to;
+            if (item.highlight) {
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className="relative flex flex-col items-center gap-0.5 px-3 py-1 -mt-3"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-[0_0_20px_rgba(34,197,94,0.5)] active:scale-95 transition-all duration-200">
+                    <span className="text-xl text-white">{item.icon}</span>
+                  </div>
+                  <span className="text-[10px] font-semibold gradient-text mt-0.5">{item.label}</span>
+                </Link>
+              );
+            }
             return (
               <Link
                 key={item.to}
@@ -109,6 +123,18 @@ export function Navbar() {
           <div className="flex items-center gap-1">
             {navItems.map(item => {
               const isActive = location.pathname === item.to;
+              if (item.highlight) {
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className="relative flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 text-green-400 hover:from-green-500/30 hover:to-emerald-500/30 hover:scale-105 active:scale-95"
+                  >
+                    <span>{item.icon}</span>
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              }
               return (
                 <Link
                   key={item.to}

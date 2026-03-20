@@ -90,19 +90,35 @@ export function RequestCard({ request }: Props) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between">
-          <span className="text-xs bg-white/5 border border-white/10 text-white/50 px-2 py-1 rounded-lg">
-            {category.emoji} {category.labelZh}{request.subCategory && (" · " + getSubCategoryLabel(request.category, request.subCategory))}
-          </span>
-          <div className="flex items-center gap-3 text-xs text-white/30">
-            {request.tipEnabled && (
-              <span className="text-amber-400 font-medium">💰 贈NT$10</span>
-            )}
-            <span className="flex items-center gap-1">
-              <span>💬</span>
-              <span>{request.responseCount}</span>
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-xs bg-white/5 border border-white/10 text-white/50 px-2 py-1 rounded-lg flex-shrink-0">
+              {category.emoji} {category.labelZh}{request.subCategory && (" · " + getSubCategoryLabel(request.category, request.subCategory))}
             </span>
+            <div className="flex items-center gap-2 text-xs text-white/30">
+              {request.tipEnabled && (
+                <span className="text-amber-400 font-medium">💰 贈NT$10</span>
+              )}
+              <span className="flex items-center gap-1">
+                <span>💬</span>
+                <span>{request.responseCount}</span>
+              </span>
+            </div>
           </div>
+          {/* Price status indicator */}
+          {request.status === 'waiting' ? (
+            <div className="flex items-center gap-1.5 shrink-0">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-[0_0_6px_rgba(245,158,11,0.8)]" />
+              <span className="text-xs text-amber-400 font-medium whitespace-nowrap">等待回報</span>
+            </div>
+          ) : request.status === 'answered' && request.responseCount > 0 ? (
+            <div className="shrink-0 text-right">
+              <p className="text-sm font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent leading-tight">
+                💬 {request.responseCount} 回報
+              </p>
+              <p className="text-[10px] text-green-400/60">已有價格</p>
+            </div>
+          ) : null}
         </div>
       </div>
     </Link>

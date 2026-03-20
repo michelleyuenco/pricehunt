@@ -11,6 +11,7 @@ import { useAuth } from '../../application/context/AuthContext';
 import { type MainCategory, type Urgency } from '../../domain/entities/Request';
 
 type Step = 1 | 2 | 3;
+type Mode = 'quick' | 'full';
 
 interface FormData {
   productName: string;
@@ -46,6 +47,7 @@ export function CreateRequestPage() {
   const storeNames = useStoreNames();
   const { user, signInWithGoogle } = useAuth();
 
+  const [mode, setMode] = useState<Mode>('quick');
   const [step, setStep] = useState<Step>(1);
   const [form, setForm] = useState<FormData>(initialForm);
   const [submitting, setSubmitting] = useState(false);
@@ -67,6 +69,28 @@ export function CreateRequestPage() {
   const storeSuggestions = storeNames.filter(n =>
     n.toLowerCase().includes(storeInput.toLowerCase()) && storeInput.length > 0
   );
+
+  const handleQuickSubmit = async () => {
+    if (!user) { await signInWithGoogle(); return; }
+    if (!form.productName) return;
+    setSubmitting(true);
+    const req = await create({
+      userId: user.uid,
+      userName: user.displayName ?? '用戶',
+      userPhoto: user.photoURL ?? '',
+      username: user.displayName ?? '用戶',
+      avatarEmoji: user.photoURL ?? '👤',
+      ...form,
+      city: form.location,
+      storeName: form.storeName || `${getLocationLabel(form.location)}任一商店`,
+      anyStoreInCity: !form.storeName,
+      subCategory: undefined,
+      tipEnabled: false,
+    });
+    setNewRequestId(req.id);
+    setSuccess(true);
+    setSubmitting(false);
+  };
 
   const handleSubmit = async () => {
     if (!user) { await signInWithGoogle(); return; }
@@ -145,8 +169,72 @@ export function CreateRequestPage() {
     <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20">
       <PageHeader title="發起格價需求" showBack />
 
+      {/* Quick Mode card */}
+      <div className="px-4 pt-4 max-w-2xl mx-auto">
+        <div className={`card p-5 space-y-4 border-2 transition-all duration-200 ${mode === 'quick' ? 'border-green-500/30' : 'border-white/10'}`}>
+          <div className="flex items-center gap-2">
+            <span className="text-lg">⚡</span>
+            <h3 className="font-bold text-white">快速格價 Quick Price Check</h3>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-white/60 mb-1.5">
+              產品名稱 <span className="text-red-400">*</span>
+            </label>
+            <input
+              value={form.productName}
+              onChange={e => update('productName', e.target.value)}
+              placeholder="例如：義美小泡芙 / Product name"
+              className="input-field"
+            />
+          </div>
+
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-white/60 mb-1.5">商店名稱（選填）</label>
+              <input
+                value={form.storeName}
+                onChange={e => { update('storeName', e.target.value); setStoreInput(e.target.value); }}
+                placeholder="例如：百佳、惠康..."
+                className="input-field"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-white/60 mb-1.5">城市</label>
+              <select
+                value={form.location}
+                onChange={e => update('location', e.target.value)}
+                className="input-field"
+              >
+                <option value="hongkong">🇭🇰 香港</option>
+                <option value="taiwan">🇹🇼 台灣</option>
+              </select>
+            </div>
+          </div>
+
+          <button
+            onClick={mode === 'quick' ? handleQuickSubmit : undefined}
+            disabled={!form.productName || submitting}
+            className="btn-primary w-full disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {submitting ? '發送中...' : '🚀 發出請求'}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setMode(mode === 'quick' ? 'full' : 'quick')}
+            className="w-full text-center text-sm text-white/40 hover:text-white/60 transition-colors py-1"
+          >
+            {mode === 'quick' ? '想填更多？ 展開完整表單 ↓' : '▲ 收起完整表單'}
+          </button>
+        </div>
+      </div>
+
+      {/* Full form — shown when mode === 'full' */}
+      {mode === 'full' && (
+        <>
       {/* Step indicator */}
-      <div className="bg-[#0A0A0A]/95 border-b border-white/10 px-4 py-3">
+      <div className="bg-[#0A0A0A]/95 border-b border-white/10 px-4 py-3 mt-4">
         <div className="max-w-2xl mx-auto flex items-center gap-2">
           {([1, 2, 3] as Step[]).map(s => (
             <div key={s} className="flex items-center gap-2 flex-1">
@@ -509,6 +597,8 @@ export function CreateRequestPage() {
           </div>
         )}
       </div>
+        </>
+      )}
     </div>
   );
 }
