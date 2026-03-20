@@ -27,6 +27,7 @@ export interface OfficialPrice {
     sasa: boolean;
     lungfung: boolean;
   };
+  storePrices?: Record<string, number>; // e.g. { wellcome: 10.5, parknshop: 10 }
   source: string;
   scrapedAt?: Timestamp;
   updatedAt?: Timestamp;

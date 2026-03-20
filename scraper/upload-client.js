@@ -39,6 +39,7 @@ for (let i = 0; i < products.length; i += BATCH_SIZE) {
       currency: product.currency || 'HK$',
       category: product.category || '',
       stores: product.stores || {},
+      storePrices: product.storePrices || {},
       source: 'consumer.org.hk',
       scrapedAt: Timestamp.now(),
       updatedAt: Timestamp.now(),

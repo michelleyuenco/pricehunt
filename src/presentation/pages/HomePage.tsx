@@ -12,9 +12,21 @@ import {
   ClipboardList, Lock, Plus, Sparkles, X, Globe, ChevronRight
 } from 'lucide-react';
 
+function getCheapestStoreName(storePrices?: Record<string, number>): string | null {
+  if (!storePrices || Object.keys(storePrices).length === 0) return null;
+  const cheapest = Object.entries(storePrices).reduce((a, b) => a[1] <= b[1] ? a : b);
+  const STORE_ZH: Record<string, string> = {
+    wellcome: '惠康', parknshop: '百佳', jasons: 'Market Place',
+    watsons: '屈臣氏', mannings: '萬寧', aeon: 'AEON',
+    dchfood: '大昌食品', sasa: '莎莎', lungfung: '龍豐',
+  };
+  return STORE_ZH[cheapest[0]] ?? cheapest[0];
+}
+
 function OfficialPriceCard({ product }: { product: ReturnType<typeof useOfficialPrices>['prices'][0] }) {
   const { t } = useLanguage();
   const storeCount = Object.values(product.stores ?? {}).filter(Boolean).length;
+  const cheapestStore = getCheapestStoreName(product.storePrices);
   return (
     <LocaleLink
       to={`/official-price/${product.code}`}
@@ -23,7 +35,14 @@ function OfficialPriceCard({ product }: { product: ReturnType<typeof useOfficial
       <div className="flex-1 min-w-0">
         <p className="text-[11px] text-white/30 truncate mb-0.5">{product.brand}</p>
         <p className="text-sm font-semibold text-white/90 leading-snug line-clamp-2">{product.name}</p>
-        <p className="text-[11px] text-white/30 mt-1">{storeCount} {t('home.stores.count')}</p>
+        <div className="flex items-center gap-2 mt-1 flex-wrap">
+          <p className="text-[11px] text-white/30">{storeCount} {t('home.stores.count')}</p>
+          {cheapestStore && (
+            <span className="text-[10px] font-semibold bg-green-500/15 text-green-400 border border-green-500/25 rounded-full px-1.5 py-0.5">
+              {cheapestStore}最平
+            </span>
+          )}
+        </div>
       </div>
       {product.minPrice != null && (
         <div className="shrink-0 text-right">

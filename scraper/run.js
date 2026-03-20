@@ -94,11 +94,31 @@ async function extractProducts(page, url) {
         const cat3 = el.getAttribute('data-cat3') || '';
 
         const stores = {};
+        const storePrices = {};
+        const storeOrder = ['wellcome', 'parknshop', 'jasons', 'watsons', 'mannings', 'aeon', 'dchfood', 'sasa', 'lungfung'];
+        
         for (const [attr, key] of Object.entries(storeMap)) {
           stores[key] = el.getAttribute(attr) === '1';
         }
 
-        results.push({ code, brand, name, minPrice, cat1, cat2, cat3, stores });
+        // Extract per-store prices from child cells with data-label
+        el.querySelectorAll('[data-label]').forEach(cell => {
+          const label = cell.getAttribute('data-label');
+          const singleSpan = cell.querySelector('[data-price-type="single"]');
+          const text = singleSpan ? singleSpan.textContent : cell.textContent;
+          const priceMatch = (text || '').match(/\$([\d.]+)/);
+          if (priceMatch) {
+            const priceVal = parseFloat(priceMatch[1]);
+            if (!isNaN(priceVal) && priceVal > 0) {
+              // Map Chinese store labels to English keys
+              const labelMap = {'惠康':'wellcome','百佳':'parknshop','Market Place':'jasons','屈臣氏':'watsons','萬寧':'mannings','AEON':'aeon','大昌食品':'dchfood','莎莎':'sasa','龍豐':'lungfung'};
+              const key = labelMap[label];
+              if (key) storePrices[key] = priceVal;
+            }
+          }
+        });
+
+        results.push({ code, brand, name, minPrice, cat1, cat2, cat3, stores, storePrices });
       });
 
       return results;
@@ -203,6 +223,7 @@ async function main() {
           currency: 'HK$',
           category: [p.cat1, p.cat2, p.cat3].filter(Boolean).join('/'),
           stores: p.stores,
+          storePrices: p.storePrices || {},
         };
       }
     }

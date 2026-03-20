@@ -1,4 +1,15 @@
 import { Search, Store } from "lucide-react";
+
+function getCheapestStoreName(storePrices?: Record<string, number>): string | null {
+  if (!storePrices || Object.keys(storePrices).length === 0) return null;
+  const cheapest = Object.entries(storePrices).reduce((a, b) => a[1] <= b[1] ? a : b);
+  const STORE_ZH: Record<string, string> = {
+    wellcome: '惠康', parknshop: '百佳', jasons: 'Market Place',
+    watsons: '屈臣氏', mannings: '萬寧', aeon: 'AEON',
+    dchfood: '大昌食品', sasa: '莎莎', lungfung: '龍豐',
+  };
+  return STORE_ZH[cheapest[0]] ?? cheapest[0];
+}
 import { useState, useEffect, useMemo } from 'react';
 import { LocaleLink } from '../components/LocaleLink';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
@@ -135,10 +146,15 @@ export function AllPricesPage() {
                   </span>
                 )}
               </div>
-              <div className="flex items-center gap-2 mt-2">
+              <div className="flex items-center gap-2 mt-2 flex-wrap">
                 <span className="text-[10px] text-white/30">
                   <Store size={14} className="inline text-current" /> {countStores(product.stores)} {t('prices.storesAvailable') || 'stores'}
                 </span>
+                {getCheapestStoreName(product.storePrices) && (
+                  <span className="text-[10px] font-semibold bg-green-500/15 text-green-400 border border-green-500/25 rounded-full px-2 py-0.5">
+                    {getCheapestStoreName(product.storePrices)}最平
+                  </span>
+                )}
                 <span className="text-[10px] text-white/20">·</span>
                 <span className="text-[10px] text-green-400/60">
                   {product.source}
