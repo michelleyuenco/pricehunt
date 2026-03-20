@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useLanguage } from '../../application/context/LanguageContext';
 import { Link, useParams, Navigate } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { blogPosts } from '../../infrastructure/data/blogPosts';
@@ -37,6 +38,7 @@ function extractToc(html: string): { id: string; text: string }[] {
 }
 
 export function BlogArticlePage() {
+  const { t } = useLanguage();
   const { slug } = useParams<{ slug: string }>();
   const post = blogPosts.find(p => p.slug === slug);
 
@@ -81,9 +83,9 @@ export function BlogArticlePage() {
       <div className="max-w-7xl mx-auto px-4 py-8 pb-24 lg:pb-12">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-white/30 mb-6">
-          <Link to="/" className="hover:text-white/60 transition-colors">首頁</Link>
+          <Link to="/" className="hover:text-white/60 transition-colors">{t("nav.home")}</Link>
           <span>/</span>
-          <Link to="/blog" className="hover:text-white/60 transition-colors">Blog</Link>
+          <Link to="/blog" className="hover:text-white/60 transition-colors">{t("nav.blog")}</Link>
           <span>/</span>
           <span className="text-white/50 truncate max-w-xs">{post.title}</span>
         </nav>

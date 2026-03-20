@@ -214,7 +214,7 @@ export function HomePage() {
                   <span>{t('home.prices.title')}</span>
                 </h3>
                 <Link
-                  to="/explore"
+                  to="/prices"
                   className="text-xs text-green-400 hover:text-green-300 font-medium transition-colors flex items-center gap-1"
                 >
                   {t('common.viewAll')} →
