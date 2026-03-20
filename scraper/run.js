@@ -233,6 +233,11 @@ async function main() {
     console.log('\n🔍 DRY-RUN: Skipping Firestore write. Sample product:');
     const sample = Object.values(allProducts)[0];
     if (sample) console.log(JSON.stringify(sample, null, 2));
+    // Save to JSON file
+    const fs = await import('fs');
+    const outPath = './scraped-products.json';
+    fs.writeFileSync(outPath, JSON.stringify(Object.values(allProducts), null, 2));
+    console.log(`\n📁 Saved ${uniqueCount} products to ${outPath}`);
     console.log(`\n🎉 Dry-run complete! ${uniqueCount} products would be written.`);
     return;
   }

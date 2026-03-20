@@ -1,0 +1,97 @@
+[
+  {
+    "code": "P000000190",
+    "brand": "嘉頓 Garden",
+    "name": "孖寶蛋糕 - 櫻桃提子 75克",
+    "minPrice": 10,
+    "currency": "HK$",
+    "category": "001/001/001",
+    "stores": {
+      "wellcome": true,
+      "parknshop": true,
+      "jasons": true,
+      "watsons": false,
+      "mannings": false,
+      "aeon": false,
+      "dchfood": false,
+      "sasa": false,
+      "lungfung": false
+    }
+  },
+  {
+    "code": "P000002937",
+    "brand": "嘉頓 Garden",
+    "name": "超軟蛋糕 - 雲呢拿味 8片",
+    "minPrice": 26.5,
+    "currency": "HK$",
+    "category": "001/001/001",
+    "stores": {
+      "wellcome": true,
+      "parknshop": true,
+      "jasons": true,
+      "watsons": false,
+      "mannings": false,
+      "aeon": false,
+      "dchfood": false,
+      "sasa": false,
+      "lungfung": false
+    }
+  },
+  {
+    "code": "P000000038",
+    "brand": "嘉頓 Garden",
+    "name": "雪芳蛋糕 - 朱古力味 60克",
+    "minPrice": 8.5,
+    "currency": "HK$",
+    "category": "001/001/002",
+    "stores": {
+      "wellcome": true,
+      "parknshop": true,
+      "jasons": true,
+      "watsons": false,
+      "mannings": false,
+      "aeon": false,
+      "dchfood": false,
+      "sasa": false,
+      "lungfung": false
+    }
+  },
+  {
+    "code": "P000003270",
+    "brand": "嘉頓 Garden",
+    "name": "迷你瑞士卷 - 朱古力 56克",
+    "minPrice": 10,
+    "currency": "HK$",
+    "category": "001/001/003",
+    "stores": {
+      "wellcome": true,
+      "parknshop": true,
+      "jasons": true,
+      "watsons": false,
+      "mannings": false,
+      "aeon": false,
+      "dchfood": false,
+      "sasa": false,
+      "lungfung": false
+    }
+  },
+  {
+    "code": "P000000643",
+    "brand": "嘉頓 Garden",
+    "name": "迷你瑞士卷 - 檸檬 56克",
+    "minPrice": 10,
+    "currency": "HK$",
+    "category": "001/001/003",
+    "stores": {
+      "wellcome": true,
+      "parknshop": true,
+      "jasons": true,
+      "watsons": false,
+      "mannings": false,
+      "aeon": false,
+      "dchfood": false,
+      "sasa": false,
+      "lungfung": false
+    }
+  }
+]
