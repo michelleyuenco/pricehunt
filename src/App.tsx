@@ -14,6 +14,8 @@ import { AllPricesPage } from './presentation/pages/AllPricesPage';
 import { OfficialPricePage } from './presentation/pages/OfficialPricePage';
 import { BlogPage } from './presentation/pages/BlogPage';
 import { BlogArticlePage } from './presentation/pages/BlogArticlePage';
+import { RecordPricePage } from './presentation/pages/RecordPricePage';
+import { MyRecordsPage } from './presentation/pages/MyRecordsPage';
 
 function getDefaultLang(): Language {
   try {
@@ -43,6 +45,8 @@ function LocaleWrapper() {
           <Route path="/official-price/:code" element={<OfficialPricePage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogArticlePage />} />
+          <Route path="/record" element={<RecordPricePage />} />
+          <Route path="/my-records" element={<MyRecordsPage />} />
         </Routes>
         <Navbar />
         <FloatingButton />

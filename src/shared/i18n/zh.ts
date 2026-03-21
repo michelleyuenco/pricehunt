@@ -290,4 +290,37 @@ export const zh: Record<string, string> = {
   'onboarding.popular': '熱門產品',
   'onboarding.tryOther': '試下其他關鍵字',
   'onboarding.doneWithCount': '完成',
+
+  // Record Price
+  'record.title': '記錄價格',
+  'record.store': '商店',
+  'record.storePlaceholder': '搜尋商店...',
+  'record.addStore': '新增商店',
+  'record.product': '產品',
+  'record.productPlaceholder': '搜尋產品...',
+  'record.addProduct': '新增產品',
+  'record.price': '價格',
+  'record.currency': '貨幣',
+  'record.unit': '單位',
+  'record.perItem': '每件',
+  'record.perKg': '每公斤',
+  'record.perPack': '每包',
+  'record.perBox': '每盒',
+  'record.perBottle': '每瓶',
+  'record.perCan': '每罐',
+  'record.onSale': '特價中',
+  'record.originalPrice': '原價',
+  'record.note': '備註',
+  'record.save': '儲存記錄',
+  'record.saved': '已儲存！',
+  'record.recent': '最近記錄',
+
+  // My Records
+  'myRecords.title': '我的記錄',
+  'myRecords.stats': '本月記錄',
+  'myRecords.empty': '你仲未記錄過價格',
+  'myRecords.emptyBtn': '記錄第一個價格',
+
+  // Community
+  'community.reports': '社群回報',
 };

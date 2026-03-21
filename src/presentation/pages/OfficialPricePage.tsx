@@ -8,7 +8,19 @@ import { LoadingSpinner } from '../components/LoadingSpinner';
 import { useSubscriptions } from '../../application/hooks/useSubscriptions';
 import { useAuth } from '../../application/context/AuthContext';
 import { useLanguage } from '../../application/context/LanguageContext';
-import { Heart, Bell } from 'lucide-react';
+import { useProductRecords } from '../../application/hooks/usePriceRecords';
+import { LocaleLink } from '../components/LocaleLink';
+import { Heart, Bell, Users, Plus, Tag, Store } from 'lucide-react';
+import type { PriceRecord } from '../../shared/types/priceRecord';
+
+function formatCommunityDate(record: PriceRecord): string {
+  try {
+    const ts = record.recordedAt;
+    if (!ts) return '';
+    const date = 'toDate' in ts ? (ts as { toDate(): Date }).toDate() : new Date((ts as { seconds: number }).seconds * 1000);
+    return date.toLocaleDateString('zh-HK', { month: 'short', day: 'numeric' });
+  } catch { return ''; }
+}
 
 const STORE_LABELS: Record<string, { zh: string; en: string }> = {
   wellcome:  { zh: '惠康', en: 'Wellcome' },
@@ -98,6 +110,7 @@ export function OfficialPricePage() {
   const { isSubscribed, subscribe, unsubscribe } = useSubscriptions();
   const { user, signInWithGoogle } = useAuth();
   const { t } = useLanguage();
+  const { records: communityRecords, loading: communityLoading } = useProductRecords(code ?? '');
 
   useEffect(() => {
     if (!code) return;
@@ -336,6 +349,95 @@ export function OfficialPricePage() {
             {/* Subtle overlay glow */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-20 bg-green-500/5 blur-2xl rounded-full pointer-events-none" />
           </div>
+        </div>
+
+        {/* ── Community Reports ─────────────────────────────────────────── */}
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-bold text-white/80 text-sm flex items-center gap-2">
+              <Users size={16} className="text-purple-400" />
+              <span>👥 {t('community.reports') || '社群回報'} Community Reports</span>
+              {communityRecords.length > 0 && (
+                <span className="text-xs font-normal text-white/30">({communityRecords.length})</span>
+              )}
+            </h3>
+            <LocaleLink
+              to="/record"
+              className="flex items-center gap-1 text-xs text-green-400 hover:text-green-300 font-medium transition-colors border border-green-500/20 rounded-full px-2.5 py-1"
+            >
+              <Plus size={11} className="text-current" />
+              記錄價格
+            </LocaleLink>
+          </div>
+
+          {communityLoading ? (
+            <div className="py-4 flex justify-center"><LoadingSpinner /></div>
+          ) : communityRecords.length === 0 ? (
+            <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 text-center">
+              <Users size={28} className="text-white/15 mx-auto mb-2" />
+              <p className="text-sm text-white/30 mb-3">還沒有社群回報</p>
+              <LocaleLink
+                to="/record"
+                className="inline-flex items-center gap-1.5 text-xs text-green-400 border border-green-500/20 rounded-full px-3 py-1.5 hover:bg-green-500/5 transition-colors"
+              >
+                <Plus size={11} className="text-current" />
+                成為第一個記錄者
+              </LocaleLink>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {communityRecords.map((record, i) => (
+                <div key={record.id ?? i} className="flex items-start gap-3 bg-white/[0.03] border border-white/[0.06] rounded-2xl px-4 py-3 hover:border-white/10 transition-all">
+                  {/* User avatar */}
+                  <div className="flex-shrink-0 mt-0.5">
+                    {record.userPhoto ? (
+                      <img src={record.userPhoto} alt="" className="w-7 h-7 rounded-full ring-1 ring-white/10" />
+                    ) : (
+                      <div className="w-7 h-7 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center">
+                        <span className="text-[10px] text-purple-400 font-bold">
+                          {record.userName?.charAt(0) ?? 'U'}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5 mb-0.5">
+                          <Store size={11} className="text-white/30 flex-shrink-0" />
+                          <p className="text-xs text-white/60 truncate">
+                            {record.storeName}
+                            {record.storeBranch && ` · ${record.storeBranch}`}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <p className="text-[11px] text-white/30">{record.userName}</p>
+                          <span className="text-white/15">·</span>
+                          <p className="text-[11px] text-white/30">{formatCommunityDate(record)}</p>
+                          {record.isOnSale && (
+                            <span className="flex items-center gap-0.5 text-[9px] font-bold bg-orange-500/15 text-orange-400 border border-orange-500/20 rounded-full px-1.5 py-0.5">
+                              <Tag size={7} className="text-current" /> 特價
+                            </span>
+                          )}
+                        </div>
+                        {record.note && (
+                          <p className="text-[11px] text-white/25 mt-0.5 italic">💬 {record.note}</p>
+                        )}
+                      </div>
+                      <div className="shrink-0 text-right">
+                        <p className="text-base font-bold text-green-400 leading-tight">
+                          {record.currency}{typeof record.price === 'number' ? record.price.toFixed(1) : record.price}
+                        </p>
+                        <p className="text-[10px] text-white/30">{record.unit}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* ── Source / Date ─────────────────────────────────────────────── */}

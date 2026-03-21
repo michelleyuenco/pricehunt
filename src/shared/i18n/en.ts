@@ -290,4 +290,37 @@ export const en: Record<string, string> = {
   'onboarding.popular': 'Popular products',
   'onboarding.tryOther': 'Try a different keyword',
   'onboarding.doneWithCount': 'Done',
+
+  // Record Price
+  'record.title': 'Record a Price',
+  'record.store': 'Store',
+  'record.storePlaceholder': 'Search store...',
+  'record.addStore': 'Add new store',
+  'record.product': 'Product',
+  'record.productPlaceholder': 'Search product...',
+  'record.addProduct': 'Add new product',
+  'record.price': 'Price',
+  'record.currency': 'Currency',
+  'record.unit': 'Unit',
+  'record.perItem': 'per item',
+  'record.perKg': 'per kg',
+  'record.perPack': 'per pack',
+  'record.perBox': 'per box',
+  'record.perBottle': 'per bottle',
+  'record.perCan': 'per can',
+  'record.onSale': 'On sale',
+  'record.originalPrice': 'Original price',
+  'record.note': 'Note',
+  'record.save': 'Save Record',
+  'record.saved': 'Saved!',
+  'record.recent': 'Recent Records',
+
+  // My Records
+  'myRecords.title': 'My Records',
+  'myRecords.stats': 'Records this month',
+  'myRecords.empty': "You haven't recorded any prices yet",
+  'myRecords.emptyBtn': 'Record your first price',
+
+  // Community
+  'community.reports': 'Community Reports',
 };

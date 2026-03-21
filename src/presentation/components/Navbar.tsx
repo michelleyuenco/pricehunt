@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { Home, Search, Plus, FileText, User, Lock, type LucideIcon } from 'lucide-react';
+import { Home, Search, Plus, FileText, User, Lock, Tag, ClipboardList, type LucideIcon } from 'lucide-react';
 import { useAuth } from '../../application/context/AuthContext';
 import { useLanguage } from '../../application/context/LanguageContext';
 import { useSubscriptions } from '../../application/hooks/useSubscriptions';
@@ -17,9 +17,9 @@ export function Navbar() {
   const navItems: { to: string; label: string; icon: LucideIcon; highlight: boolean }[] = [
     { to: '/', label: t('nav.home'), icon: Home, highlight: false },
     { to: '/explore', label: t('nav.explore'), icon: Search, highlight: false },
-    { to: '/request/new', label: t('nav.ask'), icon: Plus, highlight: true },
+    { to: '/record', label: t('record.title') || '記錄', icon: Tag, highlight: true },
     { to: '/blog', label: t('nav.blog'), icon: FileText, highlight: false },
-    { to: '/my-requests', label: t('nav.me'), icon: User, highlight: false },
+    { to: '/my-records', label: t('myRecords.title') || '我的記錄', icon: ClipboardList, highlight: false },
   ];
 
   // Active state: compare the path without the locale prefix
@@ -71,7 +71,15 @@ export function Navbar() {
                   <span className="text-white/30 text-xs">▾</span>
                 </button>
                 {showMenu && (
-                  <div className="absolute right-0 top-9 bg-black/90 border border-white/10 rounded-xl shadow-2xl py-2 w-36 z-50 backdrop-blur-2xl">
+                  <div className="absolute right-0 top-9 bg-black/90 border border-white/10 rounded-xl shadow-2xl py-2 w-44 z-50 backdrop-blur-2xl">
+                    <LocaleLink
+                      to="/my-records"
+                      onClick={() => setShowMenu(false)}
+                      className="block px-4 py-2 text-sm text-white/70 hover:bg-white/5 transition-colors"
+                    >
+                      📋 {t('myRecords.title') || '我的記錄'}
+                    </LocaleLink>
+                    <div className="border-t border-white/5 my-1" />
                     <button
                       onClick={() => { signOut(); setShowMenu(false); }}
                       className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
@@ -200,6 +208,13 @@ export function Navbar() {
           <div className="shrink-0 flex items-center gap-3">
             <LangToggle />
             <LocaleLink
+              to="/record"
+              className="flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full bg-purple-600/20 border border-purple-500/30 text-purple-400 hover:bg-purple-600/30 hover:scale-105 active:scale-95 transition-all"
+            >
+              <Tag size={16} className="text-current" />
+              <span>{t('record.title') || '記錄價格'}</span>
+            </LocaleLink>
+            <LocaleLink
               to="/request/new"
               className="glow-btn flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full transition-all hover:scale-105 active:scale-95"
             >
@@ -229,7 +244,22 @@ export function Navbar() {
                   <span className="text-white/30 text-xs">▾</span>
                 </button>
                 {showMenu && (
-                  <div className="absolute right-0 top-10 bg-black/90 border border-white/10 rounded-xl shadow-2xl py-2 w-36 z-50 backdrop-blur-2xl">
+                  <div className="absolute right-0 top-10 bg-black/90 border border-white/10 rounded-xl shadow-2xl py-2 w-44 z-50 backdrop-blur-2xl">
+                    <LocaleLink
+                      to="/my-records"
+                      onClick={() => setShowMenu(false)}
+                      className="block px-4 py-2 text-sm text-white/70 hover:bg-white/5 transition-colors"
+                    >
+                      📋 {t('myRecords.title') || '我的記錄'}
+                    </LocaleLink>
+                    <LocaleLink
+                      to="/my-requests"
+                      onClick={() => setShowMenu(false)}
+                      className="block px-4 py-2 text-sm text-white/70 hover:bg-white/5 transition-colors"
+                    >
+                      📝 {t('my.title')}
+                    </LocaleLink>
+                    <div className="border-t border-white/5 my-1" />
                     <button
                       onClick={() => { signOut(); setShowMenu(false); }}
                       className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors"

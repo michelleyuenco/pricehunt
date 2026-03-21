@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useRequests } from '../../application/hooks/useRequests';
 import { useOfficialPrices } from '../../application/hooks/useOfficialPrices';
 import { useSubscriptions } from '../../application/hooks/useSubscriptions';
+import { useMyRecords } from '../../application/hooks/usePriceRecords';
 import { RequestCard } from '../components/RequestCard';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { LocaleLink } from '../components/LocaleLink';
@@ -12,8 +13,9 @@ import { CATEGORIES } from '../../domain/constants/categories';
 import {
   Search, Flame, BarChart3, MessageCircle, Package, Store,
   ClipboardList, Lock, Plus, Sparkles, X, ChevronRight,
-  Bell, Heart
+  Bell, Heart, Tag
 } from 'lucide-react';
+import type { PriceRecord } from '../../shared/types/priceRecord';
 
 function getCheapestStoreName(storePrices?: Record<string, number>): string | null {
   if (!storePrices || Object.keys(storePrices).length === 0) return null;
@@ -108,6 +110,7 @@ export function HomePage() {
   const { user, signInWithGoogle } = useAuth();
   const { lang, t } = useLanguage();
   const { subscriptions, loading: subsLoading, unsubscribe } = useSubscriptions();
+  const { records: myRecentRecords } = useMyRecords();
 
   
   const [searchQuery, setSearchQuery] = useState('');
@@ -378,7 +381,49 @@ export function HomePage() {
               </div>
             )}
 
-            
+            {/* My Recent Records */}
+            {user && myRecentRecords.length > 0 && (
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-bold text-white/90 text-base flex items-center gap-2 tracking-tight">
+                    <Tag size={16} className="text-purple-400" />
+                    <span>📝 {t('record.recent') || '最近記錄'}</span>
+                  </h3>
+                  <LocaleLink
+                    to="/my-records"
+                    className="text-xs text-purple-400 hover:text-purple-300 font-medium transition-colors flex items-center gap-1"
+                  >
+                    {t('common.viewAll')} <ChevronRight size={14} className="text-current" />
+                  </LocaleLink>
+                </div>
+                <div className="space-y-2">
+                  {myRecentRecords.slice(0, 3).map((record: PriceRecord) => (
+                    <div key={record.id} className="flex items-center gap-3 bg-white/[0.03] border border-white/[0.07] rounded-xl px-3 py-2.5 hover:border-purple-500/20 transition-all">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-white/80 truncate">{record.productName}</p>
+                        <p className="text-xs text-white/40 truncate">{record.storeName}{record.storeBranch ? ` · ${record.storeBranch}` : ''}</p>
+                      </div>
+                      <div className="shrink-0 text-right">
+                        <p className="text-base font-bold text-green-400">{record.currency}{typeof record.price === 'number' ? record.price.toFixed(1) : record.price}</p>
+                        {record.isOnSale && (
+                          <span className="text-[9px] font-bold text-orange-400 bg-orange-500/10 rounded-full px-1.5 py-0.5">特價</span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-2">
+                  <LocaleLink
+                    to="/record"
+                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-purple-500/5 border border-purple-500/15 text-purple-400 text-xs font-medium hover:bg-purple-500/10 transition-all"
+                  >
+                    <Plus size={13} className="text-current" />
+                    Record another price
+                  </LocaleLink>
+                </div>
+              </div>
+            )}
+
             {/* Mobile category scroll */}
             <div className="lg:hidden">
               <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
