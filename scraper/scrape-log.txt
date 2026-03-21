@@ -1,0 +1,1129 @@
+🚀 GaakGaa Consumer Council Scraper starting...
+🔍 DRY-RUN MODE — will NOT write to Firestore
+🌐 FULL MODE — scraping all categories
+📡 Loading main page to collect category URLs...
+✅ Found 357 leaf categories
+📂 Scraping category 1/357: https://online-price-watch.consumer.org.hk/opw/list/001/001/001
+  Found 2 products
+  📊 Total unique products so far: 2
+📂 Scraping category 2/357: https://online-price-watch.consumer.org.hk/opw/list/001/001/002
+  Found 1 products
+  📊 Total unique products so far: 3
+📂 Scraping category 3/357: https://online-price-watch.consumer.org.hk/opw/list/001/001/003
+  Found 2 products
+  📊 Total unique products so far: 5
+📂 Scraping category 4/357: https://online-price-watch.consumer.org.hk/opw/list/001/001/020
+  Found 2 products
+  📊 Total unique products so far: 7
+📂 Scraping category 5/357: https://online-price-watch.consumer.org.hk/opw/list/001/001/100
+  Found 2 products
+  📊 Total unique products so far: 9
+📂 Scraping category 6/357: https://online-price-watch.consumer.org.hk/opw/list/001/002/001
+  Found 16 products
+  📊 Total unique products so far: 25
+📂 Scraping category 7/357: https://online-price-watch.consumer.org.hk/opw/list/001/002/004
+  Found 7 products
+  📊 Total unique products so far: 32
+📂 Scraping category 8/357: https://online-price-watch.consumer.org.hk/opw/list/001/002/100
+  Found 1 products
+  📊 Total unique products so far: 33
+📂 Scraping category 9/357: https://online-price-watch.consumer.org.hk/opw/list/001/002/200
+  Found 3 products
+  📊 Total unique products so far: 36
+📂 Scraping category 10/357: https://online-price-watch.consumer.org.hk/opw/list/001/003/001
+  Found 2 products
+  📊 Total unique products so far: 38
+📂 Scraping category 11/357: https://online-price-watch.consumer.org.hk/opw/list/001/003/002
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/001/003/002: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 38
+📂 Scraping category 12/357: https://online-price-watch.consumer.org.hk/opw/list/001/003/003
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/001/003/003: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 38
+📂 Scraping category 13/357: https://online-price-watch.consumer.org.hk/opw/list/001/003/005
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/001/003/005: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 38
+📂 Scraping category 14/357: https://online-price-watch.consumer.org.hk/opw/list/001/003/010
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/001/003/010: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 38
+📂 Scraping category 15/357: https://online-price-watch.consumer.org.hk/opw/list/001/010/011
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/001/010/011: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 38
+📂 Scraping category 16/357: https://online-price-watch.consumer.org.hk/opw/list/001/010/021
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/001/010/021: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 38
+📂 Scraping category 17/357: https://online-price-watch.consumer.org.hk/opw/list/001/010/031
+  Found 2 products
+  📊 Total unique products so far: 40
+📂 Scraping category 18/357: https://online-price-watch.consumer.org.hk/opw/list/001/010/041
+  Found 2 products
+  📊 Total unique products so far: 42
+📂 Scraping category 19/357: https://online-price-watch.consumer.org.hk/opw/list/001/030/001
+  Found 20 products
+  📊 Total unique products so far: 62
+📂 Scraping category 20/357: https://online-price-watch.consumer.org.hk/opw/list/001/030/010
+  Found 3 products
+  📊 Total unique products so far: 65
+📂 Scraping category 21/357: https://online-price-watch.consumer.org.hk/opw/list/001/030/020
+  Found 1 products
+  📊 Total unique products so far: 66
+📂 Scraping category 22/357: https://online-price-watch.consumer.org.hk/opw/list/004/001/001
+  Found 20 products
+  📊 Total unique products so far: 86
+📂 Scraping category 23/357: https://online-price-watch.consumer.org.hk/opw/list/004/001/002
+  Found 20 products
+  📊 Total unique products so far: 106
+📂 Scraping category 24/357: https://online-price-watch.consumer.org.hk/opw/list/004/001/003
+  Found 5 products
+  📊 Total unique products so far: 111
+📂 Scraping category 25/357: https://online-price-watch.consumer.org.hk/opw/list/004/001/010
+  Found 5 products
+  📊 Total unique products so far: 116
+📂 Scraping category 26/357: https://online-price-watch.consumer.org.hk/opw/list/004/004/001
+  Found 2 products
+  📊 Total unique products so far: 118
+📂 Scraping category 27/357: https://online-price-watch.consumer.org.hk/opw/list/004/002/001
+  Found 13 products
+  📊 Total unique products so far: 131
+📂 Scraping category 28/357: https://online-price-watch.consumer.org.hk/opw/list/004/002/002
+  Found 4 products
+  📊 Total unique products so far: 135
+📂 Scraping category 29/357: https://online-price-watch.consumer.org.hk/opw/list/004/002/003
+  Found 1 products
+  📊 Total unique products so far: 136
+📂 Scraping category 30/357: https://online-price-watch.consumer.org.hk/opw/list/004/002/007
+  Found 16 products
+  📊 Total unique products so far: 152
+📂 Scraping category 31/357: https://online-price-watch.consumer.org.hk/opw/list/004/002/011
+  Found 5 products
+  📊 Total unique products so far: 157
+📂 Scraping category 32/357: https://online-price-watch.consumer.org.hk/opw/list/004/003/001
+  Found 9 products
+  📊 Total unique products so far: 166
+📂 Scraping category 33/357: https://online-price-watch.consumer.org.hk/opw/list/004/003/002
+  Found 4 products
+  📊 Total unique products so far: 170
+📂 Scraping category 34/357: https://online-price-watch.consumer.org.hk/opw/list/004/003/003
+  Found 3 products
+  📊 Total unique products so far: 173
+📂 Scraping category 35/357: https://online-price-watch.consumer.org.hk/opw/list/004/007/001
+  Found 11 products
+  📊 Total unique products so far: 184
+📂 Scraping category 36/357: https://online-price-watch.consumer.org.hk/opw/list/004/007/003
+  Found 7 products
+  📊 Total unique products so far: 191
+📂 Scraping category 37/357: https://online-price-watch.consumer.org.hk/opw/list/004/020/001
+  Found 11 products
+  📊 Total unique products so far: 202
+📂 Scraping category 38/357: https://online-price-watch.consumer.org.hk/opw/list/004/020/005
+  Found 14 products
+  📊 Total unique products so far: 216
+📂 Scraping category 39/357: https://online-price-watch.consumer.org.hk/opw/list/004/020/009
+  Found 2 products
+  📊 Total unique products so far: 218
+📂 Scraping category 40/357: https://online-price-watch.consumer.org.hk/opw/list/004/030/001
+  Found 7 products
+  📊 Total unique products so far: 225
+📂 Scraping category 41/357: https://online-price-watch.consumer.org.hk/opw/list/004/030/005
+  Found 6 products
+  📊 Total unique products so far: 231
+📂 Scraping category 42/357: https://online-price-watch.consumer.org.hk/opw/list/004/110/001
+  Found 15 products
+  📊 Total unique products so far: 246
+📂 Scraping category 43/357: https://online-price-watch.consumer.org.hk/opw/list/009/003/001
+  Found 20 products
+  📊 Total unique products so far: 266
+📂 Scraping category 44/357: https://online-price-watch.consumer.org.hk/opw/list/009/003/003
+  Found 12 products
+  📊 Total unique products so far: 278
+📂 Scraping category 45/357: https://online-price-watch.consumer.org.hk/opw/list/009/003/005
+  Found 6 products
+  📊 Total unique products so far: 284
+📂 Scraping category 46/357: https://online-price-watch.consumer.org.hk/opw/list/009/009/009
+  Found 2 products
+  📊 Total unique products so far: 286
+📂 Scraping category 47/357: https://online-price-watch.consumer.org.hk/opw/list/009/009/015
+  Found 5 products
+  📊 Total unique products so far: 291
+📂 Scraping category 48/357: https://online-price-watch.consumer.org.hk/opw/list/009/009/021
+  Found 2 products
+  📊 Total unique products so far: 293
+📂 Scraping category 49/357: https://online-price-watch.consumer.org.hk/opw/list/009/009/029
+  Found 2 products
+  📊 Total unique products so far: 295
+📂 Scraping category 50/357: https://online-price-watch.consumer.org.hk/opw/list/009/009/035
+  Found 3 products
+  📊 Total unique products so far: 298
+📂 Scraping category 51/357: https://online-price-watch.consumer.org.hk/opw/list/009/501/205
+  Found 5 products
+  📊 Total unique products so far: 303
+📂 Scraping category 52/357: https://online-price-watch.consumer.org.hk/opw/list/009/501/101
+  Found 0 products
+  📊 Total unique products so far: 303
+📂 Scraping category 53/357: https://online-price-watch.consumer.org.hk/opw/list/009/002/001
+  Found 20 products
+  📊 Total unique products so far: 323
+📂 Scraping category 54/357: https://online-price-watch.consumer.org.hk/opw/list/009/002/002
+  Found 11 products
+  📊 Total unique products so far: 334
+📂 Scraping category 55/357: https://online-price-watch.consumer.org.hk/opw/list/009/002/003
+  Found 16 products
+  📊 Total unique products so far: 350
+📂 Scraping category 56/357: https://online-price-watch.consumer.org.hk/opw/list/009/002/004
+  Found 20 products
+  📊 Total unique products so far: 370
+📂 Scraping category 57/357: https://online-price-watch.consumer.org.hk/opw/list/009/002/005
+  Found 2 products
+  📊 Total unique products so far: 372
+📂 Scraping category 58/357: https://online-price-watch.consumer.org.hk/opw/list/009/002/007
+  Found 6 products
+  📊 Total unique products so far: 378
+📂 Scraping category 59/357: https://online-price-watch.consumer.org.hk/opw/list/009/002/008
+  Found 20 products
+  📊 Total unique products so far: 398
+📂 Scraping category 60/357: https://online-price-watch.consumer.org.hk/opw/list/009/001/001
+  Found 20 products
+  📊 Total unique products so far: 418
+📂 Scraping category 61/357: https://online-price-watch.consumer.org.hk/opw/list/009/001/002
+  Found 10 products
+  📊 Total unique products so far: 428
+📂 Scraping category 62/357: https://online-price-watch.consumer.org.hk/opw/list/009/001/003
+  Found 9 products
+  📊 Total unique products so far: 437
+📂 Scraping category 63/357: https://online-price-watch.consumer.org.hk/opw/list/009/001/005
+  Found 2 products
+  📊 Total unique products so far: 439
+📂 Scraping category 64/357: https://online-price-watch.consumer.org.hk/opw/list/009/001/020
+  Found 20 products
+  📊 Total unique products so far: 459
+📂 Scraping category 65/357: https://online-price-watch.consumer.org.hk/opw/list/009/001/025
+  Found 9 products
+  📊 Total unique products so far: 468
+📂 Scraping category 66/357: https://online-price-watch.consumer.org.hk/opw/list/009/001/029
+  Found 6 products
+  📊 Total unique products so far: 474
+📂 Scraping category 67/357: https://online-price-watch.consumer.org.hk/opw/list/015/001/001
+  Found 20 products
+  📊 Total unique products so far: 494
+📂 Scraping category 68/357: https://online-price-watch.consumer.org.hk/opw/list/015/001/002
+  Found 15 products
+  📊 Total unique products so far: 509
+📂 Scraping category 69/357: https://online-price-watch.consumer.org.hk/opw/list/015/001/009
+  Found 1 products
+  📊 Total unique products so far: 510
+📂 Scraping category 70/357: https://online-price-watch.consumer.org.hk/opw/list/015/001/020
+  Found 1 products
+  📊 Total unique products so far: 511
+📂 Scraping category 71/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/001
+  Found 20 products
+  📊 Total unique products so far: 531
+📂 Scraping category 72/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/003
+  Found 17 products
+  📊 Total unique products so far: 548
+📂 Scraping category 73/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/004
+  Found 19 products
+  📊 Total unique products so far: 567
+📂 Scraping category 74/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/006
+  Found 2 products
+  📊 Total unique products so far: 569
+📂 Scraping category 75/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/008
+  Found 3 products
+  📊 Total unique products so far: 572
+📂 Scraping category 76/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/010
+  Found 10 products
+  📊 Total unique products so far: 582
+📂 Scraping category 77/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/012
+  Found 10 products
+  📊 Total unique products so far: 592
+📂 Scraping category 78/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/013
+  Found 4 products
+  📊 Total unique products so far: 596
+📂 Scraping category 79/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/015
+  Found 2 products
+  📊 Total unique products so far: 598
+📂 Scraping category 80/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/018
+  Found 2 products
+  📊 Total unique products so far: 600
+📂 Scraping category 81/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/005
+  Found 5 products
+  📊 Total unique products so far: 605
+📂 Scraping category 82/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/002
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/002/002: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 605
+📂 Scraping category 83/357: https://online-price-watch.consumer.org.hk/opw/list/015/002/007
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/002/007: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 605
+📂 Scraping category 84/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/111
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/003/111: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 605
+📂 Scraping category 85/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/121
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/003/121: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 605
+📂 Scraping category 86/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/131
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/003/131: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 605
+📂 Scraping category 87/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/141
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/003/141: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 605
+📂 Scraping category 88/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/181
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/003/181: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 605
+📂 Scraping category 89/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/501
+  Found 9 products
+  📊 Total unique products so far: 614
+📂 Scraping category 90/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/531
+  Found 6 products
+  📊 Total unique products so far: 620
+📂 Scraping category 91/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/561
+  Found 17 products
+  📊 Total unique products so far: 637
+📂 Scraping category 92/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/591
+  Found 1 products
+  📊 Total unique products so far: 638
+📂 Scraping category 93/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/601
+  Found 2 products
+  📊 Total unique products so far: 640
+📂 Scraping category 94/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/801
+  Found 8 products
+  📊 Total unique products so far: 648
+📂 Scraping category 95/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/821
+  Found 3 products
+  📊 Total unique products so far: 651
+📂 Scraping category 96/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/823
+  Found 3 products
+  📊 Total unique products so far: 654
+📂 Scraping category 97/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/831
+  Found 6 products
+  📊 Total unique products so far: 660
+📂 Scraping category 98/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/851
+  Found 1 products
+  📊 Total unique products so far: 661
+📂 Scraping category 99/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/861
+  Found 4 products
+  📊 Total unique products so far: 665
+📂 Scraping category 100/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/881
+  Found 2 products
+  📊 Total unique products so far: 667
+📂 Scraping category 101/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/901
+  Found 9 products
+  📊 Total unique products so far: 676
+📂 Scraping category 102/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/951
+  Found 5 products
+  📊 Total unique products so far: 681
+📂 Scraping category 103/357: https://online-price-watch.consumer.org.hk/opw/list/015/003/980
+  Found 5 products
+  📊 Total unique products so far: 686
+📂 Scraping category 104/357: https://online-price-watch.consumer.org.hk/opw/list/015/004/002
+  Found 2 products
+  📊 Total unique products so far: 688
+📂 Scraping category 105/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/129
+  Found 1 products
+  📊 Total unique products so far: 689
+📂 Scraping category 106/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/139
+  Found 1 products
+  📊 Total unique products so far: 690
+📂 Scraping category 107/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/151
+  Found 1 products
+  📊 Total unique products so far: 691
+📂 Scraping category 108/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/161
+  Found 2 products
+  📊 Total unique products so far: 693
+📂 Scraping category 109/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/201
+  Found 1 products
+  📊 Total unique products so far: 694
+📂 Scraping category 110/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/301
+  Found 1 products
+  📊 Total unique products so far: 695
+📂 Scraping category 111/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/311
+  Found 1 products
+  📊 Total unique products so far: 696
+📂 Scraping category 112/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/453
+  Found 1 products
+  📊 Total unique products so far: 697
+📂 Scraping category 113/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/455
+  Found 0 products
+  📊 Total unique products so far: 697
+📂 Scraping category 114/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/551
+  Found 1 products
+  📊 Total unique products so far: 698
+📂 Scraping category 115/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/651
+  Found 2 products
+  📊 Total unique products so far: 700
+📂 Scraping category 116/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/710
+  Found 1 products
+  📊 Total unique products so far: 701
+📂 Scraping category 117/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/751
+  Found 2 products
+  📊 Total unique products so far: 703
+📂 Scraping category 118/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/781
+  Found 1 products
+  📊 Total unique products so far: 704
+📂 Scraping category 119/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/800
+  Found 8 products
+  📊 Total unique products so far: 712
+📂 Scraping category 120/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/801
+  Found 2 products
+  📊 Total unique products so far: 714
+📂 Scraping category 121/357: https://online-price-watch.consumer.org.hk/opw/list/015/051/900
+  Found 0 products
+  📊 Total unique products so far: 714
+📂 Scraping category 122/357: https://online-price-watch.consumer.org.hk/opw/list/015/101/111
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/101/111: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 714
+📂 Scraping category 123/357: https://online-price-watch.consumer.org.hk/opw/list/015/101/101
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/101/101: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 714
+📂 Scraping category 124/357: https://online-price-watch.consumer.org.hk/opw/list/015/101/121
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/101/121: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 714
+📂 Scraping category 125/357: https://online-price-watch.consumer.org.hk/opw/list/015/101/131
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/101/131: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 714
+📂 Scraping category 126/357: https://online-price-watch.consumer.org.hk/opw/list/015/101/135
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/101/135: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 714
+📂 Scraping category 127/357: https://online-price-watch.consumer.org.hk/opw/list/015/101/139
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/101/139: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 714
+📂 Scraping category 128/357: https://online-price-watch.consumer.org.hk/opw/list/015/101/151
+  ⚠️  Failed to scrape https://online-price-watch.consumer.org.hk/opw/list/015/101/151: Navigation timeout of 30000 ms exceeded
+  Found 0 products
+  📊 Total unique products so far: 714
+📂 Scraping category 129/357: https://online-price-watch.consumer.org.hk/opw/list/015/101/301
+  Found 0 products
+  📊 Total unique products so far: 714
+📂 Scraping category 130/357: https://online-price-watch.consumer.org.hk/opw/list/015/101/401
+  Found 0 products
+  📊 Total unique products so far: 714
+📂 Scraping category 131/357: https://online-price-watch.consumer.org.hk/opw/list/015/101/551
+  Found 0 products
+  📊 Total unique products so far: 714
+📂 Scraping category 132/357: https://online-price-watch.consumer.org.hk/opw/list/015/101/589
+  Found 2 products
+  📊 Total unique products so far: 716
+📂 Scraping category 133/357: https://online-price-watch.consumer.org.hk/opw/list/015/201/131
+  Found 8 products
+  📊 Total unique products so far: 724
+📂 Scraping category 134/357: https://online-price-watch.consumer.org.hk/opw/list/015/251/101
+  Found 2 products
+  📊 Total unique products so far: 726
+📂 Scraping category 135/357: https://online-price-watch.consumer.org.hk/opw/list/015/251/152
+  Found 4 products
+  📊 Total unique products so far: 730
+📂 Scraping category 136/357: https://online-price-watch.consumer.org.hk/opw/list/015/501/101
+  Found 1 products
+  📊 Total unique products so far: 731
+📂 Scraping category 137/357: https://online-price-watch.consumer.org.hk/opw/list/015/501/131
+  Found 0 products
+  📊 Total unique products so far: 731
+📂 Scraping category 138/357: https://online-price-watch.consumer.org.hk/opw/list/015/501/151
+  Found 1 products
+  📊 Total unique products so far: 732
+📂 Scraping category 139/357: https://online-price-watch.consumer.org.hk/opw/list/015/501/161
+  Found 0 products
+  📊 Total unique products so far: 732
+📂 Scraping category 140/357: https://online-price-watch.consumer.org.hk/opw/list/015/501/165
+  Found 5 products
+  📊 Total unique products so far: 737
+📂 Scraping category 141/357: https://online-price-watch.consumer.org.hk/opw/list/015/501/171
+  Found 2 products
+  📊 Total unique products so far: 739
+📂 Scraping category 142/357: https://online-price-watch.consumer.org.hk/opw/list/015/601/011
+  Found 3 products
+  📊 Total unique products so far: 742
+📂 Scraping category 143/357: https://online-price-watch.consumer.org.hk/opw/list/015/601/101
+  Found 3 products
+  📊 Total unique products so far: 745
+📂 Scraping category 144/357: https://online-price-watch.consumer.org.hk/opw/list/015/601/111
+  Found 3 products
+  📊 Total unique products so far: 748
+📂 Scraping category 145/357: https://online-price-watch.consumer.org.hk/opw/list/018/001/001
+  Found 20 products
+  📊 Total unique products so far: 768
+📂 Scraping category 146/357: https://online-price-watch.consumer.org.hk/opw/list/018/001/002
+  Found 10 products
+  📊 Total unique products so far: 778
+📂 Scraping category 147/357: https://online-price-watch.consumer.org.hk/opw/list/018/002/001
+  Found 5 products
+  📊 Total unique products so far: 783
+📂 Scraping category 148/357: https://online-price-watch.consumer.org.hk/opw/list/018/003/001
+  Found 6 products
+  📊 Total unique products so far: 789
+📂 Scraping category 149/357: https://online-price-watch.consumer.org.hk/opw/list/018/003/003
+  Found 0 products
+  📊 Total unique products so far: 789
+📂 Scraping category 150/357: https://online-price-watch.consumer.org.hk/opw/list/018/003/005
+  Found 10 products
+  📊 Total unique products so far: 799
+📂 Scraping category 151/357: https://online-price-watch.consumer.org.hk/opw/list/018/003/010
+  Found 7 products
+  📊 Total unique products so far: 806
+📂 Scraping category 152/357: https://online-price-watch.consumer.org.hk/opw/list/018/004/001
+  Found 17 products
+  📊 Total unique products so far: 823
+📂 Scraping category 153/357: https://online-price-watch.consumer.org.hk/opw/list/018/004/002
+  Found 15 products
+  📊 Total unique products so far: 838
+📂 Scraping category 154/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/031
+  Found 10 products
+  📊 Total unique products so far: 848
+📂 Scraping category 155/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/015
+  Found 2 products
+  📊 Total unique products so far: 850
+📂 Scraping category 156/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/001
+  Found 3 products
+  📊 Total unique products so far: 853
+📂 Scraping category 157/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/035
+  Found 4 products
+  📊 Total unique products so far: 857
+📂 Scraping category 158/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/033
+  Found 4 products
+  📊 Total unique products so far: 861
+📂 Scraping category 159/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/013
+  Found 3 products
+  📊 Total unique products so far: 864
+📂 Scraping category 160/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/002
+  Found 6 products
+  📊 Total unique products so far: 870
+📂 Scraping category 161/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/003
+  Found 3 products
+  📊 Total unique products so far: 873
+📂 Scraping category 162/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/023
+  Found 6 products
+  📊 Total unique products so far: 879
+📂 Scraping category 163/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/004
+  Found 10 products
+  📊 Total unique products so far: 889
+📂 Scraping category 164/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/005
+  Found 2 products
+  📊 Total unique products so far: 891
+📂 Scraping category 165/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/006
+  Found 2 products
+  📊 Total unique products so far: 893
+📂 Scraping category 166/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/008
+  Found 5 products
+  📊 Total unique products so far: 898
+📂 Scraping category 167/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/010
+  Found 4 products
+  📊 Total unique products so far: 902
+📂 Scraping category 168/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/009
+  Found 0 products
+  📊 Total unique products so far: 902
+📂 Scraping category 169/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/225
+  Found 15 products
+  📊 Total unique products so far: 917
+📂 Scraping category 170/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/305
+  Found 8 products
+  📊 Total unique products so far: 925
+📂 Scraping category 171/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/153
+  Found 8 products
+  📊 Total unique products so far: 933
+📂 Scraping category 172/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/007
+  Found 12 products
+  📊 Total unique products so far: 945
+📂 Scraping category 173/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/105
+  Found 20 products
+  📊 Total unique products so far: 965
+📂 Scraping category 174/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/011
+  Found 9 products
+  📊 Total unique products so far: 974
+📂 Scraping category 175/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/200
+  Found 2 products
+  📊 Total unique products so far: 976
+📂 Scraping category 176/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/201
+  Found 4 products
+  📊 Total unique products so far: 980
+📂 Scraping category 177/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/205
+  Found 3 products
+  📊 Total unique products so far: 983
+📂 Scraping category 178/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/211
+  Found 1 products
+  📊 Total unique products so far: 984
+📂 Scraping category 179/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/221
+  Found 6 products
+  📊 Total unique products so far: 990
+📂 Scraping category 180/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/016
+  Found 1 products
+  📊 Total unique products so far: 991
+📂 Scraping category 181/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/017
+  Found 9 products
+  📊 Total unique products so far: 1000
+📂 Scraping category 182/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/018
+  Found 19 products
+  📊 Total unique products so far: 1019
+📂 Scraping category 183/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/020
+  Found 4 products
+  📊 Total unique products so far: 1023
+📂 Scraping category 184/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/710
+  Found 1 products
+  📊 Total unique products so far: 1024
+📂 Scraping category 185/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/650
+  Found 1 products
+  📊 Total unique products so far: 1025
+📂 Scraping category 186/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/025
+  Found 4 products
+  📊 Total unique products so far: 1029
+📂 Scraping category 187/357: https://online-price-watch.consumer.org.hk/opw/list/018/005/309
+  Found 3 products
+  📊 Total unique products so far: 1032
+📂 Scraping category 188/357: https://online-price-watch.consumer.org.hk/opw/list/018/007/101
+  Found 3 products
+  📊 Total unique products so far: 1035
+📂 Scraping category 189/357: https://online-price-watch.consumer.org.hk/opw/list/018/007/106
+  Found 3 products
+  📊 Total unique products so far: 1038
+📂 Scraping category 190/357: https://online-price-watch.consumer.org.hk/opw/list/018/007/111
+  Found 4 products
+  📊 Total unique products so far: 1042
+📂 Scraping category 191/357: https://online-price-watch.consumer.org.hk/opw/list/018/007/121
+  Found 5 products
+  📊 Total unique products so far: 1047
+📂 Scraping category 192/357: https://online-price-watch.consumer.org.hk/opw/list/018/007/131
+  Found 1 products
+  📊 Total unique products so far: 1048
+📂 Scraping category 193/357: https://online-price-watch.consumer.org.hk/opw/list/018/007/136
+  Found 1 products
+  📊 Total unique products so far: 1049
+📂 Scraping category 194/357: https://online-price-watch.consumer.org.hk/opw/list/018/007/141
+  Found 2 products
+  📊 Total unique products so far: 1051
+📂 Scraping category 195/357: https://online-price-watch.consumer.org.hk/opw/list/018/007/161
+  Found 2 products
+  📊 Total unique products so far: 1053
+📂 Scraping category 196/357: https://online-price-watch.consumer.org.hk/opw/list/018/010/010
+  Found 20 products
+  📊 Total unique products so far: 1073
+📂 Scraping category 197/357: https://online-price-watch.consumer.org.hk/opw/list/018/010/020
+  Found 5 products
+  📊 Total unique products so far: 1078
+📂 Scraping category 198/357: https://online-price-watch.consumer.org.hk/opw/list/018/010/030
+  Found 4 products
+  📊 Total unique products so far: 1082
+📂 Scraping category 199/357: https://online-price-watch.consumer.org.hk/opw/list/018/010/040
+  Found 8 products
+  📊 Total unique products so far: 1090
+📂 Scraping category 200/357: https://online-price-watch.consumer.org.hk/opw/list/018/010/045
+  Found 2 products
+  📊 Total unique products so far: 1092
+📂 Scraping category 201/357: https://online-price-watch.consumer.org.hk/opw/list/018/010/050
+  Found 13 products
+  📊 Total unique products so far: 1105
+📂 Scraping category 202/357: https://online-price-watch.consumer.org.hk/opw/list/018/010/060
+  Found 3 products
+  📊 Total unique products so far: 1108
+📂 Scraping category 203/357: https://online-price-watch.consumer.org.hk/opw/list/018/010/070
+  Found 2 products
+  📊 Total unique products so far: 1110
+📂 Scraping category 204/357: https://online-price-watch.consumer.org.hk/opw/list/018/010/085
+  Found 3 products
+  📊 Total unique products so far: 1113
+📂 Scraping category 205/357: https://online-price-watch.consumer.org.hk/opw/list/027/001/001
+  Found 12 products
+  📊 Total unique products so far: 1125
+📂 Scraping category 206/357: https://online-price-watch.consumer.org.hk/opw/list/027/001/002
+  Found 15 products
+  📊 Total unique products so far: 1140
+📂 Scraping category 207/357: https://online-price-watch.consumer.org.hk/opw/list/027/003/001
+  Found 14 products
+  📊 Total unique products so far: 1154
+📂 Scraping category 208/357: https://online-price-watch.consumer.org.hk/opw/list/027/003/002
+  Found 11 products
+  📊 Total unique products so far: 1165
+📂 Scraping category 209/357: https://online-price-watch.consumer.org.hk/opw/list/027/003/003
+  Found 20 products
+  📊 Total unique products so far: 1185
+📂 Scraping category 210/357: https://online-price-watch.consumer.org.hk/opw/list/027/003/004
+  Found 2 products
+  📊 Total unique products so far: 1187
+📂 Scraping category 211/357: https://online-price-watch.consumer.org.hk/opw/list/027/003/005
+  Found 6 products
+  📊 Total unique products so far: 1193
+📂 Scraping category 212/357: https://online-price-watch.consumer.org.hk/opw/list/027/003/006
+  Found 3 products
+  📊 Total unique products so far: 1196
+📂 Scraping category 213/357: https://online-price-watch.consumer.org.hk/opw/list/027/004/001
+  Found 9 products
+  📊 Total unique products so far: 1205
+📂 Scraping category 214/357: https://online-price-watch.consumer.org.hk/opw/list/027/004/002
+  Found 18 products
+  📊 Total unique products so far: 1223
+📂 Scraping category 215/357: https://online-price-watch.consumer.org.hk/opw/list/027/004/003
+  Found 2 products
+  📊 Total unique products so far: 1225
+📂 Scraping category 216/357: https://online-price-watch.consumer.org.hk/opw/list/027/005/001
+  Found 1 products
+  📊 Total unique products so far: 1226
+📂 Scraping category 217/357: https://online-price-watch.consumer.org.hk/opw/list/027/005/002
+  Found 8 products
+  📊 Total unique products so far: 1234
+📂 Scraping category 218/357: https://online-price-watch.consumer.org.hk/opw/list/027/005/003
+  Found 10 products
+  📊 Total unique products so far: 1244
+📂 Scraping category 219/357: https://online-price-watch.consumer.org.hk/opw/list/027/005/004
+  Found 6 products
+  📊 Total unique products so far: 1250
+📂 Scraping category 220/357: https://online-price-watch.consumer.org.hk/opw/list/027/005/005
+  Found 6 products
+  📊 Total unique products so far: 1256
+📂 Scraping category 221/357: https://online-price-watch.consumer.org.hk/opw/list/027/005/006
+  Found 6 products
+  📊 Total unique products so far: 1262
+📂 Scraping category 222/357: https://online-price-watch.consumer.org.hk/opw/list/027/006/001
+  Found 12 products
+  📊 Total unique products so far: 1274
+📂 Scraping category 223/357: https://online-price-watch.consumer.org.hk/opw/list/027/006/005
+  Found 4 products
+  📊 Total unique products so far: 1278
+📂 Scraping category 224/357: https://online-price-watch.consumer.org.hk/opw/list/027/006/010
+  Found 7 products
+  📊 Total unique products so far: 1285
+📂 Scraping category 225/357: https://online-price-watch.consumer.org.hk/opw/list/027/006/110
+  Found 19 products
+  📊 Total unique products so far: 1304
+📂 Scraping category 226/357: https://online-price-watch.consumer.org.hk/opw/list/027/006/301
+  Found 10 products
+  📊 Total unique products so far: 1314
+📂 Scraping category 227/357: https://online-price-watch.consumer.org.hk/opw/list/027/006/601
+  Found 6 products
+  📊 Total unique products so far: 1320
+📂 Scraping category 228/357: https://online-price-watch.consumer.org.hk/opw/list/027/009/005
+  Found 5 products
+  📊 Total unique products so far: 1325
+📂 Scraping category 229/357: https://online-price-watch.consumer.org.hk/opw/list/037/001/001
+  Found 20 products
+  📊 Total unique products so far: 1345
+📂 Scraping category 230/357: https://online-price-watch.consumer.org.hk/opw/list/037/001/003
+  Found 4 products
+  📊 Total unique products so far: 1349
+📂 Scraping category 231/357: https://online-price-watch.consumer.org.hk/opw/list/037/002/001
+  Found 0 products
+  📊 Total unique products so far: 1349
+📂 Scraping category 232/357: https://online-price-watch.consumer.org.hk/opw/list/037/003/001
+  Found 4 products
+  📊 Total unique products so far: 1353
+📂 Scraping category 233/357: https://online-price-watch.consumer.org.hk/opw/list/037/003/002
+  Found 4 products
+  📊 Total unique products so far: 1357
+📂 Scraping category 234/357: https://online-price-watch.consumer.org.hk/opw/list/037/003/003
+  Found 5 products
+  📊 Total unique products so far: 1362
+📂 Scraping category 235/357: https://online-price-watch.consumer.org.hk/opw/list/037/003/010
+  Found 4 products
+  📊 Total unique products so far: 1366
+📂 Scraping category 236/357: https://online-price-watch.consumer.org.hk/opw/list/037/011/101
+  Found 5 products
+  📊 Total unique products so far: 1371
+📂 Scraping category 237/357: https://online-price-watch.consumer.org.hk/opw/list/037/011/105
+  Found 14 products
+  📊 Total unique products so far: 1385
+📂 Scraping category 238/357: https://online-price-watch.consumer.org.hk/opw/list/037/020/010
+  Found 18 products
+  📊 Total unique products so far: 1403
+📂 Scraping category 239/357: https://online-price-watch.consumer.org.hk/opw/list/037/020/015
+  Found 12 products
+  📊 Total unique products so far: 1415
+📂 Scraping category 240/357: https://online-price-watch.consumer.org.hk/opw/list/037/020/020
+  Found 5 products
+  📊 Total unique products so far: 1420
+📂 Scraping category 241/357: https://online-price-watch.consumer.org.hk/opw/list/037/020/040
+  Found 2 products
+  📊 Total unique products so far: 1422
+📂 Scraping category 242/357: https://online-price-watch.consumer.org.hk/opw/list/037/020/030
+  Found 1 products
+  📊 Total unique products so far: 1423
+📂 Scraping category 243/357: https://online-price-watch.consumer.org.hk/opw/list/037/020/050
+  Found 7 products
+  📊 Total unique products so far: 1430
+📂 Scraping category 244/357: https://online-price-watch.consumer.org.hk/opw/list/040/001/001
+  Found 16 products
+  📊 Total unique products so far: 1446
+📂 Scraping category 245/357: https://online-price-watch.consumer.org.hk/opw/list/040/001/002
+  Found 3 products
+  📊 Total unique products so far: 1449
+📂 Scraping category 246/357: https://online-price-watch.consumer.org.hk/opw/list/040/001/003
+  Found 10 products
+  📊 Total unique products so far: 1459
+📂 Scraping category 247/357: https://online-price-watch.consumer.org.hk/opw/list/040/001/004
+  Found 2 products
+  📊 Total unique products so far: 1461
+📂 Scraping category 248/357: https://online-price-watch.consumer.org.hk/opw/list/040/001/006
+  Found 2 products
+  📊 Total unique products so far: 1463
+📂 Scraping category 249/357: https://online-price-watch.consumer.org.hk/opw/list/040/002/001
+  Found 20 products
+  📊 Total unique products so far: 1483
+📂 Scraping category 250/357: https://online-price-watch.consumer.org.hk/opw/list/040/002/002
+  Found 8 products
+  📊 Total unique products so far: 1491
+📂 Scraping category 251/357: https://online-price-watch.consumer.org.hk/opw/list/040/002/008
+  Found 1 products
+  📊 Total unique products so far: 1492
+📂 Scraping category 252/357: https://online-price-watch.consumer.org.hk/opw/list/040/002/012
+  Found 2 products
+  📊 Total unique products so far: 1494
+📂 Scraping category 253/357: https://online-price-watch.consumer.org.hk/opw/list/040/004/001
+  Found 20 products
+  📊 Total unique products so far: 1514
+📂 Scraping category 254/357: https://online-price-watch.consumer.org.hk/opw/list/040/004/003
+  Found 5 products
+  📊 Total unique products so far: 1519
+📂 Scraping category 255/357: https://online-price-watch.consumer.org.hk/opw/list/040/004/007
+  Found 6 products
+  📊 Total unique products so far: 1525
+📂 Scraping category 256/357: https://online-price-watch.consumer.org.hk/opw/list/040/004/010
+  Found 10 products
+  📊 Total unique products so far: 1535
+📂 Scraping category 257/357: https://online-price-watch.consumer.org.hk/opw/list/040/004/012
+  Found 1 products
+  📊 Total unique products so far: 1536
+📂 Scraping category 258/357: https://online-price-watch.consumer.org.hk/opw/list/040/003/001
+  Found 15 products
+  📊 Total unique products so far: 1551
+📂 Scraping category 259/357: https://online-price-watch.consumer.org.hk/opw/list/040/003/002
+  Found 5 products
+  📊 Total unique products so far: 1556
+📂 Scraping category 260/357: https://online-price-watch.consumer.org.hk/opw/list/040/003/007
+  Found 3 products
+  📊 Total unique products so far: 1559
+📂 Scraping category 261/357: https://online-price-watch.consumer.org.hk/opw/list/040/009/001
+  Found 2 products
+  📊 Total unique products so far: 1561
+📂 Scraping category 262/357: https://online-price-watch.consumer.org.hk/opw/list/040/009/002
+  Found 3 products
+  📊 Total unique products so far: 1564
+📂 Scraping category 263/357: https://online-price-watch.consumer.org.hk/opw/list/040/011/001
+  Found 0 products
+  📊 Total unique products so far: 1564
+📂 Scraping category 264/357: https://online-price-watch.consumer.org.hk/opw/list/040/011/002
+  Found 5 products
+  📊 Total unique products so far: 1569
+📂 Scraping category 265/357: https://online-price-watch.consumer.org.hk/opw/list/040/005/001
+  Found 10 products
+  📊 Total unique products so far: 1579
+📂 Scraping category 266/357: https://online-price-watch.consumer.org.hk/opw/list/040/005/002
+  Found 2 products
+  📊 Total unique products so far: 1581
+📂 Scraping category 267/357: https://online-price-watch.consumer.org.hk/opw/list/040/005/003
+  Found 15 products
+  📊 Total unique products so far: 1596
+📂 Scraping category 268/357: https://online-price-watch.consumer.org.hk/opw/list/040/005/004
+  Found 2 products
+  📊 Total unique products so far: 1598
+📂 Scraping category 269/357: https://online-price-watch.consumer.org.hk/opw/list/040/005/005
+  Found 2 products
+  📊 Total unique products so far: 1600
+📂 Scraping category 270/357: https://online-price-watch.consumer.org.hk/opw/list/040/005/007
+  Found 7 products
+  📊 Total unique products so far: 1607
+📂 Scraping category 271/357: https://online-price-watch.consumer.org.hk/opw/list/040/005/009
+  Found 6 products
+  📊 Total unique products so far: 1613
+📂 Scraping category 272/357: https://online-price-watch.consumer.org.hk/opw/list/040/005/028
+  Found 1 products
+  📊 Total unique products so far: 1614
+📂 Scraping category 273/357: https://online-price-watch.consumer.org.hk/opw/list/040/005/023
+  Found 6 products
+  📊 Total unique products so far: 1620
+📂 Scraping category 274/357: https://online-price-watch.consumer.org.hk/opw/list/040/005/025
+  Found 4 products
+  📊 Total unique products so far: 1624
+📂 Scraping category 275/357: https://online-price-watch.consumer.org.hk/opw/list/040/005/015
+  Found 3 products
+  📊 Total unique products so far: 1627
+📂 Scraping category 276/357: https://online-price-watch.consumer.org.hk/opw/list/040/005/018
+  Found 4 products
+  📊 Total unique products so far: 1631
+📂 Scraping category 277/357: https://online-price-watch.consumer.org.hk/opw/list/040/006/011
+  Found 0 products
+  📊 Total unique products so far: 1631
+📂 Scraping category 278/357: https://online-price-watch.consumer.org.hk/opw/list/040/006/021
+  Found 1 products
+  📊 Total unique products so far: 1632
+📂 Scraping category 279/357: https://online-price-watch.consumer.org.hk/opw/list/040/007/001
+  Found 1 products
+  📊 Total unique products so far: 1633
+📂 Scraping category 280/357: https://online-price-watch.consumer.org.hk/opw/list/040/007/005
+  Found 3 products
+  📊 Total unique products so far: 1636
+📂 Scraping category 281/357: https://online-price-watch.consumer.org.hk/opw/list/040/007/007
+  Found 3 products
+  📊 Total unique products so far: 1639
+📂 Scraping category 282/357: https://online-price-watch.consumer.org.hk/opw/list/040/008/001
+  Found 6 products
+  📊 Total unique products so far: 1645
+📂 Scraping category 283/357: https://online-price-watch.consumer.org.hk/opw/list/040/008/002
+  Found 5 products
+  📊 Total unique products so far: 1650
+📂 Scraping category 284/357: https://online-price-watch.consumer.org.hk/opw/list/040/010/001
+  Found 8 products
+  📊 Total unique products so far: 1658
+📂 Scraping category 285/357: https://online-price-watch.consumer.org.hk/opw/list/040/010/003
+  Found 4 products
+  📊 Total unique products so far: 1662
+📂 Scraping category 286/357: https://online-price-watch.consumer.org.hk/opw/list/040/010/009
+  Found 8 products
+  📊 Total unique products so far: 1670
+📂 Scraping category 287/357: https://online-price-watch.consumer.org.hk/opw/list/040/010/019
+  Found 10 products
+  📊 Total unique products so far: 1680
+📂 Scraping category 288/357: https://online-price-watch.consumer.org.hk/opw/list/040/010/020
+  Found 1 products
+  📊 Total unique products so far: 1681
+📂 Scraping category 289/357: https://online-price-watch.consumer.org.hk/opw/list/040/010/022
+  Found 8 products
+  📊 Total unique products so far: 1689
+📂 Scraping category 290/357: https://online-price-watch.consumer.org.hk/opw/list/040/010/029
+  Found 4 products
+  📊 Total unique products so far: 1693
+📂 Scraping category 291/357: https://online-price-watch.consumer.org.hk/opw/list/040/010/190
+  Found 5 products
+  📊 Total unique products so far: 1698
+📂 Scraping category 292/357: https://online-price-watch.consumer.org.hk/opw/list/040/010/200
+  Found 1 products
+  📊 Total unique products so far: 1699
+📂 Scraping category 293/357: https://online-price-watch.consumer.org.hk/opw/list/040/010/210
+  Found 9 products
+  📊 Total unique products so far: 1708
+📂 Scraping category 294/357: https://online-price-watch.consumer.org.hk/opw/list/040/010/230
+  Found 2 products
+  📊 Total unique products so far: 1710
+📂 Scraping category 295/357: https://online-price-watch.consumer.org.hk/opw/list/040/010/250
+  Found 4 products
+  📊 Total unique products so far: 1714
+📂 Scraping category 296/357: https://online-price-watch.consumer.org.hk/opw/list/040/013/001
+  Found 8 products
+  📊 Total unique products so far: 1722
+📂 Scraping category 297/357: https://online-price-watch.consumer.org.hk/opw/list/040/013/003
+  Found 1 products
+  📊 Total unique products so far: 1723
+📂 Scraping category 298/357: https://online-price-watch.consumer.org.hk/opw/list/040/013/008
+  Found 4 products
+  📊 Total unique products so far: 1727
+📂 Scraping category 299/357: https://online-price-watch.consumer.org.hk/opw/list/040/013/015
+  Found 8 products
+  📊 Total unique products so far: 1735
+📂 Scraping category 300/357: https://online-price-watch.consumer.org.hk/opw/list/040/013/019
+  Found 9 products
+  📊 Total unique products so far: 1744
+📂 Scraping category 301/357: https://online-price-watch.consumer.org.hk/opw/list/040/013/025
+  Found 7 products
+  📊 Total unique products so far: 1751
+📂 Scraping category 302/357: https://online-price-watch.consumer.org.hk/opw/list/040/015/003
+  Found 3 products
+  📊 Total unique products so far: 1754
+📂 Scraping category 303/357: https://online-price-watch.consumer.org.hk/opw/list/040/015/005
+  Found 2 products
+  📊 Total unique products so far: 1756
+📂 Scraping category 304/357: https://online-price-watch.consumer.org.hk/opw/list/040/805/001
+  Found 2 products
+  📊 Total unique products so far: 1758
+📂 Scraping category 305/357: https://online-price-watch.consumer.org.hk/opw/list/040/801/001
+  Found 2 products
+  📊 Total unique products so far: 1760
+📂 Scraping category 306/357: https://online-price-watch.consumer.org.hk/opw/list/040/801/008
+  Found 0 products
+  📊 Total unique products so far: 1760
+📂 Scraping category 307/357: https://online-price-watch.consumer.org.hk/opw/list/040/110/101
+  Found 18 products
+  📊 Total unique products so far: 1778
+📂 Scraping category 308/357: https://online-price-watch.consumer.org.hk/opw/list/040/210/301
+  Found 9 products
+  📊 Total unique products so far: 1787
+📂 Scraping category 309/357: https://online-price-watch.consumer.org.hk/opw/list/040/210/303
+  Found 4 products
+  📊 Total unique products so far: 1791
+📂 Scraping category 310/357: https://online-price-watch.consumer.org.hk/opw/list/045/001/001
+  Found 11 products
+  📊 Total unique products so far: 1802
+📂 Scraping category 311/357: https://online-price-watch.consumer.org.hk/opw/list/045/001/002
+  Found 11 products
+  📊 Total unique products so far: 1813
+📂 Scraping category 312/357: https://online-price-watch.consumer.org.hk/opw/list/045/001/004
+  Found 1 products
+  📊 Total unique products so far: 1814
+📂 Scraping category 313/357: https://online-price-watch.consumer.org.hk/opw/list/045/001/003
+  Found 9 products
+  📊 Total unique products so far: 1823
+📂 Scraping category 314/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/001
+  Found 15 products
+  📊 Total unique products so far: 1838
+📂 Scraping category 315/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/002
+  Found 7 products
+  📊 Total unique products so far: 1845
+📂 Scraping category 316/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/003
+  Found 4 products
+  📊 Total unique products so far: 1849
+📂 Scraping category 317/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/005
+  Found 5 products
+  📊 Total unique products so far: 1854
+📂 Scraping category 318/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/011
+  Found 2 products
+  📊 Total unique products so far: 1856
+📂 Scraping category 319/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/007
+  Found 7 products
+  📊 Total unique products so far: 1863
+📂 Scraping category 320/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/009
+  Found 1 products
+  📊 Total unique products so far: 1864
+📂 Scraping category 321/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/015
+  Found 11 products
+  📊 Total unique products so far: 1875
+📂 Scraping category 322/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/017
+  Found 4 products
+  📊 Total unique products so far: 1879
+📂 Scraping category 323/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/020
+  Found 3 products
+  📊 Total unique products so far: 1882
+📂 Scraping category 324/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/251
+  Found 2 products
+  📊 Total unique products so far: 1884
+📂 Scraping category 325/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/025
+  Found 5 products
+  📊 Total unique products so far: 1889
+📂 Scraping category 326/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/031
+  Found 2 products
+  📊 Total unique products so far: 1891
+📂 Scraping category 327/357: https://online-price-watch.consumer.org.hk/opw/list/045/002/111
+  Found 4 products
+  📊 Total unique products so far: 1895
+📂 Scraping category 328/357: https://online-price-watch.consumer.org.hk/opw/list/045/003/001
+  Found 10 products
+  📊 Total unique products so far: 1905
+📂 Scraping category 329/357: https://online-price-watch.consumer.org.hk/opw/list/045/003/101
+  Found 5 products
+  📊 Total unique products so far: 1910
+📂 Scraping category 330/357: https://online-price-watch.consumer.org.hk/opw/list/045/003/111
+  Found 3 products
+  📊 Total unique products so far: 1913
+📂 Scraping category 331/357: https://online-price-watch.consumer.org.hk/opw/list/045/003/002
+  Found 20 products
+  📊 Total unique products so far: 1933
+📂 Scraping category 332/357: https://online-price-watch.consumer.org.hk/opw/list/045/003/003
+  Found 9 products
+  📊 Total unique products so far: 1942
+📂 Scraping category 333/357: https://online-price-watch.consumer.org.hk/opw/list/045/003/020
+  Found 5 products
+  📊 Total unique products so far: 1947
+📂 Scraping category 334/357: https://online-price-watch.consumer.org.hk/opw/list/045/003/025
+  Found 4 products
+  📊 Total unique products so far: 1951
+📂 Scraping category 335/357: https://online-price-watch.consumer.org.hk/opw/list/045/004/001
+  Found 9 products
+  📊 Total unique products so far: 1960
+📂 Scraping category 336/357: https://online-price-watch.consumer.org.hk/opw/list/045/004/003
+  Found 9 products
+  📊 Total unique products so far: 1969
+📂 Scraping category 337/357: https://online-price-watch.consumer.org.hk/opw/list/045/004/005
+  Found 3 products
+  📊 Total unique products so far: 1972
+📂 Scraping category 338/357: https://online-price-watch.consumer.org.hk/opw/list/045/020/010
+  Found 6 products
+  📊 Total unique products so far: 1978
+📂 Scraping category 339/357: https://online-price-watch.consumer.org.hk/opw/list/045/020/020
+  Found 3 products
+  📊 Total unique products so far: 1981
+📂 Scraping category 340/357: https://online-price-watch.consumer.org.hk/opw/list/045/027/005
+  Found 5 products
+  📊 Total unique products so far: 1986
+📂 Scraping category 341/357: https://online-price-watch.consumer.org.hk/opw/list/045/027/033
+  Found 3 products
+  📊 Total unique products so far: 1989
+📂 Scraping category 342/357: https://online-price-watch.consumer.org.hk/opw/list/045/803/001
+  Found 5 products
+  📊 Total unique products so far: 1994
+📂 Scraping category 343/357: https://online-price-watch.consumer.org.hk/opw/list/045/803/005
+  Found 6 products
+  📊 Total unique products so far: 2000
+📂 Scraping category 344/357: https://online-price-watch.consumer.org.hk/opw/list/045/805/001
+  Found 2 products
+  📊 Total unique products so far: 2002
+📂 Scraping category 345/357: https://online-price-watch.consumer.org.hk/opw/list/045/805/003
+  Found 4 products
+  📊 Total unique products so far: 2006
+📂 Scraping category 346/357: https://online-price-watch.consumer.org.hk/opw/list/045/805/005
+  Found 2 products
+  📊 Total unique products so far: 2008
+📂 Scraping category 347/357: https://online-price-watch.consumer.org.hk/opw/list/045/805/007
+  Found 7 products
+  📊 Total unique products so far: 2015
+📂 Scraping category 348/357: https://online-price-watch.consumer.org.hk/opw/list/045/809/001
+  Found 3 products
+  📊 Total unique products so far: 2018
+📂 Scraping category 349/357: https://online-price-watch.consumer.org.hk/opw/list/046/001/002
+  Found 20 products
+  📊 Total unique products so far: 2038
+📂 Scraping category 350/357: https://online-price-watch.consumer.org.hk/opw/list/046/001/101
+  Found 8 products
+  📊 Total unique products so far: 2046
+📂 Scraping category 351/357: https://online-price-watch.consumer.org.hk/opw/list/046/002/002
+  Found 1 products
+  📊 Total unique products so far: 2047
+📂 Scraping category 352/357: https://online-price-watch.consumer.org.hk/opw/list/046/003/001
+  Found 4 products
+  📊 Total unique products so far: 2051
+📂 Scraping category 353/357: https://online-price-watch.consumer.org.hk/opw/list/046/003/010
+  Found 1 products
+  📊 Total unique products so far: 2052
+📂 Scraping category 354/357: https://online-price-watch.consumer.org.hk/opw/list/046/004/001
+  Found 1 products
+  📊 Total unique products so far: 2053
+📂 Scraping category 355/357: https://online-price-watch.consumer.org.hk/opw/list/046/004/003
+  Found 1 products
+  📊 Total unique products so far: 2054
+📂 Scraping category 356/357: https://online-price-watch.consumer.org.hk/opw/list/046/005/001
+  Found 3 products
+  📊 Total unique products so far: 2057
+📂 Scraping category 357/357: https://online-price-watch.consumer.org.hk/opw/list/046/006/001
+  Found 5 products
+  📊 Total unique products so far: 2062
+
+✅ Scraping complete!
+  Categories scraped: 357
+  Total product entries: 2062
+  Unique products: 2062
+
+🔍 DRY-RUN: Skipping Firestore write. Sample product:
+{
+  "code": "173520",
+  "brand": "純一 PURE",
+  "name": "初榨橄欖油 1公升",
+  "minPrice": 108,
+  "currency": "HK$",
+  "category": "015/002/010",
+  "stores": {
+    "wellcome": false,
+    "parknshop": true,
+    "jasons": false,
+    "watsons": false,
+    "mannings": false,
+    "aeon": false,
+    "dchfood": false,
+    "sasa": false,
+    "lungfung": false
+  },
+  "storePrices": {
+    "parknshop": 108
+  }
+}
+
+📁 Saved 2062 products to ./scraped-products.json
+
+🎉 Dry-run complete! 2062 products would be written.

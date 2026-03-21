@@ -3,13 +3,16 @@ import { useState } from 'react';
 import { Home, Search, Plus, FileText, User, Lock, type LucideIcon } from 'lucide-react';
 import { useAuth } from '../../application/context/AuthContext';
 import { useLanguage } from '../../application/context/LanguageContext';
+import { useSubscriptions } from '../../application/hooks/useSubscriptions';
 import { LocaleLink } from './LocaleLink';
 
 export function Navbar() {
   const location = useLocation();
   const { user, signInWithGoogle, signOut } = useAuth();
   const { lang, setLang, t } = useLanguage();
+  const { subscriptions } = useSubscriptions();
   const [showMenu, setShowMenu] = useState(false);
+  const subCount = (subscriptions.subscribedProducts ?? []).length;
 
   const navItems: { to: string; label: string; icon: LucideIcon; highlight: boolean }[] = [
     { to: '/', label: t('nav.home'), icon: Home, highlight: false },
@@ -121,7 +124,14 @@ export function Navbar() {
                 {isActive && (
                   <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-green-400 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.9)]" />
                 )}
-                <item.icon size={20} className="text-current" />
+                <div className="relative">
+                  <item.icon size={20} className="text-current" />
+                  {item.to === '/my-requests' && subCount > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 min-w-[16px] h-4 bg-green-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center px-0.5 leading-none shadow-[0_0_6px_rgba(34,197,94,0.7)]">
+                      {subCount > 99 ? '99+' : subCount}
+                    </span>
+                  )}
+                </div>
                 <span className={`text-xs font-medium ${isActive ? 'text-shimmer' : ''}`}>
                   {item.label}
                 </span>
@@ -172,7 +182,14 @@ export function Navbar() {
                   {isActive && (
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.9)]" />
                   )}
-                  <item.icon size={16} className="text-current" />
+                  <div className="relative">
+                    <item.icon size={16} className="text-current" />
+                    {item.to === '/my-requests' && subCount > 0 && (
+                      <span className="absolute -top-1.5 -right-1.5 min-w-[15px] h-3.5 bg-green-500 text-white text-[8px] font-bold rounded-full flex items-center justify-center px-0.5 leading-none">
+                        {subCount > 99 ? '99+' : subCount}
+                      </span>
+                    )}
+                  </div>
                   <span className={isActive ? 'text-shimmer' : ''}>{item.label}</span>
                 </LocaleLink>
               );

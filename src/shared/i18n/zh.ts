@@ -261,4 +261,26 @@ export const zh: Record<string, string> = {
   'prices.storesAvailable': '間商店有售',
   'prices.loadMore': '載入更多',
   'prices.remaining': '個剩餘',
+
+  // Onboarding
+  'onboarding.step1.title': '你最常買咩？',
+  'onboarding.step1.subtitle': '選擇你感興趣的產品類別',
+  'onboarding.step2.title': '你常去邊間？',
+  'onboarding.step2.subtitle': '選擇你常去的商店',
+  'onboarding.step3.title': '關注呢啲產品？',
+  'onboarding.step3.subtitle': '我們根據你的喜好推薦',
+  'onboarding.done': '完成',
+  'onboarding.next': '下一步',
+  'onboarding.skip': '稍後再說',
+
+  // Subscription
+  'subscription.watch': '關注',
+  'subscription.watching': '已關注',
+  'subscription.unwatch': '取消關注',
+  'subscription.watchlist': '我關注的產品',
+  'subscription.watchMore': '關注更多產品',
+  'subscription.priceDown': '減價！',
+  'subscription.priceUp': '加價',
+  'subscription.noChange': '價格不變',
+  'subscription.loginPrompt': '登入後關注你常買的產品，價格變動即時通知你！',
 };

@@ -1,4 +1,4 @@
-import { Search, Store } from "lucide-react";
+import { Search, Store, Heart } from "lucide-react";
 
 function getCheapestStoreName(storePrices?: Record<string, number>): string | null {
   if (!storePrices || Object.keys(storePrices).length === 0) return null;
@@ -17,6 +17,8 @@ import { db } from '../../infrastructure/firebase/config';
 import { type OfficialPrice } from '../../application/hooks/useOfficialPrices';
 import { PageHeader } from '../components/PageHeader';
 import { useLanguage } from '../../application/context/LanguageContext';
+import { useAuth } from '../../application/context/AuthContext';
+import { useSubscriptions } from '../../application/hooks/useSubscriptions';
 
 const STORE_NAMES: Record<string, string> = {
   wellcome: '惠康',
@@ -29,6 +31,53 @@ const STORE_NAMES: Record<string, string> = {
   sasa: '莎莎',
   lungfung: '龍豐',
 };
+
+interface SubscribeButtonProps {
+  productCode: string;
+}
+
+function SubscribeButton({ productCode }: SubscribeButtonProps) {
+  const { t } = useLanguage();
+  const { user, signInWithGoogle } = useAuth();
+  const { isSubscribed, subscribe, unsubscribe } = useSubscriptions();
+  const subscribed = isSubscribed(productCode);
+  const [animating, setAnimating] = useState(false);
+
+  async function handleToggle(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!user) {
+      signInWithGoogle();
+      return;
+    }
+    setAnimating(true);
+    if (subscribed) {
+      await unsubscribe(productCode);
+    } else {
+      await subscribe(productCode);
+    }
+    setTimeout(() => setAnimating(false), 400);
+  }
+
+  return (
+    <button
+      onClick={handleToggle}
+      title={subscribed ? t('subscription.unwatch') : t('subscription.watch')}
+      className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center border transition-all duration-200 ${
+        animating ? 'scale-125' : 'scale-100'
+      } ${
+        subscribed
+          ? 'bg-green-500/20 border-green-500/50 text-green-400'
+          : 'bg-white/5 border-white/15 text-white/30 hover:border-green-500/40 hover:text-green-400'
+      }`}
+    >
+      <Heart
+        size={14}
+        className={`transition-all duration-200 ${subscribed ? 'fill-green-400 text-green-400' : 'text-current'}`}
+      />
+    </button>
+  );
+}
 
 export function AllPricesPage() {
   const { t } = useLanguage();
@@ -130,37 +179,42 @@ export function AllPricesPage() {
         {/* Product grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
           {paginated.map(product => (
-            <LocaleLink
-              key={product.code}
-              to={`/official-price/${product.code}`}
-              className="glass rounded-2xl p-4 hover:scale-[1.01] transition-all duration-300 block shine-sweep gradient-border card-lift"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div className="min-w-0 flex-1">
-                  <p className="text-white font-medium text-sm truncate">{product.name}</p>
-                  <p className="text-white/40 text-xs mt-0.5 truncate">{product.brand}</p>
+            <div key={product.code} className="relative glass rounded-2xl p-4 hover:scale-[1.01] transition-all duration-300 shine-sweep gradient-border card-lift">
+              <LocaleLink
+                to={`/official-price/${product.code}`}
+                className="block"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-white font-medium text-sm truncate">{product.name}</p>
+                    <p className="text-white/40 text-xs mt-0.5 truncate">{product.brand}</p>
+                  </div>
+                  {product.minPrice != null && product.minPrice > 0 && (
+                    <span className="text-lg font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent flex-shrink-0">
+                      ${product.minPrice.toFixed(1)}
+                    </span>
+                  )}
                 </div>
-                {product.minPrice != null && product.minPrice > 0 && (
-                  <span className="text-lg font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent flex-shrink-0">
-                    ${product.minPrice.toFixed(1)}
+                <div className="flex items-center gap-2 mt-2 flex-wrap">
+                  <span className="text-[10px] text-white/30">
+                    <Store size={14} className="inline text-current" /> {countStores(product.stores)} {t('prices.storesAvailable') || 'stores'}
                   </span>
-                )}
-              </div>
-              <div className="flex items-center gap-2 mt-2 flex-wrap">
-                <span className="text-[10px] text-white/30">
-                  <Store size={14} className="inline text-current" /> {countStores(product.stores)} {t('prices.storesAvailable') || 'stores'}
-                </span>
-                {getCheapestStoreName(product.storePrices) && (
-                  <span className="text-[10px] font-semibold bg-green-500/15 text-green-400 border border-green-500/25 rounded-full px-2 py-0.5">
-                    {getCheapestStoreName(product.storePrices)}最平
+                  {getCheapestStoreName(product.storePrices) && (
+                    <span className="text-[10px] font-semibold bg-green-500/15 text-green-400 border border-green-500/25 rounded-full px-2 py-0.5">
+                      {getCheapestStoreName(product.storePrices)}最平
+                    </span>
+                  )}
+                  <span className="text-[10px] text-white/20">·</span>
+                  <span className="text-[10px] text-green-400/60">
+                    {product.source}
                   </span>
-                )}
-                <span className="text-[10px] text-white/20">·</span>
-                <span className="text-[10px] text-green-400/60">
-                  {product.source}
-                </span>
+                </div>
+              </LocaleLink>
+              {/* Subscribe button */}
+              <div className="absolute top-3 right-3">
+                <SubscribeButton productCode={product.code} />
               </div>
-            </LocaleLink>
+            </div>
           ))}
         </div>
 

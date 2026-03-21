@@ -1,15 +1,18 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useRequests } from '../../application/hooks/useRequests';
 import { useOfficialPrices } from '../../application/hooks/useOfficialPrices';
+import { useSubscriptions } from '../../application/hooks/useSubscriptions';
 import { RequestCard } from '../components/RequestCard';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { LocaleLink } from '../components/LocaleLink';
+import { OnboardingFlow } from '../components/OnboardingFlow';
 import { useAuth } from '../../application/context/AuthContext';
 import { useLanguage } from '../../application/context/LanguageContext';
 import { CATEGORIES } from '../../domain/constants/categories';
 import {
   Search, Flame, BarChart3, MessageCircle, Package, Store,
-  ClipboardList, Lock, Plus, Sparkles, X, Globe, ChevronRight
+  ClipboardList, Lock, Plus, Sparkles, X, Globe, ChevronRight,
+  Bell, Heart
 } from 'lucide-react';
 
 function getCheapestStoreName(storePrices?: Record<string, number>): string | null {
@@ -56,6 +59,48 @@ function OfficialPriceCard({ product }: { product: ReturnType<typeof useOfficial
   );
 }
 
+interface WatchlistCardProps {
+  product: ReturnType<typeof useOfficialPrices>['prices'][0];
+  onUnsubscribe: (code: string) => void;
+}
+
+function WatchlistCard({ product, onUnsubscribe }: WatchlistCardProps) {
+  const { t } = useLanguage();
+  const cheapestStore = getCheapestStoreName(product.storePrices);
+  return (
+    <div className="relative flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-green-500/20 transition-all duration-200 card-lift">
+      <LocaleLink
+        to={`/official-price/${product.code}`}
+        className="flex-1 min-w-0"
+      >
+        <p className="text-[11px] text-white/30 truncate mb-0.5">{product.brand}</p>
+        <p className="text-sm font-semibold text-white/90 leading-snug line-clamp-2">{product.name}</p>
+        <div className="flex items-center gap-2 mt-1 flex-wrap">
+          {cheapestStore && (
+            <span className="text-[10px] font-semibold bg-green-500/15 text-green-400 border border-green-500/25 rounded-full px-1.5 py-0.5">
+              {cheapestStore}
+            </span>
+          )}
+        </div>
+      </LocaleLink>
+      <div className="shrink-0 flex flex-col items-end gap-1">
+        {product.minPrice != null && (
+          <p className="text-lg font-extrabold text-green-400 leading-tight">
+            {product.currency}{product.minPrice.toFixed(1)}
+          </p>
+        )}
+        <button
+          onClick={(e) => { e.preventDefault(); onUnsubscribe(product.code); }}
+          className="p-1 text-green-400 hover:text-red-400 transition-colors"
+          title={t('subscription.unwatch')}
+        >
+          <Heart size={14} className="fill-green-400 text-green-400 hover:fill-red-400 hover:text-red-400 transition-colors" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 const CITY_PILLS = [
   { labelZh: '香港', labelEn: 'Hong Kong', flag: '🇭🇰', value: 'hongkong' },
   { labelZh: '台灣', labelEn: 'Taiwan', flag: '🇹🇼', value: 'taiwan' },
@@ -67,21 +112,34 @@ export function HomePage() {
   const { prices: officialPrices, loading: pricesLoading } = useOfficialPrices(12);
   const { user, signInWithGoogle } = useAuth();
   const { lang, t } = useLanguage();
+  const { subscriptions, loading: subsLoading, unsubscribe } = useSubscriptions();
 
   const [selectedCity, setSelectedCity] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showWelcomeBanner, setShowWelcomeBanner] = useState(false);
 
   useEffect(() => {
     const visited = localStorage.getItem('gaakgaa-visited');
     if (!visited) {
-      setShowOnboarding(true);
+      setShowWelcomeBanner(true);
     }
   }, []);
 
-  const dismissOnboarding = () => {
+  // Show onboarding if logged-in user hasn't completed it or has no subscriptions
+  useEffect(() => {
+    if (!subsLoading && user) {
+      const needsOnboarding = !subscriptions.onboardingComplete ||
+        (subscriptions.subscribedProducts ?? []).length === 0;
+      if (needsOnboarding) {
+        setShowOnboarding(true);
+      }
+    }
+  }, [subsLoading, user, subscriptions.onboardingComplete, subscriptions.subscribedProducts]);
+
+  const dismissWelcome = () => {
     localStorage.setItem('gaakgaa-visited', '1');
-    setShowOnboarding(false);
+    setShowWelcomeBanner(false);
   };
 
   const filteredRequests = useMemo(() => {
@@ -109,11 +167,30 @@ export function HomePage() {
     );
   }, [officialPrices, searchQuery]);
 
+  // Build watchlist from officialPrices (showing only subscribed ones)
+  const subscribedCodes = subscriptions.subscribedProducts ?? [];
+  const hasSubscriptions = subscribedCodes.length > 0;
+
+  // For the watchlist section, we need to fetch the actual subscribed products
+  // officialPrices only has 12 items; filter what we have, then note the rest
+  const watchlistInFeed = useMemo(() => {
+    if (!hasSubscriptions) return [];
+    return officialPrices.filter(p => subscribedCodes.includes(p.code));
+  }, [officialPrices, subscribedCodes, hasSubscriptions]);
+
+  // Determine what section to show: watchlist or generic
+  const showPersonalized = user && hasSubscriptions;
+
   return (
     <div className="min-h-screen bg-[#0A0A0A] pb-24 pt-14 lg:pb-8 lg:pt-20 dot-grid">
 
-      {/* ===== Onboarding Banner ===== */}
+      {/* Onboarding overlay */}
       {showOnboarding && (
+        <OnboardingFlow onDismiss={() => setShowOnboarding(false)} />
+      )}
+
+      {/* Welcome Banner (non-logged in first visit) */}
+      {showWelcomeBanner && !user && (
         <div className="mx-4 mt-3 mb-1 flex items-start gap-3 bg-black/60 border-l-4 border-green-500 rounded-2xl px-4 py-3 backdrop-blur-sm shadow-lg">
           <Sparkles size={20} className="text-green-400 mt-0.5 flex-shrink-0" />
           <div className="flex-1 min-w-0">
@@ -122,7 +199,7 @@ export function HomePage() {
             </p>
           </div>
           <button
-            onClick={dismissOnboarding}
+            onClick={dismissWelcome}
             className="flex-shrink-0 text-white/30 hover:text-white/60 ml-1 mt-0.5 transition-colors"
             aria-label="Dismiss"
           >
@@ -228,42 +305,113 @@ export function HomePage() {
           {/* ===== LEFT / MAIN ===== */}
           <div className="lg:col-span-2 space-y-8">
 
-            {/* Official Prices */}
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-bold text-white/90 text-base flex items-center gap-2 tracking-tight">
-                  <Flame size={16} className="text-orange-400" />
-                  <span>{t('home.prices.title')}</span>
-                </h3>
-                <LocaleLink
-                  to="/prices"
-                  className="text-xs text-green-400 hover:text-green-300 font-medium transition-colors flex items-center gap-1"
+            {/* === Login teaser for non-logged in users === */}
+            {!user && (
+              <div className="flex items-center gap-3 bg-green-500/5 border border-green-500/20 rounded-2xl px-4 py-4">
+                <Bell size={20} className="text-green-400 flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-white/70 leading-relaxed">{t('subscription.loginPrompt')}</p>
+                </div>
+                <button
+                  onClick={signInWithGoogle}
+                  className="flex-shrink-0 text-xs font-bold text-green-400 hover:text-green-300 transition-colors whitespace-nowrap"
                 >
-                  {t('common.viewAll')} <ChevronRight size={14} className="text-current" />
-                </LocaleLink>
+                  {t('common.signIn')} →
+                </button>
               </div>
+            )}
 
-              {pricesLoading ? (
-                <div className="py-6 flex justify-center">
-                  <LoadingSpinner />
+            {/* === Personalized Watchlist OR Generic Prices === */}
+            {showPersonalized ? (
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-bold text-white/90 text-base flex items-center gap-2 tracking-tight">
+                    <Bell size={16} className="text-green-400" />
+                    <span>🔔 {t('subscription.watchlist')}</span>
+                    <span className="text-xs font-normal text-white/30">({subscribedCodes.length})</span>
+                  </h3>
+                  <LocaleLink
+                    to="/prices"
+                    className="text-xs text-green-400 hover:text-green-300 font-medium transition-colors flex items-center gap-1"
+                  >
+                    <Plus size={12} className="text-current" /> {t('subscription.watchMore')}
+                  </LocaleLink>
                 </div>
-              ) : filteredOfficialPrices.length === 0 ? (
-                <div className="bg-white/3 border border-white/8 rounded-xl p-5 text-center">
-                  <div className="flex justify-center mb-2 opacity-40">
-                    <BarChart3 size={32} className="text-white/40" />
+
+                {pricesLoading || subsLoading ? (
+                  <div className="py-6 flex justify-center"><LoadingSpinner /></div>
+                ) : watchlistInFeed.length === 0 ? (
+                  <div className="bg-white/3 border border-white/8 rounded-xl p-5 text-center">
+                    <Heart size={32} className="text-white/20 mx-auto mb-2" />
+                    <p className="text-sm text-white/30 mb-3">
+                      {subscribedCodes.length > 0
+                        ? '你關注的產品不在最新列表中'
+                        : '還沒有關注任何產品'}
+                    </p>
+                    <LocaleLink
+                      to="/prices"
+                      className="inline-flex items-center gap-1 text-xs text-green-400 hover:text-green-300 font-semibold border border-green-500/30 rounded-full px-3 py-1.5 transition-colors"
+                    >
+                      <Plus size={12} className="text-current" /> {t('subscription.watchMore')}
+                    </LocaleLink>
                   </div>
-                  <p className="text-sm text-white/30">
-                    {searchQuery ? t('home.prices.noResults') : t('home.prices.notLoaded')}
-                  </p>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {watchlistInFeed.map(p => (
+                      <WatchlistCard key={p.code} product={p} onUnsubscribe={unsubscribe} />
+                    ))}
+                  </div>
+                )}
+
+                {/* Watch more button */}
+                <div className="mt-3">
+                  <LocaleLink
+                    to="/prices"
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 border border-white/10 text-white/50 text-sm font-medium hover:bg-white/8 hover:text-white/70 transition-all"
+                  >
+                    <Plus size={14} className="text-current" />
+                    {t('subscription.watchMore')}
+                  </LocaleLink>
                 </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {filteredOfficialPrices.map(p => (
-                    <OfficialPriceCard key={p.code} product={p} />
-                  ))}
+              </div>
+            ) : (
+              /* Generic official prices (non-personalized) */
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-bold text-white/90 text-base flex items-center gap-2 tracking-tight">
+                    <Flame size={16} className="text-orange-400" />
+                    <span>{t('home.prices.title')}</span>
+                  </h3>
+                  <LocaleLink
+                    to="/prices"
+                    className="text-xs text-green-400 hover:text-green-300 font-medium transition-colors flex items-center gap-1"
+                  >
+                    {t('common.viewAll')} <ChevronRight size={14} className="text-current" />
+                  </LocaleLink>
                 </div>
-              )}
-            </div>
+
+                {pricesLoading ? (
+                  <div className="py-6 flex justify-center">
+                    <LoadingSpinner />
+                  </div>
+                ) : filteredOfficialPrices.length === 0 ? (
+                  <div className="bg-white/3 border border-white/8 rounded-xl p-5 text-center">
+                    <div className="flex justify-center mb-2 opacity-40">
+                      <BarChart3 size={32} className="text-white/40" />
+                    </div>
+                    <p className="text-sm text-white/30">
+                      {searchQuery ? t('home.prices.noResults') : t('home.prices.notLoaded')}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {filteredOfficialPrices.map(p => (
+                      <OfficialPriceCard key={p.code} product={p} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Mobile category scroll */}
             <div className="lg:hidden">

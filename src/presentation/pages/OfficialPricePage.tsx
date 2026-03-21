@@ -5,6 +5,10 @@ import { db } from '../../infrastructure/firebase/config';
 import { type OfficialPrice } from '../../application/hooks/useOfficialPrices';
 import { PageHeader } from '../components/PageHeader';
 import { LoadingSpinner } from '../components/LoadingSpinner';
+import { useSubscriptions } from '../../application/hooks/useSubscriptions';
+import { useAuth } from '../../application/context/AuthContext';
+import { useLanguage } from '../../application/context/LanguageContext';
+import { Heart, Bell } from 'lucide-react';
 
 const STORE_LABELS: Record<string, { zh: string; en: string }> = {
   wellcome:  { zh: '惠康', en: 'Wellcome' },
@@ -91,6 +95,9 @@ export function OfficialPricePage() {
   const [product, setProduct] = useState<OfficialPrice | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const { isSubscribed, subscribe, unsubscribe } = useSubscriptions();
+  const { user, signInWithGoogle } = useAuth();
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (!code) return;
@@ -195,6 +202,30 @@ export function OfficialPricePage() {
               <span className="bg-green-500/10 border border-green-500/20 rounded-full px-3 py-1 text-green-400">
                 🏪 {withPrice.length} 間有售
               </span>
+            )}
+          </div>
+
+          {/* Subscribe button */}
+          <div className="mt-6">
+            {code && isSubscribed(code) ? (
+              <button
+                onClick={() => code && unsubscribe(code)}
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-sm bg-green-500/15 border border-green-500/40 text-green-400 hover:bg-green-500/10 hover:text-green-300 active:scale-95 transition-all duration-200"
+              >
+                <Heart size={16} className="fill-green-400 text-green-400" />
+                ✅ {t('subscription.watching')}
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  if (!user) { signInWithGoogle(); return; }
+                  if (code) subscribe(code);
+                }}
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-sm bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-[0_0_20px_rgba(34,197,94,0.35)] hover:shadow-[0_0_30px_rgba(34,197,94,0.5)] active:scale-95 transition-all duration-200"
+              >
+                <Bell size={16} className="text-current" />
+                🔔 {t('subscription.watch')}
+              </button>
             )}
           </div>
         </div>

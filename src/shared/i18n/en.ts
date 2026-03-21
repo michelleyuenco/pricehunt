@@ -261,4 +261,26 @@ export const en: Record<string, string> = {
   'prices.storesAvailable': 'stores available',
   'prices.loadMore': 'Load more',
   'prices.remaining': 'remaining',
+
+  // Onboarding
+  'onboarding.step1.title': 'What do you usually buy?',
+  'onboarding.step1.subtitle': 'Choose product categories you care about',
+  'onboarding.step2.title': 'Where do you usually shop?',
+  'onboarding.step2.subtitle': 'Choose stores you visit',
+  'onboarding.step3.title': 'Watch these products?',
+  'onboarding.step3.subtitle': 'Recommended based on your preferences',
+  'onboarding.done': 'Done',
+  'onboarding.next': 'Next',
+  'onboarding.skip': 'Maybe later',
+
+  // Subscription
+  'subscription.watch': 'Watch',
+  'subscription.watching': 'Watching',
+  'subscription.unwatch': 'Unwatch',
+  'subscription.watchlist': 'My Watchlist',
+  'subscription.watchMore': 'Watch more products',
+  'subscription.priceDown': 'Price drop!',
+  'subscription.priceUp': 'Price up',
+  'subscription.noChange': 'No change',
+  'subscription.loginPrompt': 'Sign in to watch products and get price alerts!',
 };
