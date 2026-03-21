@@ -250,33 +250,6 @@ export function HomePage() {
             </button>
           )}
 
-          {/* City pills */}
-          <div className="flex gap-2 justify-start flex-wrap mt-6">
-            <button
-              onClick={() => setSelectedCity('all')}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border transition-all duration-200 ${
-                selectedCity === 'all'
-                  ? 'bg-green-500/20 border-green-500/50 text-green-400'
-                  : 'bg-white/5 border-white/10 text-white/50 hover:border-white/20 hover:text-white/70'
-              }`}
-            >
-              <Globe size={14} className="text-current" /> {t('home.cities.all')}
-            </button>
-            {CITY_PILLS.map(city => (
-              <button
-                key={city.value}
-                onClick={() => setSelectedCity(selectedCity === city.value ? 'all' : city.value)}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border transition-all duration-200 ${
-                  selectedCity === city.value
-                    ? 'bg-green-500/20 border-green-500/50 text-green-400'
-                    : 'bg-white/5 border-white/10 text-white/50 hover:border-white/20 hover:text-white/70'
-                }`}
-              >
-                {city.flag} {lang === 'zh' ? city.labelZh : city.labelEn}
-              </button>
-            ))}
-          </div>
-
           {/* Search bar */}
           <div className="relative max-w-md mt-4">
             <input
@@ -412,6 +385,35 @@ export function HomePage() {
                 )}
               </div>
             )}
+
+            
+            {/* Region filter (secondary priority) */}
+            {/* City pills */}
+          <div className="flex gap-2 justify-start flex-wrap mt-6">
+            <button
+              onClick={() => setSelectedCity('all')}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border transition-all duration-200 ${
+                selectedCity === 'all'
+                  ? 'bg-green-500/20 border-green-500/50 text-green-400'
+                  : 'bg-white/5 border-white/10 text-white/50 hover:border-white/20 hover:text-white/70'
+              }`}
+            >
+              <Globe size={14} className="text-current" /> {t('home.cities.all')}
+            </button>
+            {CITY_PILLS.map(city => (
+              <button
+                key={city.value}
+                onClick={() => setSelectedCity(selectedCity === city.value ? 'all' : city.value)}
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border transition-all duration-200 ${
+                  selectedCity === city.value
+                    ? 'bg-green-500/20 border-green-500/50 text-green-400'
+                    : 'bg-white/5 border-white/10 text-white/50 hover:border-white/20 hover:text-white/70'
+                }`}
+              >
+                {city.flag} {lang === 'zh' ? city.labelZh : city.labelEn}
+              </button>
+            ))}
+          </div>
 
             {/* Mobile category scroll */}
             <div className="lg:hidden">
