@@ -178,7 +178,7 @@ export function HomePage() {
 
       {/* Onboarding overlay */}
       {showOnboarding && (
-        <OnboardingFlow onDismiss={() => setShowOnboarding(false)} />
+        <OnboardingFlow onComplete={() => setShowOnboarding(false)} />
       )}
 
       {/* Welcome Banner (non-logged in first visit) */}

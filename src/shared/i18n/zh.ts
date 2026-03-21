@@ -283,4 +283,11 @@ export const zh: Record<string, string> = {
   'subscription.priceUp': '加價',
   'subscription.noChange': '價格不變',
   'subscription.loginPrompt': '登入後關注你常買的產品，價格變動即時通知你！',
+  'onboarding.title': '你想追蹤咩產品？',
+  'onboarding.subtitle': '搜尋並關注你常買的產品，價格更新即時通知你',
+  'onboarding.searchPlaceholder': '搜尋產品名稱... 例如：雞蛋、牛奶、廁紙',
+  'onboarding.subscribed': '已關注',
+  'onboarding.popular': '熱門產品',
+  'onboarding.tryOther': '試下其他關鍵字',
+  'onboarding.doneWithCount': '完成',
 };

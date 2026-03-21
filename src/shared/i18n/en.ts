@@ -283,4 +283,11 @@ export const en: Record<string, string> = {
   'subscription.priceUp': 'Price up',
   'subscription.noChange': 'No change',
   'subscription.loginPrompt': 'Sign in to watch products and get price alerts!',
+  'onboarding.title': 'What products do you want to track?',
+  'onboarding.subtitle': 'Search and follow products you buy regularly — get instant price updates',
+  'onboarding.searchPlaceholder': 'Search products... e.g. eggs, milk, tissues',
+  'onboarding.subscribed': 'subscribed',
+  'onboarding.popular': 'Popular products',
+  'onboarding.tryOther': 'Try a different keyword',
+  'onboarding.doneWithCount': 'Done',
 };
