@@ -91,10 +91,10 @@ export function OnboardingFlow({ onDismiss }: OnboardingFlowProps) {
     if (step === 1) {
       if (selectedCategories.length === 0) return;
       setAnimating(true);
-      setTimeout(() => { setStep(2); setAnimating(false); }, 200);
+      setTimeout(() => { setStep(3); setAnimating(false); }, 200);
     } else if (step === 2) {
       if (selectedStores.length === 0) return;
-      setPreferences(selectedCategories, selectedStores);
+      setPreferences(selectedCategories, ['wellcome','parknshop','jasons','watsons','mannings','aeon','dchfood','sasa','lungfung']);
       setAnimating(true);
       loadSuggested().then(() => {
         setTimeout(() => { setStep(3); setAnimating(false); }, 200);
@@ -131,7 +131,7 @@ export function OnboardingFlow({ onDismiss }: OnboardingFlowProps) {
         {/* Step indicator */}
         <div className="flex items-center justify-between px-6 pt-6 pb-4">
           <div className="flex items-center gap-2">
-            {[1, 2, 3].map(s => (
+            {[1, 3].map(s => (
               <div
                 key={s}
                 className={`transition-all duration-300 rounded-full ${
