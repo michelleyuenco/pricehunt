@@ -323,4 +323,27 @@ export const en: Record<string, string> = {
 
   // Community
   'community.reports': 'Community Reports',
+
+  // Source transparency
+  'source.official': 'Official Data',
+  'source.community': 'Community Report',
+  'source.both': 'Official + Community',
+  'source.consumerCouncil': 'Consumer Council',
+
+  // Reputation
+  'reputation.records': 'records',
+  'reputation.accuracy': 'accuracy',
+  'reputation.badges': 'Badges',
+  'reputation.badgeEarned': 'You earned a new badge!',
+
+  // Verify
+  'verify.confirm': 'I confirm this price',
+  'verify.confirmed': 'confirmed',
+  'verify.consistent': 'Price consistent',
+  'verify.range': 'Price range',
+
+  // Freshness
+  'freshness.fresh': 'Fresh',
+  'freshness.recent': 'Recent',
+  'freshness.outdated': 'May be outdated',
 };

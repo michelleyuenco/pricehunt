@@ -1,4 +1,5 @@
 import { Search, Store, Heart } from "lucide-react";
+import { PriceTimestamp } from '../components/PriceTimestamp';
 
 function getCheapestStoreName(storePrices?: Record<string, number>): string | null {
   if (!storePrices || Object.keys(storePrices).length === 0) return null;
@@ -204,11 +205,20 @@ export function AllPricesPage() {
                       {getCheapestStoreName(product.storePrices)}最平
                     </span>
                   )}
-                  <span className="text-[10px] text-white/20">·</span>
-                  <span className="text-[10px] text-green-400/60">
-                    {product.source}
+                  {/* Source badge */}
+                  <span className="text-[10px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full px-2 py-0.5">
+                    🏛️ 官方
                   </span>
                 </div>
+                {/* Last updated timestamp */}
+                {product.updatedAt && (
+                  <div className="mt-1.5">
+                    <PriceTimestamp
+                      date={product.updatedAt as { seconds: number }}
+                      source="official"
+                    />
+                  </div>
+                )}
               </LocaleLink>
               {/* Subscribe button */}
               <div className="absolute top-3 right-3">

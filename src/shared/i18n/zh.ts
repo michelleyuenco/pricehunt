@@ -323,4 +323,27 @@ export const zh: Record<string, string> = {
 
   // Community
   'community.reports': '社群回報',
+
+  // Source transparency
+  'source.official': '官方數據',
+  'source.community': '社群回報',
+  'source.both': '官方+社群',
+  'source.consumerCouncil': '消費者委員會',
+
+  // Reputation
+  'reputation.records': '次記錄',
+  'reputation.accuracy': '準確率',
+  'reputation.badges': '徽章',
+  'reputation.badgeEarned': '你獲得了新徽章！',
+
+  // Verify
+  'verify.confirm': '我也見到呢個價',
+  'verify.confirmed': '人確認',
+  'verify.consistent': '價格一致',
+  'verify.range': '價格範圍',
+
+  // Freshness
+  'freshness.fresh': '最新',
+  'freshness.recent': '近期',
+  'freshness.outdated': '可能已過時',
 };

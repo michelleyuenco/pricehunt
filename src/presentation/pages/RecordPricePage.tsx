@@ -6,6 +6,8 @@ import { useLanguage } from '../../application/context/LanguageContext';
 import { useCreateRecord } from '../../application/hooks/usePriceRecords';
 import { useMyRecords } from '../../application/hooks/usePriceRecords';
 import { useStoreSearch, useProductSearch, addUnifiedStore, addUnifiedProduct, incrementStoreRecordCount, incrementProductRecordCount } from '../../application/hooks/useUnifiedSearch';
+import { useMyReputation } from '../../application/hooks/useReputation';
+import { getBadgeById } from '../../domain/constants/badges';
 import { PageHeader } from '../components/PageHeader';
 import type { UnifiedStore } from '../../shared/types/priceRecord';
 import type { ProductSearchResult } from '../../application/hooks/useUnifiedSearch';
@@ -431,6 +433,7 @@ export function RecordPricePage() {
   const navigate = useNavigate();
   const { create, creating } = useCreateRecord();
   const { records: myRecords } = useMyRecords();
+  const { onRecordSaved } = useMyReputation();
 
   const [store, setStore] = useState<UnifiedStore | null>(null);
   const [product, setProduct] = useState<ProductSearchResult | null>(null);
@@ -442,6 +445,7 @@ export function RecordPricePage() {
   const [note, setNote] = useState('');
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
+  const [newBadges, setNewBadges] = useState<string[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -474,10 +478,16 @@ export function RecordPricePage() {
       incrementStoreRecordCount(store.id).catch(() => {});
       incrementProductRecordCount(product.code, Number(price)).catch(() => {});
 
+      // Update reputation and check for new badges
+      const earnedBadges = await onRecordSaved().catch(() => [] as string[]);
+      if (earnedBadges.length > 0) {
+        setNewBadges(earnedBadges);
+      }
+
       setSaved(true);
       setTimeout(() => {
         navigate(-1);
-      }, 1500);
+      }, earnedBadges.length > 0 ? 3000 : 1500);
     } catch (err) {
       setError('儲存失敗，請重試');
       console.error(err);
@@ -512,6 +522,17 @@ export function RecordPricePage() {
           <div className="bg-green-500/90 backdrop-blur-xl rounded-3xl px-8 py-6 shadow-2xl flex flex-col items-center gap-3 animate-in fade-in zoom-in">
             <Check size={40} className="text-white" />
             <p className="text-white font-bold text-xl">{t('record.saved') || '已儲存！'}</p>
+            {newBadges.map(id => {
+              const badge = getBadgeById(id);
+              if (!badge) return null;
+              return (
+                <div key={id} className="bg-white/20 rounded-2xl px-4 py-2 text-center">
+                  <p className="text-2xl">{badge.icon}</p>
+                  <p className="text-white text-sm font-bold">🎉 {t('reputation.badgeEarned') || '你獲得了新徽章！'}</p>
+                  <p className="text-white/80 text-xs">「{badge.nameZh}」 {badge.nameEn}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

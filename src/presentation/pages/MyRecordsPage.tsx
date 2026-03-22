@@ -1,25 +1,17 @@
 import { useState, useMemo } from 'react';
-import { ClipboardList, Trash2, Tag, Store, Calendar, Filter, Plus } from 'lucide-react';
+import { ClipboardList, Trash2, Tag, Store, Filter, Plus } from 'lucide-react';
 import { useAuth } from '../../application/context/AuthContext';
 import { useLanguage } from '../../application/context/LanguageContext';
 import { useMyRecords, useDeleteRecord } from '../../application/hooks/usePriceRecords';
 import { PageHeader } from '../components/PageHeader';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { LocaleLink } from '../components/LocaleLink';
+import { PriceTimestamp } from '../components/PriceTimestamp';
+import { useMyReputation } from '../../application/hooks/useReputation';
+import { getBadgeById } from '../../domain/constants/badges';
 import type { PriceRecord } from '../../shared/types/priceRecord';
 
-function formatRecordDate(record: PriceRecord): string {
-  try {
-    const ts = record.recordedAt;
-    if (!ts) return '';
-    const date = 'toDate' in ts ? (ts as { toDate(): Date }).toDate() : new Date((ts as { seconds: number }).seconds * 1000);
-    return date.toLocaleDateString('zh-HK', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-  } catch {
-    return '';
-  }
-}
-
-function RecordCard({ record, onDelete }: { record: PriceRecord; onDelete: (id: string) => void }) {
+function RecordCard({ record, onDelete, myBadges }: { record: PriceRecord; onDelete: (id: string) => void; myBadges?: string[] }) {
   const [confirming, setConfirming] = useState(false);
 
   return (
@@ -51,12 +43,14 @@ function RecordCard({ record, onDelete }: { record: PriceRecord; onDelete: (id: 
             </p>
           </div>
 
-          {/* Date & badges */}
+          {/* Timestamp + badges */}
           <div className="flex items-center gap-2 flex-wrap">
-            <div className="flex items-center gap-1">
-              <Calendar size={11} className="text-white/20" />
-              <span className="text-[11px] text-white/30">{formatRecordDate(record)}</span>
-            </div>
+            <PriceTimestamp
+              date={record.recordedAt}
+              source="user"
+              userName={record.userName}
+              userBadges={myBadges}
+            />
             {record.isOnSale && (
               <span className="flex items-center gap-0.5 text-[10px] font-bold bg-orange-500/15 text-orange-400 border border-orange-500/20 rounded-full px-1.5 py-0.5">
                 <Tag size={9} className="text-current" /> 特價
@@ -106,6 +100,7 @@ export function MyRecordsPage() {
   const { t } = useLanguage();
   const { records, loading } = useMyRecords();
   const { deleteRecord } = useDeleteRecord();
+  const { reputation } = useMyReputation();
   const [filterStore, setFilterStore] = useState('');
   const [showFilter, setShowFilter] = useState(false);
 
@@ -155,7 +150,7 @@ export function MyRecordsPage() {
 
         {/* Stats bar */}
         {records.length > 0 && (
-          <div className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-4 py-4">
+          <div className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-4 py-4 space-y-3">
             <div className="grid grid-cols-3 gap-2 text-center">
               <div>
                 <p className="text-2xl font-extrabold text-white">{thisMonth.length}</p>
@@ -170,6 +165,28 @@ export function MyRecordsPage() {
                 <p className="text-[11px] text-white/40 mt-0.5 leading-tight">格價產品</p>
               </div>
             </div>
+            {/* Reputation badges row */}
+            {reputation && reputation.badges.length > 0 && (
+              <div className="border-t border-white/5 pt-3">
+                <p className="text-[10px] text-white/30 mb-1.5">{t('reputation.badges') || '徽章'} Badges</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {reputation.badges.map(id => {
+                    const badge = getBadgeById(id);
+                    if (!badge) return null;
+                    return (
+                      <span key={id} title={`${badge.nameZh} ${badge.nameEn}`} className="text-sm bg-white/5 border border-white/10 rounded-full px-2 py-0.5 flex items-center gap-1">
+                        <span>{badge.icon}</span>
+                        <span className="text-[10px] text-white/50">{badge.nameZh}</span>
+                      </span>
+                    );
+                  })}
+                </div>
+                <p className="text-[10px] text-white/25 mt-1.5">
+                  共 {reputation.totalRecords} {t('reputation.records') || '次記錄'}
+                  {reputation.accuracyScore > 0 && ` · ${reputation.accuracyScore}% ${t('reputation.accuracy') || '準確率'}`}
+                </p>
+              </div>
+            )}
           </div>
         )}
 
@@ -258,6 +275,7 @@ export function MyRecordsPage() {
                 key={record.id}
                 record={record}
                 onDelete={(id) => deleteRecord(id).catch(console.error)}
+                myBadges={reputation?.badges}
               />
             ))}
           </div>

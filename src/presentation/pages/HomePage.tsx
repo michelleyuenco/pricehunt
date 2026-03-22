@@ -7,6 +7,7 @@ import { RequestCard } from '../components/RequestCard';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { LocaleLink } from '../components/LocaleLink';
 import { OnboardingFlow } from '../components/OnboardingFlow';
+import { PriceTimestamp } from '../components/PriceTimestamp';
 import { useAuth } from '../../application/context/AuthContext';
 import { useLanguage } from '../../application/context/LanguageContext';
 import { CATEGORIES } from '../../domain/constants/categories';
@@ -47,7 +48,11 @@ function OfficialPriceCard({ product }: { product: ReturnType<typeof useOfficial
               {cheapestStore}最平
             </span>
           )}
+          <span className="text-[10px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full px-1.5 py-0.5">🏛️ 官方</span>
         </div>
+        {product.updatedAt && (
+          <PriceTimestamp date={product.updatedAt as { seconds: number }} source="official" className="mt-1" />
+        )}
       </div>
       {product.minPrice != null && (
         <div className="shrink-0 text-right">
@@ -402,6 +407,7 @@ export function HomePage() {
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-white/80 truncate">{record.productName}</p>
                         <p className="text-xs text-white/40 truncate">{record.storeName}{record.storeBranch ? ` · ${record.storeBranch}` : ''}</p>
+                        <PriceTimestamp date={record.recordedAt} source="user" />
                       </div>
                       <div className="shrink-0 text-right">
                         <p className="text-base font-bold text-green-400">{record.currency}{typeof record.price === 'number' ? record.price.toFixed(1) : record.price}</p>

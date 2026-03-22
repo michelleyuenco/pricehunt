@@ -12,14 +12,115 @@ import { useProductRecords } from '../../application/hooks/usePriceRecords';
 import { LocaleLink } from '../components/LocaleLink';
 import { Heart, Bell, Users, Plus, Tag, Store } from 'lucide-react';
 import type { PriceRecord } from '../../shared/types/priceRecord';
+import { PriceTimestamp } from '../components/PriceTimestamp';
+import { useUserReputation } from '../../application/hooks/useReputation';
+import { useVerifyRecord } from '../../application/hooks/useVerification';
+import { useStoreConsistency } from '../../application/hooks/useVerification';
 
-function formatCommunityDate(record: PriceRecord): string {
-  try {
-    const ts = record.recordedAt;
-    if (!ts) return '';
-    const date = 'toDate' in ts ? (ts as { toDate(): Date }).toDate() : new Date((ts as { seconds: number }).seconds * 1000);
-    return date.toLocaleDateString('zh-HK', { month: 'short', day: 'numeric' });
-  } catch { return ''; }
+// CommunityRecordCard — shows reputation, verify button, freshness
+function CommunityRecordCard({ record }: { record: PriceRecord & { confirmations?: number } }) {
+  const { user } = useAuth();
+  const { t } = useLanguage();
+  const { reputation } = useUserReputation(record.userId);
+  const { confirmRecord, confirming } = useVerifyRecord();
+  const [localConfirmations, setLocalConfirmations] = useState(record.confirmations ?? 0);
+  const [alreadyConfirmed, setAlreadyConfirmed] = useState(false);
+
+  const isOwnRecord = user?.uid === record.userId;
+  const confirmCount = localConfirmations;
+
+  // Reputation-based border
+  const totalRecords = reputation?.totalRecords ?? 0;
+  const borderClass = totalRecords >= 100
+    ? 'border-yellow-500/40 bg-yellow-500/5'
+    : totalRecords >= 10
+    ? 'border-green-500/25 bg-green-500/5'
+    : 'border-white/[0.06] bg-white/[0.03]';
+
+  const handleConfirm = async () => {
+    if (!user || isOwnRecord || alreadyConfirmed) return;
+    const success = await confirmRecord(record.id!, record.userId);
+    if (success) {
+      setLocalConfirmations(v => v + 1);
+      setAlreadyConfirmed(true);
+    }
+  };
+
+  return (
+    <div className={`flex items-start gap-3 border rounded-2xl px-4 py-3 hover:border-white/10 transition-all ${borderClass}`}>
+      {/* User avatar */}
+      <div className="flex-shrink-0 mt-0.5">
+        {record.userPhoto ? (
+          <img src={record.userPhoto} alt="" className="w-7 h-7 rounded-full ring-1 ring-white/10" />
+        ) : (
+          <div className="w-7 h-7 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center">
+            <span className="text-[10px] text-purple-400 font-bold">
+              {record.userName?.charAt(0) ?? 'U'}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 mb-0.5">
+              <Store size={11} className="text-white/30 flex-shrink-0" />
+              <p className="text-xs text-white/60 truncate">
+                {record.storeName}
+                {record.storeBranch && ` · ${record.storeBranch}`}
+              </p>
+            </div>
+
+            {/* Timestamp with reputation */}
+            <PriceTimestamp
+              date={record.recordedAt}
+              source="user"
+              userName={record.userName}
+              userBadges={reputation?.badges}
+            />
+
+            {record.isOnSale && (
+              <span className="inline-flex items-center gap-0.5 text-[9px] font-bold bg-orange-500/15 text-orange-400 border border-orange-500/20 rounded-full px-1.5 py-0.5 mt-0.5">
+                <Tag size={7} className="text-current" /> 特價
+              </span>
+            )}
+            {record.note && (
+              <p className="text-[11px] text-white/25 mt-0.5 italic">💬 {record.note}</p>
+            )}
+
+            {/* Confirmations */}
+            {confirmCount > 0 && (
+              <p className="text-[10px] text-green-400/70 mt-1">
+                ✅ {confirmCount} {t('verify.confirmed') || '人確認'}
+              </p>
+            )}
+          </div>
+          <div className="shrink-0 text-right">
+            <p className="text-base font-bold text-green-400 leading-tight">
+              {record.currency}{typeof record.price === 'number' ? record.price.toFixed(1) : record.price}
+            </p>
+            <p className="text-[10px] text-white/30">{record.unit}</p>
+          </div>
+        </div>
+
+        {/* Verify button */}
+        {user && !isOwnRecord && !alreadyConfirmed && (
+          <button
+            onClick={handleConfirm}
+            disabled={confirming === record.id}
+            className="mt-2 flex items-center gap-1 text-[10px] text-white/40 hover:text-green-400 border border-white/10 hover:border-green-500/30 rounded-full px-2 py-0.5 transition-all"
+          >
+            {confirming === record.id ? '...' : `✅ ${t('verify.confirm') || '我也見到呢個價'}`}
+          </button>
+        )}
+        {alreadyConfirmed && (
+          <p className="mt-1 text-[10px] text-green-400/60">✅ 已確認</p>
+        )}
+      </div>
+    </div>
+  );
 }
 
 const STORE_LABELS: Record<string, { zh: string; en: string }> = {
@@ -111,6 +212,7 @@ export function OfficialPricePage() {
   const { user, signInWithGoogle } = useAuth();
   const { t } = useLanguage();
   const { records: communityRecords, loading: communityLoading } = useProductRecords(code ?? '');
+  const { storeData: storeConsistency } = useStoreConsistency(code);
 
   useEffect(() => {
     if (!code) return;
@@ -189,6 +291,21 @@ export function OfficialPricePage() {
       <PageHeader title="官方價格" showBack />
 
       <div className="px-4 py-8 max-w-3xl mx-auto lg:px-6 lg:py-12 space-y-6">
+
+        {/* ── Official Source Header ─────────────────────────────────────── */}
+        <div className="flex items-center gap-2 bg-blue-500/5 border border-blue-500/20 rounded-2xl px-4 py-3">
+          <span className="text-lg">🏛️</span>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-bold text-blue-400">消費者委員會數據 Consumer Council Data</p>
+            {product.updatedAt && (
+              <PriceTimestamp
+                date={product.updatedAt as { seconds: number }}
+                source="official"
+              />
+            )}
+          </div>
+          <span className="text-[10px] bg-blue-500/15 text-blue-400 border border-blue-500/20 rounded-full px-2 py-0.5 font-semibold flex-shrink-0">🏛️ 官方</span>
+        </div>
 
         {/* ── Hero Product Card ──────────────────────────────────────────── */}
         <div className="bg-white/[0.04] border border-white/10 rounded-3xl p-8 lg:p-10">
@@ -353,14 +470,19 @@ export function OfficialPricePage() {
 
         {/* ── Community Reports ─────────────────────────────────────────── */}
         <div>
+          {/* Community section header with green tint */}
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold text-white/80 text-sm flex items-center gap-2">
-              <Users size={16} className="text-purple-400" />
-              <span>👥 {t('community.reports') || '社群回報'} Community Reports</span>
-              {communityRecords.length > 0 && (
-                <span className="text-xs font-normal text-white/30">({communityRecords.length})</span>
-              )}
-            </h3>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 bg-green-500/5 border border-green-500/20 rounded-xl px-3 py-1.5">
+                <span className="text-base">👤</span>
+                <h3 className="font-bold text-green-400/90 text-sm">
+                  社群回報 Community Reports
+                </h3>
+                {communityRecords.length > 0 && (
+                  <span className="text-xs font-normal text-green-400/50">({communityRecords.length})</span>
+                )}
+              </div>
+            </div>
             <LocaleLink
               to="/record"
               className="flex items-center gap-1 text-xs text-green-400 hover:text-green-300 font-medium transition-colors border border-green-500/20 rounded-full px-2.5 py-1"
@@ -369,6 +491,30 @@ export function OfficialPricePage() {
               記錄價格
             </LocaleLink>
           </div>
+
+          {/* Store consistency indicators */}
+          {storeConsistency.length > 0 && (
+            <div className="mb-4 space-y-2">
+              <p className="text-[11px] text-white/30 font-semibold uppercase tracking-wider">各商店社群數據</p>
+              {storeConsistency.map(sc => (
+                <div key={sc.storeId} className="flex items-center gap-2 bg-white/[0.02] border border-white/[0.05] rounded-xl px-3 py-2">
+                  <Store size={12} className="text-white/30 flex-shrink-0" />
+                  <p className="text-xs text-white/60 flex-1 min-w-0 truncate">
+                    {sc.storeName}{sc.storeBranch ? ` · ${sc.storeBranch}` : ''}
+                  </p>
+                  {sc.isConsistent ? (
+                    <span className="text-[10px] text-green-400 bg-green-500/10 border border-green-500/20 rounded-full px-2 py-0.5 flex-shrink-0">
+                      ✅ ${sc.mostCommonPrice.toFixed(1)} ({sc.reports}人確認)
+                    </span>
+                  ) : (
+                    <span className="text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded-full px-2 py-0.5 flex-shrink-0">
+                      💬 ${sc.priceRange.min.toFixed(1)}-${sc.priceRange.max.toFixed(1)} ({sc.reports}報告)
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
 
           {communityLoading ? (
             <div className="py-4 flex justify-center"><LoadingSpinner /></div>
@@ -387,66 +533,18 @@ export function OfficialPricePage() {
           ) : (
             <div className="space-y-2">
               {communityRecords.map((record, i) => (
-                <div key={record.id ?? i} className="flex items-start gap-3 bg-white/[0.03] border border-white/[0.06] rounded-2xl px-4 py-3 hover:border-white/10 transition-all">
-                  {/* User avatar */}
-                  <div className="flex-shrink-0 mt-0.5">
-                    {record.userPhoto ? (
-                      <img src={record.userPhoto} alt="" className="w-7 h-7 rounded-full ring-1 ring-white/10" />
-                    ) : (
-                      <div className="w-7 h-7 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center">
-                        <span className="text-[10px] text-purple-400 font-bold">
-                          {record.userName?.charAt(0) ?? 'U'}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5 mb-0.5">
-                          <Store size={11} className="text-white/30 flex-shrink-0" />
-                          <p className="text-xs text-white/60 truncate">
-                            {record.storeName}
-                            {record.storeBranch && ` · ${record.storeBranch}`}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <p className="text-[11px] text-white/30">{record.userName}</p>
-                          <span className="text-white/15">·</span>
-                          <p className="text-[11px] text-white/30">{formatCommunityDate(record)}</p>
-                          {record.isOnSale && (
-                            <span className="flex items-center gap-0.5 text-[9px] font-bold bg-orange-500/15 text-orange-400 border border-orange-500/20 rounded-full px-1.5 py-0.5">
-                              <Tag size={7} className="text-current" /> 特價
-                            </span>
-                          )}
-                        </div>
-                        {record.note && (
-                          <p className="text-[11px] text-white/25 mt-0.5 italic">💬 {record.note}</p>
-                        )}
-                      </div>
-                      <div className="shrink-0 text-right">
-                        <p className="text-base font-bold text-green-400 leading-tight">
-                          {record.currency}{typeof record.price === 'number' ? record.price.toFixed(1) : record.price}
-                        </p>
-                        <p className="text-[10px] text-white/30">{record.unit}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <CommunityRecordCard key={record.id ?? i} record={record as PriceRecord & { confirmations?: number }} />
               ))}
             </div>
           )}
         </div>
 
         {/* ── Source / Date ─────────────────────────────────────────────── */}
-        <p className="text-xs text-white/20 text-center pt-2">
-          資料來源 Source: 消費者委員會 Consumer Council
-          {product.updatedAt && (
-            <> · {new Date((product.updatedAt as { seconds: number }).seconds * 1000).toLocaleDateString('zh-HK')}</>
-          )}
-        </p>
+        <div className="flex items-center justify-center gap-2 pt-2">
+          <span className="text-[10px] text-blue-400/50 bg-blue-500/5 border border-blue-500/10 rounded-full px-3 py-1">
+            🏛️ 官方數據 · 消費者委員會 Consumer Council
+          </span>
+        </div>
       </div>
     </div>
   );
