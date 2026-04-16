@@ -5,15 +5,30 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    /* Prevent pull-to-refresh on mobile */
+    overscroll-behavior: none;
+  }
   body {
     font-family: 'Noto Sans TC', sans-serif;
     background: #050505;
     color: white;
     min-height: 100vh;
+    min-height: 100dvh;
     background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34,197,94,0.08), transparent);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Prevent iOS text size adjustment */
+    -webkit-text-size-adjust: 100%;
   }
   * {
     @apply border-white/10;
+    /* Prevent tap highlight on mobile */
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Prevent iOS auto-zoom on form inputs smaller than 16px */
+  input, select, textarea {
+    font-size: 16px;
   }
 }
 
@@ -392,4 +407,24 @@
 }
 .reveal {
   animation: revealUp 0.7s ease-out forwards;
+}
+
+/* ── Safe Area Utilities ── */
+.safe-area-pt { padding-top: env(safe-area-inset-top); }
+.safe-area-pb { padding-bottom: env(safe-area-inset-bottom); }
+.safe-area-top { top: env(safe-area-inset-top); }
+.safe-area-bottom { bottom: env(safe-area-inset-bottom); }
+
+/* ── Mobile Touch Optimization ── */
+@media (hover: none) and (pointer: coarse) {
+  /* Ensure minimum touch targets on mobile */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  /* Exception for inline/small buttons within text or tight layouts */
+  .touch-compact {
+    min-height: unset;
+    min-width: unset;
+  }
 }

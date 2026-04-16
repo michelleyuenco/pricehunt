@@ -311,15 +311,44 @@ export const zh: Record<string, string> = {
   'record.onSale': '特價中',
   'record.originalPrice': '原價',
   'record.note': '備註',
+  'record.notePlaceholder': '例如：快到期、特別優惠...',
   'record.save': '儲存記錄',
   'record.saved': '已儲存！',
   'record.recent': '最近記錄',
+  'record.photo': '產品照片',
+  'record.uploading': '上傳照片中...',
+  'record.signIn.title': '登入後記錄價格',
+  'record.signIn.desc': '登入帳號後即可開始記錄和分享超市價格',
+  'record.error.product': '請選擇產品',
+  'record.error.price': '請輸入有效價格',
+  'record.error.store': '請選擇商店',
+  'record.error.save': '儲存失敗，請重試',
+
+  // Navbar
+  'nav.record': '記錄',
+  'nav.myRecords': '我的',
+
+  // Home feed
+  'home.feed.title': '最新價格',
+  'home.feed.subtitle': '街坊分享的最新超市價格',
+  'home.feed.empty': '暫時沒有價格記錄',
+  'home.feed.emptyCta': '做第一個分享價格的人！',
+
+  // Product detail
+  'product.records': '筆記錄',
+  'product.priceHistory': '價格紀錄',
 
   // My Records
   'myRecords.title': '我的記錄',
   'myRecords.stats': '本月記錄',
-  'myRecords.empty': '你仲未記錄過價格',
+  'myRecords.empty': '還沒有記錄',
+  'myRecords.emptyCta': '開始記錄你見到的價格吧！',
   'myRecords.emptyBtn': '記錄第一個價格',
+  'myRecords.totalRecords': '總記錄',
+  'myRecords.thisMonth': '本月',
+  'myRecords.products': '產品',
+  'myRecords.signIn': '登入查看你的記錄',
+  'myRecords.signInDesc': '登入後可以查看和管理你的價格記錄',
 
   // Community
   'community.reports': '社群回報',

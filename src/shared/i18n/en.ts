@@ -311,15 +311,44 @@ export const en: Record<string, string> = {
   'record.onSale': 'On sale',
   'record.originalPrice': 'Original price',
   'record.note': 'Note',
+  'record.notePlaceholder': 'e.g. Near expiry, special deal...',
   'record.save': 'Save Record',
   'record.saved': 'Saved!',
   'record.recent': 'Recent Records',
+  'record.photo': 'Product Photo',
+  'record.uploading': 'Uploading photo...',
+  'record.signIn.title': 'Sign in to record prices',
+  'record.signIn.desc': 'Sign in to start recording and sharing supermarket prices',
+  'record.error.product': 'Please select a product',
+  'record.error.price': 'Please enter a valid price',
+  'record.error.store': 'Please select a store',
+  'record.error.save': 'Save failed, please try again',
+
+  // Navbar
+  'nav.record': 'Record',
+  'nav.myRecords': 'Mine',
+
+  // Home feed
+  'home.feed.title': 'Latest Prices',
+  'home.feed.subtitle': 'Recent prices shared by the community',
+  'home.feed.empty': 'No price records yet',
+  'home.feed.emptyCta': 'Be the first to share a price!',
+
+  // Product detail
+  'product.records': 'records',
+  'product.priceHistory': 'Price History',
 
   // My Records
   'myRecords.title': 'My Records',
   'myRecords.stats': 'Records this month',
-  'myRecords.empty': "You haven't recorded any prices yet",
+  'myRecords.empty': 'No records yet',
+  'myRecords.emptyCta': 'Start recording prices you see!',
   'myRecords.emptyBtn': 'Record your first price',
+  'myRecords.totalRecords': 'Total',
+  'myRecords.thisMonth': 'This Month',
+  'myRecords.products': 'Products',
+  'myRecords.signIn': 'Sign in to view your records',
+  'myRecords.signInDesc': 'Sign in to view and manage your price records',
 
   // Community
   'community.reports': 'Community Reports',
